@@ -26,7 +26,6 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
-  // 슬라이드 애니메이션을 위한 ref
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export default function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
-  // 모바일 메뉴 열릴 때 스크롤 방지
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -167,7 +165,6 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* 우측 하단 다크모드 버튼 */}
       <button
         onClick={toggleTheme}
         className="fixed bottom-4 right-4 p-3 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-full shadow-md z-50 hover:scale-110 transition-transform"

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { FaCode, FaFlask } from "react-icons/fa";
 import { Project } from "@/types/project";
 import { Code } from "lucide-react";
 
@@ -10,10 +9,6 @@ interface ProjectPreviewCardProps {
 }
 
 const ProjectCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
-  const Icon = project.title.toLowerCase().includes("research")
-    ? FaFlask
-    : FaCode;
-
   return (
     <Link href={`/projects/${project.slug}`}>
       <div className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">

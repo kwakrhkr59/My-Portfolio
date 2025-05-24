@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import {
   FolderOpen,
-  Search,
   Calendar,
   MapPin,
   Award,
@@ -15,6 +13,7 @@ import {
   Rocket,
   BookOpen,
 } from "lucide-react";
+import { Experience } from "@/data/experience";
 import { experienceData } from "@/data/experience";
 
 function ExperienceItem({ experience }: { experience: Experience }) {

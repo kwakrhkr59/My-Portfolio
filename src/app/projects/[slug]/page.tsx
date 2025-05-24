@@ -13,11 +13,9 @@ import {
   FaTasks,
   FaTrophy,
   FaChartLine,
-  FaImage,
   FaTools,
 } from "react-icons/fa";
 import { supabase } from "@/lib/supabaseClient";
-import type { Project } from "@/types/project";
 import Footer from "@/components/layout/Footer";
 
 interface PageProps {
@@ -26,7 +24,7 @@ interface PageProps {
 
 async function fetchProject(slug: string) {
   const { data, error } = await supabase
-    .from<Project>("projects")
+    .from("projects")
     .select("*")
     .eq("slug", slug)
     .single();
@@ -41,28 +39,6 @@ export default function ProjectDetail({ params }: PageProps) {
   const { slug } = use(params);
   const project = use(fetchProject(slug));
   const [activeImage, setActiveImage] = useState(0);
-
-  if (!project) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-50">
-        <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold mb-4 text-gray-800">
-            Project Not Found
-          </h1>
-          <p className="mb-6 text-gray-600">
-            The project you are looking for doesn't exist or has been removed.
-          </p>
-          <Link
-            href="/"
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 inline-flex items-center transition-colors duration-200"
-          >
-            <FaArrowLeft className="mr-2" />
-            Back to Home
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   // icon 선택
   const Icon =
@@ -155,7 +131,7 @@ export default function ProjectDetail({ params }: PageProps) {
             {/* Thumbnails */}
             {project.images.length > 1 && (
               <div className="mt-4 flex justify-center gap-2">
-                {project.images.map((image, idx) => (
+                {project.images.map((image: string, idx: number) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImage(idx)}
@@ -214,7 +190,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   Key Features
                 </h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {project.features.map((feature, idx) => (
+                  {project.features.map((feature: string, idx: number) => (
                     <li key={idx} className="flex items-start">
                       <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-100 flex items-center justify-center mt-1 mr-3">
                         <div className="h-2 w-2 rounded-full bg-indigo-600"></div>
@@ -276,7 +252,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   Technologies
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {project.stack.map((tech, idx) => (
+                  {project.stack.map((tech: string, idx: number) => (
                     <span
                       key={idx}
                       className="px-3 py-1.5 bg-indigo-50 text-indigo-700 text-sm font-medium rounded-full"
@@ -296,7 +272,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   Team
                 </h3>
                 <ul className="space-y-3">
-                  {project.team.map((member, idx) => (
+                  {project.team.map((member: string, idx: number) => (
                     <li key={idx} className="flex items-center">
                       <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center mr-3 text-indigo-700">
                         {member.charAt(0)}

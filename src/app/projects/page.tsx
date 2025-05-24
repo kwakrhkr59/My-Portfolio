@@ -1,15 +1,15 @@
 // "use client";
 
-import ProjectsPageCard from "@/components/projects/ProjectCard";
 import { supabase } from "@/lib/supabaseClient";
 import { Project } from "@/types/project";
-import { Suspense } from "react";
 import { Github, FolderOpen, Search, Filter } from "lucide-react";
 
 function ProjectStats({ projects }: { projects: Project[] }) {
   const totalProjects = projects.length;
   const recentProjects = projects.filter((project) => {
-    const createdAt = new Date(project.created_at);
+    const createdAt = project.created_at
+      ? new Date(project.created_at)
+      : new Date(0); // 기본값: Unix epoch (1970-01-01)
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     return createdAt > thirtyDaysAgo;
@@ -69,7 +69,7 @@ function ProjectStats({ projects }: { projects: Project[] }) {
 }
 
 export default async function ProjectsPage() {
-  const { data: projects, error } = await supabase
+  const { data: projects } = await supabase
     .from("projects")
     .select("*")
     .order("created_at", { ascending: false });
@@ -87,12 +87,14 @@ export default async function ProjectsPage() {
           </p>
         </div>
 
-        <ProjectStats projects={projects} />
+        <ProjectStats projects={projects ?? []} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12">
-          {projects.map((project) => (
-            <ProjectsPageCard key={project.id} project={project} />
-          ))}
+          {projects && projects.length > 0 ? (
+            <ProjectStats projects={projects} />
+          ) : (
+            <p>No projects available</p> // 예시: 프로젝트가 없을 때 보여줄 메시지
+          )}
         </div>
 
         <div className="text-center">

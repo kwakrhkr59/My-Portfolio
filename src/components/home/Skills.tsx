@@ -1,4 +1,3 @@
-// components/Skills.tsx
 "use client";
 
 import { Code, Webhook, Brain, Wrench } from "lucide-react"; // Using Lucide icons for categories

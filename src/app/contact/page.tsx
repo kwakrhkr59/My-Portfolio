@@ -77,7 +77,7 @@ const ContactPage = () => {
             Get in Touch
           </h1>
           <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            I'd love to hear from you!
+            I&apos;d love to hear from you!
             <br />
             Feel free to reach out for collaborations, inquiries, or just a
             friendly chat.
@@ -92,7 +92,7 @@ const ContactPage = () => {
                   <MessageSquare className="w-10 h-10 text-white" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  Let's Connect
+                  Let&apos;s Connect
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
                   Ready to start a conversation?
@@ -183,8 +183,8 @@ const ContactPage = () => {
                   Send a Message
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Fill out the form below and I'll get back to you as soon as
-                  possible.
+                  Fill out the form below and I&apos;ll get back to you as soon
+                  as possible.
                 </p>
               </div>
 
@@ -332,7 +332,8 @@ const ContactPage = () => {
                 {status === "success" && (
                   <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
                     <p className="text-green-800 dark:text-green-400 text-center font-medium">
-                      ✨ Message sent successfully! I'll get back to you soon.
+                      ✨ Message sent successfully! I&apos;ll get back to you
+                      soon.
                     </p>
                   </div>
                 )}

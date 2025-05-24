@@ -4,8 +4,6 @@ import Link from "next/link";
 import {
   FaCode,
   FaFlask,
-  FaGithub,
-  FaExternalLinkAlt,
   FaClock,
   FaUsers,
   FaStar,
