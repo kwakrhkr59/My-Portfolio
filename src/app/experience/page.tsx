@@ -13,8 +13,10 @@ import {
   Rocket,
   BookOpen,
 } from "lucide-react";
-import { Experience } from "@/data/experience";
 import { experienceData } from "@/data/experience";
+
+// experienceData 배열의 요소 타입을 추론하여 Experience 타입으로 사용
+type Experience = (typeof experienceData)[number];
 
 function ExperienceItem({ experience }: { experience: Experience }) {
   const getTypeColor = (type: string) => {
@@ -52,23 +54,17 @@ function ExperienceItem({ experience }: { experience: Experience }) {
   const displayedResponsibilities = experience.details.responsibilities.slice(
     0,
     3
-  ); // Show top 3
-  const displayedAchievements = experience.details.achievements.slice(0, 3); // Show top 3
-  const displayedTechnologies = experience.details.technologies.slice(0, 4); // Show top 4
-  const displayedSkills = experience.details.skills.slice(0, 4); // Show top 4
-  const displayedProjects = experience.details.projects?.slice(0, 2); // Show top 2 projects
+  );
+  const displayedAchievements = experience.details.achievements.slice(0, 3);
+  const displayedTechnologies = experience.details.technologies.slice(0, 4);
+  const displayedSkills = experience.details.skills.slice(0, 4);
+  // projects는 옵셔널일 수 있으므로 안전하게 접근
+  const displayedProjects = experience.details.projects?.slice(0, 2);
 
   return (
     <div className="relative mb-16 md:mb-24 last:mb-0">
-      {" "}
-      {/* Removed 'group' class from here */}
-      {/* Content Card */}
       <div className="mt-8 md:mt-24 bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 dark:border-slate-700 transition-all duration-300">
-        {" "}
-        {/* Removed hover effects from here */}
-        {/* Header */}
         <div className="mb-6 text-center">
-          {/* Moved the icon into the header for better visual flow */}
           <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md mx-auto mb-4">
             <Icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
           </div>

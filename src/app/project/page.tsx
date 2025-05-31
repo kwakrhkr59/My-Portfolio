@@ -1,12 +1,13 @@
-import { Project, fetchNotionProjects } from "@/lib/fetchProject";
+import { fetchNotionProjects } from "@/lib/fetchProject";
+import { Project } from "@/types/project";
 import { Github, FolderOpen, Search, Filter } from "lucide-react";
 import ProjectsPageCard from "@/components/projects/ProjectCard";
 
 function ProjectStats({ projects }: { projects: Project[] }) {
   const totalProjects = projects.length;
   const recentProjects = projects.filter((project) => {
-    const createdAt = project.createdTime
-      ? new Date(project.createdTime)
+    const createdAt = project.created_at
+      ? new Date(project.created_at)
       : new Date(0);
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);

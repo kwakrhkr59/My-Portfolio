@@ -5,10 +5,10 @@ import HeroSection from "@/components/home/Hero";
 import FloatingNav from "@/components/layout/FloatingNav";
 import Profile from "@/components/home/Profile";
 import ProjectPreview from "@/components/home/ProjectPreview";
-import Publication from "@/components/home/Publication";
+import Publications from "@/components/home/Publications";
 import Awards from "@/components/home/Awards";
 import Education from "@/components/home/Education";
-import Experience from "@/components/home/Experience";
+import Experiences from "@/components/home/Experiences";
 import Skills from "@/components/home/Skills";
 
 const Portfolio = () => {
@@ -33,9 +33,9 @@ const Portfolio = () => {
       <FloatingNav show={showNav} />
       <Profile />
       <ProjectPreview />
-      <Publication />
+      <Publications />
       <Awards />
-      <Experience />
+      <Experiences />
       <Education />
       <Skills />
     </div>

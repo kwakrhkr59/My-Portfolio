@@ -12,7 +12,7 @@ import {
   Globe,
   Github,
 } from "lucide-react";
-import { Paper } from "@/data/publications";
+import { Paper } from "@/types/publications";
 
 export default function PaperCard({ paper }: { paper: Paper }) {
   const getFieldIcon = (field: string) => {

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Award } from "lucide-react";
+import { Award as AwardIcon } from "lucide-react";
+import { Award } from "@/types/award";
 
 export default function Awards() {
-  const [awards, setAwards] = useState([]);
+  const [awards, setAwards] = useState<Award[]>([]);
 
   useEffect(() => {
     const fetchPapers = async () => {
@@ -41,7 +42,7 @@ export default function Awards() {
               className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="flex-shrink-0 w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-6 mb-4 md:mb-0">
-                <Award className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <AwardIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="flex-grow">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">

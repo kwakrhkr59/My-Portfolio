@@ -1,68 +1,80 @@
 import { notion, NOTION_PROJECT_ID } from "./notion";
-
-export interface Project {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string | null;
-  details: string | null;
-  goal: string | null;
-  period: string | null;
-  priority: string | null;
-  status: string | null;
-  link: string | null;
-  github: string | null;
-  stack: string[];
-  type: string | undefined;
-  createdAt?: string;
-  features: string[];
-  team: string[];
-  results: string | null;
-  challenges: string | null;
-  images: string[];
-}
+import { Project } from "@/types/project";
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionProjects(): Promise<Project[]> {
-  const queryDatabase = notion.databases.query.bind(notion.databases);
-  const response = await queryDatabase({
+  const response = await notion.databases.query({
     database_id: NOTION_PROJECT_ID,
     sorts: [{ property: "Period", direction: "descending" }],
   });
 
-  return response.results.map((page) => {
-    const props = page.properties;
+  return response.results
+    .filter(
+      (page): page is PageObjectResponse =>
+        "properties" in page && page.object === "page"
+    )
+    .map((page) => {
+      const props = page.properties;
 
-    return {
-      id: page.id,
-      title: props["Title"]?.title?.[0]?.plain_text ?? "",
-      slug: props["Slug"]?.rich_text?.[0]?.plain_text ?? "",
-      summary: props["Summary"]?.rich_text?.[0]?.plain_text ?? null,
-      details: props["Details"]?.rich_text?.[0]?.plain_text ?? null,
-      goal: props["Goal"]?.rich_text?.[0]?.plain_text ?? null,
-      features:
-        props["Features"]?.multi_select?.map((f: { name: string }) => f.name) ||
-        [],
-      challenges: props["Challenges"]?.rich_text?.[0]?.plain_text ?? null,
-      results: props["Results"]?.rich_text?.[0]?.plain_text ?? null,
-      images:
-        props["Images"]?.type === "files"
-          ? props["Images"]?.files?.map(
-              (f: { file?: { url: string }; external?: { url: string } }) =>
-                f.external?.url || f.file?.url
-            ) || []
-          : [],
-      github: props["GitHub"]?.url || null,
-      link: props["Link"]?.url || null,
-      stack:
-        props["Stack"]?.multi_select?.map((s: { name: string }) => s.name) ||
-        [],
-      period: props["Period"]?.rich_text?.[0]?.plain_text ?? null,
-      team:
-        props["Team"]?.multi_select?.map((p: { name: string }) => p.name) || [],
-      type: props["Type"]?.select?.name || undefined,
-      priority: props["Priority"]?.select?.name || undefined,
-      status: props["Status"]?.status?.name || undefined,
-      createdAt: page.created_time,
-    };
-  });
+      const getPlainText = (
+        prop: any,
+        expectedType: string
+      ): string | undefined => {
+        if (prop && prop.type === expectedType) {
+          if (expectedType === "title" || expectedType === "rich_text") {
+            return prop[expectedType][0]?.plain_text || undefined;
+          }
+          return prop[expectedType] || undefined;
+        }
+        return undefined;
+      };
+
+      const getMultiSelect = (prop: any): string[] =>
+        prop?.type === "multi_select"
+          ? prop.multi_select.map((s: { name: string }) => s.name)
+          : [];
+
+      const getSelectName = (prop: any): string | undefined =>
+        prop?.type === "select" ? prop.select?.name : undefined;
+
+      const getStatusName = (prop: any): string | undefined =>
+        prop?.type === "status" ? prop.status?.name : undefined;
+
+      const getUrl = (prop: any): string | undefined =>
+        prop?.type === "url" ? prop.url || undefined : undefined;
+
+      const getFiles = (prop: any): string[] =>
+        prop?.type === "files"
+          ? (prop.files
+              .map(
+                (f: { file?: { url: string }; external?: { url: string } }) =>
+                  f.external?.url || f.file?.url || ""
+              )
+              .filter(Boolean) as string[])
+          : [];
+
+      const createdAt = page.created_time as string;
+
+      return {
+        id: page.id,
+        title: getPlainText(props["Title"], "title") || "",
+        slug: getPlainText(props["Slug"], "rich_text") || "",
+        summary: getPlainText(props["Summary"], "rich_text") || "",
+        details: getPlainText(props["Details"], "rich_text") || "",
+        goal: getPlainText(props["Goal"], "rich_text") || "",
+        features: getMultiSelect(props["Features"]) || "",
+        challenges: getPlainText(props["Challenges"], "rich_text") || "",
+        results: getPlainText(props["Results"], "rich_text") || "",
+        images: getFiles(props["Images"]) || "",
+        github: getUrl(props["GitHub"]) || "",
+        link: getUrl(props["Link"]) || "",
+        stack: getMultiSelect(props["Stack"]) || "",
+        period: getPlainText(props["Period"], "rich_text") || "",
+        team: getMultiSelect(props["Team"]) || "",
+        type: getSelectName(props["Type"]) || "",
+        priority: getSelectName(props["Priority"]) || "",
+        status: getStatusName(props["Status"]) || "",
+        created_at: createdAt,
+      };
+    });
 }

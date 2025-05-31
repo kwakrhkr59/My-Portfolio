@@ -32,7 +32,7 @@ export default function ProjectPreview() {
         setProjects(data);
       } catch (err: unknown) {
         console.error("Error fetching projects:", err);
-        setError(err.message || "프로젝트 데이터를 불러오는데 실패했습니다.");
+        setError("프로젝트 데이터를 불러오는데 실패했습니다.");
       } finally {
         setLoading(false);
       }

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { BookOpen } from "lucide-react";
+import { Paper } from "@/types/publications";
 
-export default function Publication() {
-  const [papers, setPapers] = useState([]);
+export default function Publications() {
+  const [papers, setPapers] = useState<Paper[]>([]);
 
   useEffect(() => {
     const fetchPapers = async () => {

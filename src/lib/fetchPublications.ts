@@ -1,33 +1,65 @@
 import { notion, NOTION_PUBLICATION_ID } from "./notion";
-import { Paper } from "@/data/publications";
+import { Paper } from "@/types/publications";
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionPapers(): Promise<Paper[]> {
-  const queryDatabase = notion.databases.query.bind(notion.databases);
-  const response = await queryDatabase({
+  const response = await notion.databases.query({
     database_id: NOTION_PUBLICATION_ID,
     sorts: [{ property: "Year", direction: "descending" }],
   });
 
-  return response.results.map((page) => {
-    const props = page.properties;
+  return response.results
+    .filter(
+      (page): page is PageObjectResponse =>
+        "properties" in page && page.object === "page"
+    )
+    .map((page) => {
+      const props = page.properties;
 
-    return {
-      id: page.id,
-      title: props.Title.title[0]?.plain_text || "Untitled",
-      role: props.Role?.select?.name || "",
-      authors: props.Authors.multi_select?.map((a: unknown) => a.name) || [],
-      journal: props.Journal?.rich_text[0]?.plain_text || "",
-      year: props.Year?.number || 0,
-      abstract: props.Abstract?.rich_text[0]?.plain_text || "",
-      keywords: props.Keywords?.multi_select?.map((k: unknown) => k.name) || [],
-      doi: props.DOI?.url || undefined,
-      github: props.GitHub?.url || undefined,
-      website: props.Website?.url || undefined,
-      citations: props.Citations?.number || undefined,
-      status: props.Status?.select?.name as Paper["status"],
-      impact: props.Impact?.rich_text[0]?.plain_text || undefined,
-      methodology: props.Methodology?.rich_text[0]?.plain_text || undefined,
-      field: props.Field?.select?.name || "Other",
-    };
-  });
+      const getPlainText = (
+        prop: any,
+        expectedType: string
+      ): string | undefined => {
+        if (prop && prop.type === expectedType) {
+          if (expectedType === "title" || expectedType === "rich_text") {
+            return prop[expectedType][0]?.plain_text || undefined;
+          }
+          return prop[expectedType] || undefined;
+        }
+        return undefined;
+      };
+
+      const getMultiSelect = (prop: any): string[] =>
+        prop?.type === "multi_select"
+          ? prop.multi_select.map((s: { name: string }) => s.name)
+          : [];
+
+      const getSelectName = (prop: any): string | undefined =>
+        prop?.type === "select" ? prop.select?.name : undefined;
+
+      const getUrl = (prop: any): string | undefined =>
+        prop?.type === "url" ? prop.url || undefined : undefined;
+
+      const getNumber = (prop: any): number | undefined =>
+        prop?.type === "number" ? prop.number : undefined;
+
+      return {
+        id: page.id,
+        title: getPlainText(props["Title"], "title") || "Untitled",
+        role: getSelectName(props["Role"]) || "",
+        authors: getMultiSelect(props["Authors"]),
+        journal: getPlainText(props["Journal"], "rich_text") || "",
+        year: getNumber(props["Year"]) || 0,
+        abstract: getPlainText(props["Abstract"], "rich_text") || "",
+        keywords: getMultiSelect(props["Keywords"]),
+        doi: getUrl(props["DOI"]),
+        github: getUrl(props["GitHub"]),
+        website: getUrl(props["Website"]),
+        citations: getNumber(props["Citations"]),
+        status: getSelectName(props["Status"]) as Paper["status"],
+        impact: getPlainText(props["Impact"], "rich_text"),
+        methodology: getPlainText(props["Methodology"], "rich_text"),
+        field: getSelectName(props["Field"]) || "Other",
+      };
+    });
 }

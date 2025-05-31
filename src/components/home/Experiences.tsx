@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { FolderOpen } from "lucide-react";
+import { Experience } from "@/types/experience";
 
-export default function Experience() {
-  const [experiences, setExperiences] = useState([]);
+export default function Experiences() {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
 
   useEffect(() => {
     const fetchPapers = async () => {

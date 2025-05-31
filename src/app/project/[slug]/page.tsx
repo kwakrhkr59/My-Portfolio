@@ -2,20 +2,20 @@
 import React, { use, useState } from "react";
 import Link from "next/link";
 import {
-  FaGithub,
-  FaExternalLinkAlt,
-  FaArrowLeft,
-  FaCalendarAlt,
-  FaUsers,
-  FaCode,
-  FaFlask,
-  FaLightbulb,
-  FaTasks,
-  FaTrophy,
-  FaChartLine,
-  FaTools,
-} from "react-icons/fa";
-import { Image } from "lucide-react";
+  Github,
+  ExternalLink,
+  ArrowLeft,
+  Calendar,
+  Users,
+  Code,
+  FlaskConical,
+  Lightbulb,
+  ListTodo,
+  Trophy,
+  LineChart,
+  Wrench,
+} from "lucide-react";
+import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 
 interface PageProps {
@@ -40,13 +40,19 @@ export default function ProjectDetail({ params }: PageProps) {
   const project = use(fetchProject(slug));
   const [activeImage, setActiveImage] = useState(0);
 
-  // icon 선택
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-700">
+        <p>Project not found or an error occurred.</p>
+      </div>
+    );
+  }
+
   const Icon =
-    project.type && project.type.includes("Research") ? FaFlask : FaCode;
+    project.type && project.type.includes("Research") ? FlaskConical : Code;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation Bar */}
       <nav className="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-md bg-white/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -55,7 +61,7 @@ export default function ProjectDetail({ params }: PageProps) {
                 href="/"
                 className="flex items-center text-gray-900 hover:text-indigo-600 transition-colors duration-200"
               >
-                <FaArrowLeft className="mr-2" />
+                <ArrowLeft className="mr-2" />
                 <span>Back to Projects</span>
               </Link>
             </div>
@@ -68,7 +74,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   className="text-gray-500 hover:text-gray-900 transition-colors duration-200"
                   title="GitHub Repository"
                 >
-                  <FaGithub className="h-5 w-5" />
+                  <Github className="h-5 w-5" />
                 </a>
               )}
               {project.link && (
@@ -79,7 +85,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   className="text-gray-500 hover:text-gray-900 transition-colors duration-200"
                   title="Visit Project"
                 >
-                  <FaExternalLinkAlt className="h-5 w-5" />
+                  <ExternalLink className="h-5 w-5" />
                 </a>
               )}
             </div>
@@ -87,7 +93,6 @@ export default function ProjectDetail({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* Project Header */}
       <header className="bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-4">
@@ -103,12 +108,12 @@ export default function ProjectDetail({ params }: PageProps) {
           </h1>
           <div className="flex flex-wrap items-center gap-6 text-white/90">
             <div className="flex items-center bg-black/10 px-4 py-2 rounded-full">
-              <FaCalendarAlt className="mr-2" />
+              <Calendar className="mr-2" />
               <span>{project.period || "Unknown period"}</span>
             </div>
             {project.team && project.team.length > 0 && (
               <div className="flex items-center bg-black/10 px-4 py-2 rounded-full">
-                <FaUsers className="mr-2" />
+                <Users className="mr-2" />
                 <span>{project.team.join(", ")}</span>
               </div>
             )}
@@ -116,7 +121,6 @@ export default function ProjectDetail({ params }: PageProps) {
         </div>
       </header>
 
-      {/* Project Images (if available, show as hero section) */}
       {project.images && project.images.length > 0 && (
         <div className="bg-gray-900 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -130,7 +134,6 @@ export default function ProjectDetail({ params }: PageProps) {
               />
             </div>
 
-            {/* Thumbnails */}
             {project.images.length > 1 && (
               <div className="mt-4 flex justify-center gap-2">
                 {project.images.map((image: string, idx: number) => (
@@ -156,12 +159,9 @@ export default function ProjectDetail({ params }: PageProps) {
         </div>
       )}
 
-      {/* Project Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Summary */}
             <div className="bg-white rounded-2xl shadow-md p-8">
               <h2 className="text-2xl font-bold mb-6 pb-4 border-b border-gray-100">
                 Overview
@@ -173,22 +173,20 @@ export default function ProjectDetail({ params }: PageProps) {
               </p>
             </div>
 
-            {/* Project Goal */}
             {project.goal && (
               <div className="bg-white rounded-2xl shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <FaLightbulb className="mr-3 text-yellow-500" />
+                  <Lightbulb className="mr-3 text-yellow-500" />
                   Project Goal
                 </h2>
                 <p className="text-gray-700 leading-relaxed">{project.goal}</p>
               </div>
             )}
 
-            {/* Key Features */}
             {project.features && project.features.length > 0 && (
               <div className="bg-white rounded-2xl shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <FaTasks className="mr-3 text-indigo-500" />
+                  <ListTodo className="mr-3 text-indigo-500" />
                   Key Features
                 </h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,11 +202,10 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             )}
 
-            {/* Challenges & Solutions */}
             {project.challenges && (
               <div className="bg-white rounded-2xl shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <FaTools className="mr-3 text-gray-600" />
+                  <Wrench className="mr-3 text-gray-600" />
                   Challenges & Solutions
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -217,11 +214,10 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             )}
 
-            {/* Results */}
             {project.results && (
               <div className="bg-white rounded-2xl shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <FaTrophy className="mr-3 text-amber-500" />
+                  <Trophy className="mr-3 text-amber-500" />
                   Results & Achievements
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -230,11 +226,10 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             )}
 
-            {/* Future Plans */}
             {project.future_plans && (
               <div className="bg-white rounded-2xl shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <FaChartLine className="mr-3 text-green-500" />
+                  <LineChart className="mr-3 text-green-500" />
                   Future Plans
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
@@ -244,13 +239,11 @@ export default function ProjectDetail({ params }: PageProps) {
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-8">
-            {/* Tech Stack Card */}
             {project.stack && project.stack.length > 0 && (
               <div className="bg-white rounded-2xl shadow-md p-6">
                 <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800">
-                  <FaTools className="mr-2 text-indigo-500" />
+                  <Wrench className="mr-2 text-indigo-500" />
                   Technologies
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -266,11 +259,10 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             )}
 
-            {/* Team Members */}
             {project.team && project.team.length > 0 && (
               <div className="bg-white rounded-2xl shadow-md p-6">
                 <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800">
-                  <FaUsers className="mr-2 text-indigo-500" />
+                  <Users className="mr-2 text-indigo-500" />
                   Team
                 </h3>
                 <ul className="space-y-3">
@@ -286,7 +278,6 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             )}
 
-            {/* Links Card */}
             <div className="bg-white rounded-2xl shadow-md p-6">
               <h3 className="text-xl font-bold mb-4 text-gray-800">Links</h3>
               <div className="space-y-4">
@@ -297,7 +288,7 @@ export default function ProjectDetail({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="flex items-center py-2 px-4 text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors duration-200"
                   >
-                    <FaExternalLinkAlt className="mr-3" />
+                    <ExternalLink className="mr-3" />
                     <span>Visit Project</span>
                   </a>
                 )}
@@ -308,14 +299,13 @@ export default function ProjectDetail({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="flex items-center py-2 px-4 text-gray-700 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                   >
-                    <FaGithub className="mr-3" />
+                    <Github className="mr-3" />
                     <span>GitHub Repository</span>
                   </a>
                 )}
               </div>
             </div>
 
-            {/* Contact Card */}
             <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-md p-6">
               <h3 className="text-xl font-bold mb-4 text-indigo-800">
                 Have Questions?
