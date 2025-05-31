@@ -1,5 +1,4 @@
 import PaperCard from "@/components/publication/PaperCard";
-// import { papers } from "@/data/publications";
 import { fetchNotionPapers } from "@/lib/fetchPublications";
 
 export default async function PublicationsPage() {
@@ -17,7 +16,7 @@ export default async function PublicationsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12 items-start">
           {papers.map((paper) => (
             <PaperCard key={paper.id} paper={paper} />
           ))}

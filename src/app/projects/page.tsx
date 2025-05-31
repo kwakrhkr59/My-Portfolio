@@ -1,15 +1,13 @@
-// "use client";
-
-import { supabase } from "@/lib/supabaseClient";
-import { Project } from "@/types/project";
+import { Project, fetchNotionProjects } from "@/lib/fetchProject";
 import { Github, FolderOpen, Search, Filter } from "lucide-react";
+import ProjectsPageCard from "@/components/projects/ProjectCard";
 
 function ProjectStats({ projects }: { projects: Project[] }) {
   const totalProjects = projects.length;
   const recentProjects = projects.filter((project) => {
-    const createdAt = project.created_at
-      ? new Date(project.created_at)
-      : new Date(0); // 기본값: Unix epoch (1970-01-01)
+    const createdAt = project.createdTime
+      ? new Date(project.createdTime)
+      : new Date(0);
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     return createdAt > thirtyDaysAgo;
@@ -17,51 +15,58 @@ function ProjectStats({ projects }: { projects: Project[] }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-slate-700">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Total Projects
-            </p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">
-              {totalProjects}
-            </p>
-          </div>
-          <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-            <FolderOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-          </div>
-        </div>
-      </div>
+      <StatCard
+        title="Total Projects"
+        value={totalProjects}
+        icon={
+          <FolderOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        }
+        bg="bg-blue-100 dark:bg-blue-900/30"
+      />
+      <StatCard
+        title="Recent Projects"
+        value={recentProjects}
+        icon={<Search className="w-6 h-6 text-green-600 dark:text-green-400" />}
+        bg="bg-green-100 dark:bg-green-900/30"
+      />
+      <StatCard
+        title="Last 30 Days"
+        value={recentProjects}
+        icon={
+          <Filter className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+        }
+        bg="bg-purple-100 dark:bg-purple-900/30"
+      />
+    </div>
+  );
+}
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-slate-700">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Recent Projects
-            </p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">
-              {recentProjects}
-            </p>
-          </div>
-          <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-            <Search className="w-6 h-6 text-green-600 dark:text-green-400" />
-          </div>
+function StatCard({
+  title,
+  value,
+  icon,
+  bg,
+}: {
+  title: string;
+  value: number;
+  icon: React.ReactNode;
+  bg: string;
+}) {
+  return (
+    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-slate-700">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+            {title}
+          </p>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">
+            {value}
+          </p>
         </div>
-      </div>
-
-      <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-slate-700">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-              Last 30 Days
-            </p>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">
-              {recentProjects}
-            </p>
-          </div>
-          <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-            <Filter className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-          </div>
+        <div
+          className={`w-12 h-12 ${bg} rounded-lg flex items-center justify-center`}
+        >
+          {icon}
         </div>
       </div>
     </div>
@@ -69,10 +74,7 @@ function ProjectStats({ projects }: { projects: Project[] }) {
 }
 
 export default async function ProjectsPage() {
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("*")
-    .order("created_at", { ascending: false });
+  const projects = await fetchNotionProjects();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
@@ -87,14 +89,12 @@ export default async function ProjectsPage() {
           </p>
         </div>
 
-        <ProjectStats projects={projects ?? []} />
+        <ProjectStats projects={projects} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12">
-          {projects && projects.length > 0 ? (
-            <ProjectStats projects={projects} />
-          ) : (
-            <p>No projects available</p> // 예시: 프로젝트가 없을 때 보여줄 메시지
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12 items-start">
+          {projects.map((project) => (
+            <ProjectsPageCard key={project.id} project={project} />
+          ))}
         </div>
 
         <div className="text-center">

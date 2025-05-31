@@ -54,24 +54,24 @@ export default function PaperCard({ paper }: { paper: Paper }) {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 group">
-      <div className={`h-24 bg-gradient-to-r ${selectedGradient} relative`}>
+    <div className="relative bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 cursor-pointer">
+      <div className={`h-32 bg-gradient-to-r ${selectedGradient} relative`}>
         <div className="absolute inset-0 bg-black/10" />
-        <div className="absolute top-3 left-4">
-          <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-            <Icon className="text-white text-lg" />
+        <div className="absolute top-4 left-4">
+          <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+            <Icon className="text-white text-xl" />
           </div>
         </div>
-        <div className="absolute bottom-3 left-4">
+        <div className="absolute bottom-4 left-4">
           <span
-            className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+            className={`className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium ${getStatusColor(
               paper.status
             )}`}
           >
             {paper.status}
           </span>
         </div>
-        {paper.citations && (
+        {/* {paper.citations && (
           <div className="absolute top-3 right-4">
             <div className="bg-white/20 backdrop-blur-sm rounded-lg px-2 py-1">
               <span className="text-white text-xs font-medium">
@@ -79,11 +79,11 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               </span>
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300">
+      <div className="p-6 group">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300 line-clamp-2">
           {paper.title}
         </h3>
 
@@ -207,6 +207,8 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             </a>
           )}
         </div>
+
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-all duration-300 pointer-events-none rounded-2xl"></div>
       </div>
     </div>
   );
