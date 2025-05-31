@@ -7,7 +7,7 @@ import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
   { name: "홈", path: "/" },
-  { name: "프로젝트", path: "/projects" },
+  { name: "프로젝트", path: "/project" },
   { name: "연구", path: "/publication" },
   { name: "경력", path: "/experience" },
   {

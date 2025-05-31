@@ -21,7 +21,7 @@ export default function ProjectPreview() {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("/api/notion/projects");
+        const res = await fetch("/api/notion/project");
         console.log("fetch 응답 상태:", res.status);
 
         if (!res.ok) {
