@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FolderOpen, Search } from "lucide-react";
+import { FolderOpen } from "lucide-react";
 
 export default function Experience() {
   const [experiences, setExperiences] = useState([]);

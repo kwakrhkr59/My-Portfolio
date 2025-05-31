@@ -15,7 +15,7 @@ interface FloatingNavProps {
 
 const navItems = [
   { href: "#about", icon: User, label: "About Me" },
-  // { href: "#projects", icon: Briefcase, label: "Projects" },
+  { href: "#projects", icon: Briefcase, label: "Projects" },
   { href: "#publication", icon: BookOpen, label: "Publication" },
   { href: "#awards", icon: Award, label: "Awards" },
   { href: "#experience", icon: Search, label: "Experience" },
