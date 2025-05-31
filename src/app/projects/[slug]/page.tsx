@@ -15,6 +15,7 @@ import {
   FaChartLine,
   FaTools,
 } from "react-icons/fa";
+import { Image } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
 interface PageProps {
@@ -120,10 +121,12 @@ export default function ProjectDetail({ params }: PageProps) {
         <div className="bg-gray-900 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="relative overflow-hidden rounded-xl shadow-2xl aspect-video">
-              <img
+              <Image
                 src={project.images[activeImage]}
                 alt={`${project.title} screenshot ${activeImage + 1}`}
                 className="w-full h-full object-cover object-center"
+                width={500}
+                height={500}
               />
             </div>
 

@@ -11,14 +11,14 @@ import "swiper/css/navigation";
 
 export default function ProjectPreview() {
   const [projects, setProjects] = useState<Project[]>([]);
-  // const [loading, setLoading] = useState(true); // 로딩 상태 제거
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadProjects = async () => {
       console.log("fetch 시작");
       try {
-        // setLoading(true); // 로딩 상태 설정 제거
+        setLoading(true);
         setError(null);
 
         const res = await fetch("/api/notion/projects");
@@ -30,30 +30,29 @@ export default function ProjectPreview() {
         const data: Project[] = await res.json();
         console.log("fetch 받은 데이터:", data);
         setProjects(data);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching projects:", err);
         setError(err.message || "프로젝트 데이터를 불러오는데 실패했습니다.");
       } finally {
-        // setLoading(false); // 로딩 상태 해제 제거
+        setLoading(false);
       }
     };
 
     loadProjects();
   }, []);
 
-  // 로딩 중 UI를 반환하는 부분을 제거했습니다.
-  // if (loading) {
-  //   return (
-  //     <section id="projects" className="py-20 bg-gray-50">
-  //       <div className="max-w-6xl mx-auto px-4">
-  //         <div className="text-center">
-  //           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-  //           <p className="mt-4 text-gray-600">Loading projects...</p>
-  //         </div>
-  //       </div>
-  //     </section>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading projects...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (error) {
     return (

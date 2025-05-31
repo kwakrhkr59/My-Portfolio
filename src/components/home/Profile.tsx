@@ -1,6 +1,7 @@
 "use client";
 
 import { Mail, Github, Linkedin, FileText, User } from "lucide-react";
+import Image from "next/image";
 
 const profileData = {
   name: "Hyeonjeong Kwak",
@@ -26,10 +27,12 @@ const Profile = () => {
         <div className="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-slate-700 max-w-2xl mx-auto transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
           <div className="relative w-36 h-36 mx-auto mb-6 rounded-full overflow-hidden border-4 border-blue-500 dark:border-purple-500 shadow-lg">
             {profileData.imageUrl ? (
-              <img
+              <Image
                 src={profileData.imageUrl}
                 alt={profileData.name}
                 className="w-full h-full object-cover"
+                width={500}
+                height={500}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-slate-700 text-gray-500 dark:text-gray-400">
