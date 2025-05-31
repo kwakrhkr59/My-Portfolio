@@ -1,27 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { FolderOpen, Search } from "lucide-react";
 
-const experienceData = [
-  {
-    title: "SKT FLY AI 6th Bootcamp",
-    organization: "SK Telecom",
-    period: "Dec 2024 ~ Feb 2025",
-    description:
-      "Participated in the SK Telecom-sponsored FLYAI Bootcamp, an intensive, hands-on program designed to build end-to-end capabilities in AI development and deployment.",
-    icon: FolderOpen,
-  },
-  {
-    title: "AI Research Lab Intern",
-    organization: "AISec, Ewha Womans University",
-    period: "Jul 2022 ~ Feb 2024",
-    description:
-      "Researched encrypted network traffic classification, particularly in the context of Website Fingerprinting.",
-    icon: Search,
-  },
-];
+export default function Experience() {
+  const [experiences, setExperiences] = useState([]);
 
-const Experience = () => {
+  useEffect(() => {
+    const fetchPapers = async () => {
+      try {
+        const res = await fetch("/api/notion/experience");
+        const data = await res.json();
+        setExperiences(data);
+      } catch (err) {
+        console.error("Error fetching experiences:", err);
+      }
+    };
+
+    fetchPapers();
+  }, []);
+
   return (
     <section
       id="experience"
@@ -38,13 +36,13 @@ const Experience = () => {
         </div>
 
         <div className="space-y-8 max-w-3xl mx-auto">
-          {experienceData.map((exp, idx) => (
+          {experiences.map((exp, idx) => (
             <div
               key={idx}
               className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="flex-shrink-0 w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-6 mb-4 md:mb-0">
-                <exp.icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <FolderOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="flex-grow">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
@@ -68,6 +66,4 @@ const Experience = () => {
       </div>
     </section>
   );
-};
-
-export default Experience;
+}

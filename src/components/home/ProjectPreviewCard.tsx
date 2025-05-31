@@ -8,7 +8,7 @@ interface ProjectPreviewCardProps {
   project: Project;
 }
 
-const ProjectCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
+const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
   return (
     <Link href={`/projects/${project.slug}`}>
       <div className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -43,4 +43,4 @@ const ProjectCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
   );
 };
 
-export default ProjectCard;
+export default ProjectPreviewCard;

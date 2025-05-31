@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
 import { Project } from "@/types/project";
 import ProjectCard from "@/components/home/ProjectPreviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,48 +11,49 @@ import "swiper/css/navigation";
 
 export default function ProjectPreview() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true); // 로딩 상태 제거
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const loadProjects = async () => {
+      console.log("fetch 시작");
       try {
-        setLoading(true);
+        // setLoading(true); // 로딩 상태 설정 제거
         setError(null);
 
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*")
-          .order("created_at", { ascending: false });
+        const res = await fetch("/api/notion/projects");
+        console.log("fetch 응답 상태:", res.status);
 
-        if (error) {
-          throw error;
+        if (!res.ok) {
+          throw new Error("Failed to fetch projects from Notion API");
         }
-
-        setProjects(data || []);
-      } catch (err) {
+        const data: Project[] = await res.json();
+        console.log("fetch 받은 데이터:", data);
+        setProjects(data);
+      } catch (err: any) {
         console.error("Error fetching projects:", err);
-        setError("Failed to load projects. Please try again later.");
+        setError(err.message || "프로젝트 데이터를 불러오는데 실패했습니다.");
       } finally {
-        setLoading(false);
+        // setLoading(false); // 로딩 상태 해제 제거
       }
     };
 
-    fetchProjects();
+    loadProjects();
   }, []);
 
-  if (loading) {
-    return (
-      <section id="projects" className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading projects...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // 로딩 중 UI를 반환하는 부분을 제거했습니다.
+  // if (loading) {
+  //   return (
+  //     <section id="projects" className="py-20 bg-gray-50">
+  //       <div className="max-w-6xl mx-auto px-4">
+  //         <div className="text-center">
+  //           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+  //           <p className="mt-4 text-gray-600">Loading projects...</p>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   if (error) {
     return (
@@ -88,6 +88,8 @@ export default function ProjectPreview() {
     );
   }
 
+  // 프로젝트가 없거나 아직 로드되지 않았을 때 (초기 상태)
+  // 이 부분이 로딩 상태를 대신하여 빈 프로젝트 목록 또는 에러 시 표시됩니다.
   if (!projects || projects.length === 0) {
     return (
       <section id="projects" className="py-20 bg-gray-50">
@@ -171,8 +173,6 @@ export default function ProjectPreview() {
             ))}
           </Swiper>
 
-          {/* <div className="swiper-button-prev !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !-left-3 !bg-white !rounded-full !shadow-lg !border !border-gray-200 hover:!bg-gray-50 !transition-all after:!text-indigo-600 after:!text-xl after:!font-bold"></div>
-          <div className="swiper-button-next !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !-right-3 !bg-white !rounded-full !shadow-lg !border !border-gray-200 hover:!bg-gray-50 !transition-all after:!text-indigo-600 after:!text-xl after:!font-bold"></div> */}
           <div className="swiper-button-prev !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !-right-3 !rounded-full !transition-all after:!text-indigo-600 after:!text-xl after:!font-bold"></div>
           <div className="swiper-button-next !w-12 !h-12 !mt-0 !top-1/2 !-translate-y-1/2 !-right-3 !rounded-full !transition-all after:!text-indigo-600 after:!text-xl after:!font-bold"></div>
         </div>

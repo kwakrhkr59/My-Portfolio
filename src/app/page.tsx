@@ -43,3 +43,14 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
+// ("use client");
+// import ProjectPreview from "@/components/home/ProjectPreview";
+
+// export default function Parent() {
+//   return (
+//     <div>
+//       <ProjectPreview />
+//     </div>
+//   );
+// }

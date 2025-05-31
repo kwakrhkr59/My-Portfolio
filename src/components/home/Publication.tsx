@@ -1,26 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { BookOpen } from "lucide-react";
-const papersData = [
-  {
-    title:
-      "DeepCoAST: Unveiling Split Trace Correlation to Counter Traffic Splitting Defenses",
-    journel: "IEEE Access",
-    year: "2024",
-    description: "Triplet을 통한 분할 트래픽 간의 상관관계 분석",
-    icon: BookOpen,
-  },
-  {
-    title:
-      "딥러닝 기반 분할 데이터 상관관계 탐지를 통한 WF 방어 모델의 취약점 탐색",
-    journel: "한국정보보호학회(KIISC) 영남지부 학술대회",
-    year: "2023",
-    description: "한국정보보호학회 학회장상 수여",
-    icon: BookOpen,
-  },
-];
 
 export default function Publication() {
+  const [papers, setPapers] = useState([]);
+
+  useEffect(() => {
+    const fetchPapers = async () => {
+      try {
+        const res = await fetch("/api/notion/publications");
+        const data = await res.json();
+        setPapers(data);
+      } catch (err) {
+        console.error("Error fetching publications:", err);
+      }
+    };
+
+    fetchPapers();
+  }, []);
+
   return (
     <section
       id="publication"
@@ -37,13 +36,13 @@ export default function Publication() {
         </div>
 
         <div className="space-y-8 max-w-3xl mx-auto">
-          {papersData.map((paper, idx) => (
+          {papers.map((paper, idx) => (
             <div
               key={idx}
               className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="flex-shrink-0 w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-6 mb-4 md:mb-0">
-                <paper.icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <BookOpen className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="flex-grow">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
@@ -55,10 +54,10 @@ export default function Publication() {
                   </span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 mb-3 text-base">
-                  {paper.journel}
+                  {paper.journal}
                 </p>
                 <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                  {paper.description}
+                  {paper.authors.join(", ")}
                 </p>
               </div>
             </div>

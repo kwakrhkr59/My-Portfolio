@@ -16,7 +16,6 @@ import {
   FaTools,
 } from "react-icons/fa";
 import { supabase } from "@/lib/supabaseClient";
-import Footer from "@/components/layout/Footer";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -332,9 +331,6 @@ export default function ProjectDetail({ params }: PageProps) {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

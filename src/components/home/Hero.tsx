@@ -3,17 +3,11 @@ import { ChevronDown } from "lucide-react";
 const HeroSection = ({ onScroll }: { onScroll: () => void }) => (
   <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white px-4">
     <div className="text-center space-y-10 max-w-3xl">
-      {" "}
-      {/* space-y-8에서 space-y-10으로 변경 */}
       <div className="space-y-6">
-        {" "}
-        {/* space-y-4에서 space-y-6으로 변경 */}
         <h1 className="text-5xl md:text-7xl font-bold animate-fade-in">
           안녕하세요,
         </h1>
         <h2 className="text-3xl md:text-5xl font-light animate-fade-in-2s">
-          {" "}
-          {/* animate-fade-in-delay 대신 animate-fade-in-2s 적용 */}
           AI & Full-stack 개발자, 곽현정입니다.
         </h2>
       </div>

@@ -55,7 +55,6 @@ export default function PaperCard({ paper }: { paper: Paper }) {
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 group">
-      {/* Header */}
       <div className={`h-24 bg-gradient-to-r ${selectedGradient} relative`}>
         <div className="absolute inset-0 bg-black/10" />
         <div className="absolute top-3 left-4">
@@ -83,7 +82,6 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         )}
       </div>
 
-      {/* Content */}
       <div className="p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300">
           {paper.title}
@@ -177,7 +175,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         <div className="flex gap-2">
           {paper.doi && (
             <a
-              href={`https://doi.org/${paper.doi}`}
+              href={`${paper.doi}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 py-2.5 px-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"
