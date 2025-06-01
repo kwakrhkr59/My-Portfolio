@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { fetchNotionProjects } from "@/lib/fetchProject";
+import { fetchNotionProjectsAll } from "@/lib/fetchProject";
 
 export async function GET() {
-  const res = await fetchNotionProjects();
+  const res = await fetchNotionProjectsAll();
   return NextResponse.json(res);
 }

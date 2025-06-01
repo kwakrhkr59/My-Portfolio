@@ -7,7 +7,7 @@ import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
   { name: "홈", path: "/" },
-  { name: "프로젝트", path: "/project" },
+  { name: "프로젝트", path: "/projects" },
   { name: "연구", path: "/publication" },
   { name: "경력", path: "/experience" },
   {
@@ -49,7 +49,7 @@ export default function Navbar() {
   const handleExternalLinkClick = (e: React.MouseEvent, path: string) => {
     const confirmMessage = "외부 링크로 이동하시겠습니까?";
     if (!window.confirm(confirmMessage)) {
-      e.preventDefault(); // 사용자가 '취소'를 누르면 링크 이동을 막습니다.
+      e.preventDefault();
     }
   };
 
@@ -58,7 +58,8 @@ export default function Navbar() {
       <header className="sticky top-0 z-40 w-full backdrop-blur bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 relative">
-            <div
+            <Link
+              href="/"
               className="flex-shrink-0 text-xl font-bold text-gray-900 dark:text-white w-60 h-7 overflow-hidden relative"
               style={{ height: "1.75rem" }}
             >
@@ -79,7 +80,7 @@ export default function Navbar() {
                   </div>
                 ))}
               </div>
-            </div>
+            </Link>
 
             {/* 데스크탑 네비게이션: lg (1024px) 이상에서만 보입니다. */}
             <nav className="hidden lg:flex absolute inset-x-0 justify-center">
@@ -176,14 +177,6 @@ export default function Navbar() {
           </div>
         )}
       </header>
-
-      <button
-        onClick={toggleTheme}
-        className="fixed bottom-4 right-4 p-3 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-full shadow-md z-50 hover:scale-110 transition-transform"
-        aria-label="테마 전환"
-      >
-        {theme === "light" ? "🌙" : "☀️"}
-      </button>
     </>
   );
 }

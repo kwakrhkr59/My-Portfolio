@@ -6,20 +6,36 @@ import { Award } from "@/types/award";
 
 export default function Awards() {
   const [awards, setAwards] = useState<Award[]>([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchPapers = async () => {
       try {
+        setLoading(true);
         const res = await fetch("/api/notion/awards");
         const data = await res.json();
         setAwards(data);
       } catch (err) {
         console.error("Error fetching publications:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPapers();
   }, []);
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading awards...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

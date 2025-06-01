@@ -1,7 +1,6 @@
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { ClientLayoutWrapper } from "@/components/layout/ClientLayoutWrapper"; // 새로 만든 컴포넌트 임포트
 import { ReactNode } from "react";
 
 export const metadata = {
@@ -14,12 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ko" suppressHydrationWarning>
       <body className="min-h-screen bg-light dark:bg-dark transition-colors duration-300">
         <ThemeProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            {/* <ThemeToggleButton /> */}
-            <Footer />
-          </div>
+          <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
         </ThemeProvider>
       </body>
     </html>

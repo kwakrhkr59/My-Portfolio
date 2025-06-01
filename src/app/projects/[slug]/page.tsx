@@ -1,5 +1,3 @@
-"use client";
-import React, { use, useState } from "react";
 import Link from "next/link";
 import {
   Github,
@@ -12,33 +10,23 @@ import {
   Lightbulb,
   ListTodo,
   Trophy,
-  LineChart,
   Wrench,
 } from "lucide-react";
 import Image from "next/image";
-import { supabase } from "@/lib/supabaseClient";
+import { fetchNotionProjectBySlug } from "@/lib/fetchProject";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
+type Params = {
+  slug: string;
+};
+
+interface Props {
+  params: Params;
 }
 
-async function fetchProject(slug: string) {
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-  if (error) {
-    console.error("Supabase fetch error:", error);
-    return null;
-  }
-  return data;
-}
-
-export default function ProjectDetail({ params }: PageProps) {
-  const { slug } = use(params);
-  const project = use(fetchProject(slug));
-  const [activeImage, setActiveImage] = useState(0);
+export default async function ProjectDetail(props: any) {
+  const params = await props.params;
+  const project = await fetchNotionProjectBySlug(params.slug);
+  console.log(project);
 
   if (!project) {
     return (
@@ -58,7 +46,7 @@ export default function ProjectDetail({ params }: PageProps) {
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link
-                href="/"
+                href="/projects"
                 className="flex items-center text-gray-900 hover:text-indigo-600 transition-colors duration-200"
               >
                 <ArrowLeft className="mr-2" />
@@ -92,7 +80,6 @@ export default function ProjectDetail({ params }: PageProps) {
           </div>
         </div>
       </nav>
-
       <header className="bg-gradient-to-r from-indigo-700 to-purple-700 text-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-4">
@@ -126,39 +113,16 @@ export default function ProjectDetail({ params }: PageProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="relative overflow-hidden rounded-xl shadow-2xl aspect-video">
               <Image
-                src={project.images[activeImage]}
-                alt={`${project.title} screenshot ${activeImage + 1}`}
+                src={project.images[0]}
+                alt={`${project.title} screenshot 1`}
                 className="w-full h-full object-cover object-center"
                 width={500}
                 height={500}
               />
             </div>
-
-            {project.images.length > 1 && (
-              <div className="mt-4 flex justify-center gap-2">
-                {project.images.map((image: string, idx: number) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImage(idx)}
-                    className={`w-16 h-16 rounded-md overflow-hidden border-2 transition-all ${
-                      idx === activeImage
-                        ? "border-indigo-500 opacity-100 scale-105"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       )}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
@@ -222,18 +186,6 @@ export default function ProjectDetail({ params }: PageProps) {
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
                   {project.results}
-                </p>
-              </div>
-            )}
-
-            {project.future_plans && (
-              <div className="bg-white rounded-2xl shadow-md p-8">
-                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100">
-                  <LineChart className="mr-3 text-green-500" />
-                  Future Plans
-                </h2>
-                <p className="text-gray-700 leading-relaxed">
-                  {project.future_plans}
                 </p>
               </div>
             )}

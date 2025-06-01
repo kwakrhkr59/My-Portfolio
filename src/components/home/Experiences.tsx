@@ -6,20 +6,36 @@ import { Experience } from "@/types/experience";
 
 export default function Experiences() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchPapers = async () => {
       try {
+        setLoading(true);
         const res = await fetch("/api/notion/experience");
         const data = await res.json();
         setExperiences(data);
       } catch (err) {
         console.error("Error fetching experiences:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPapers();
   }, []);
+
+  if (loading) {
+    return (
+      <section id="projects" className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading experiences...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

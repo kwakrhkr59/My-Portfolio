@@ -1,4 +1,4 @@
-import { fetchNotionProjects } from "@/lib/fetchProject";
+import { fetchNotionProjectsAll } from "@/lib/fetchProject";
 import { Project } from "@/types/project";
 import { Github, FolderOpen, Search, Filter } from "lucide-react";
 import ProjectsPageCard from "@/components/projects/ProjectCard";
@@ -75,7 +75,7 @@ function StatCard({
 }
 
 export default async function ProjectsPage() {
-  const projects = await fetchNotionProjects();
+  const projects = await fetchNotionProjectsAll();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">

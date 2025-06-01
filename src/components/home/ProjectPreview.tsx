@@ -15,20 +15,13 @@ export default function ProjectPreview() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadProjects = async () => {
-      console.log("fetch 시작");
+    const fetchProjects = async () => {
       try {
         setLoading(true);
         setError(null);
 
         const res = await fetch("/api/notion/project");
-        console.log("fetch 응답 상태:", res.status);
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch projects from Notion API");
-        }
         const data: Project[] = await res.json();
-        console.log("fetch 받은 데이터:", data);
         setProjects(data);
       } catch (err: unknown) {
         console.error("Error fetching projects:", err);
@@ -38,7 +31,7 @@ export default function ProjectPreview() {
       }
     };
 
-    loadProjects();
+    fetchProjects();
   }, []);
 
   if (loading) {
@@ -87,8 +80,6 @@ export default function ProjectPreview() {
     );
   }
 
-  // 프로젝트가 없거나 아직 로드되지 않았을 때 (초기 상태)
-  // 이 부분이 로딩 상태를 대신하여 빈 프로젝트 목록 또는 에러 시 표시됩니다.
   if (!projects || projects.length === 0) {
     return (
       <section id="projects" className="py-20 bg-gray-50">
