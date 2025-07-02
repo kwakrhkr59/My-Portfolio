@@ -1,3 +1,41 @@
+export interface ProjectDetail {
+  name: string;
+  description: string;
+  tech: string[];
+  outcome: string;
+}
+
+export interface ExperienceLinks {
+  website?: string;
+  certificate?: string;
+  portfolio?: string;
+}
+
+export interface ExperienceDetails {
+  overview: string;
+  responsibilities: string[];
+  achievements: string[];
+  technologies: string[];
+  skills: string[];
+  projects?: ProjectDetail[];
+  collaboration?: string;
+  impact?: string;
+  mentorship?: string;
+}
+
+export interface Experience {
+  id: string;
+  title: string;
+  organization: string;
+  period: string;
+  location?: string;
+  type: "Research" | "Bootcamp" | "Internship" | "Project";
+  description: string;
+  details: ExperienceDetails;
+  links?: ExperienceLinks;
+}
+
+
 export const experienceData = [
   {
     id: "1",
