@@ -13,10 +13,7 @@ import {
   Rocket,
   BookOpen,
 } from "lucide-react";
-import { experienceData } from "@/data/experience";
-
-// experienceData 배열의 요소 타입을 추론하여 Experience 타입으로 사용
-type Experience = (typeof experienceData)[number];
+import { experienceData, Experience } from "@/data/experience"; 
 
 function ExperienceItem({ experience }: { experience: Experience }) {
   const getTypeColor = (type: string) => {
@@ -232,7 +229,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
           experience.links?.certificate ||
           experience.links?.portfolio) && (
           <div className="flex flex-wrap gap-4 justify-center mt-6">
-            {experience.links.website && (
+            {experience.links?.website && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
               <a
                 href={experience.links.website}
                 target="_blank"
@@ -243,7 +240,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                 Website
               </a>
             )}
-            {experience.links.certificate && (
+            {experience.links?.certificate && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
               <a
                 href={experience.links.certificate}
                 target="_blank"
@@ -254,7 +251,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                 Certificate
               </a>
             )}
-            {experience.links.portfolio && (
+            {experience.links?.portfolio && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
               <a
                 href={experience.links.portfolio}
                 target="_blank"
