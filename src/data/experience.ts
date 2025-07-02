@@ -1,158 +1,178 @@
 export const experienceData = [
   {
     id: "1",
-    title: "SKT FLY AI 6th Bootcamp",
+    title: "Undergraduate Intern",
+    organization: "SAILab, KAIST",
+    period: "Jun 2025 ~ Present",
+    location: "Sungnam, South Korea",
+    type: "Research",
+    description:
+      "Undergraduate intern conducting in-depth research on explainable AI (XAI) and diffusion models with a focus on adversarial perturbations under Prof. Jaesik Choi.",
+    details: {
+      overview:
+        "Engaged in advanced studies on XAI and diffusion probabilistic models, emphasizing robustness against adversarial attacks. Conducted experiments to analyze model interpretability and vulnerability.",
+      responsibilities: [
+        "Reviewed recent literature on XAI and adversarial machine learning",
+        "Implemented and evaluated diffusion model variants with adversarial perturbation techniques",
+        "Collaborated with research team for experiment design and result analysis",
+        "Prepared reports and presentations for lab meetings",
+      ],
+      achievements: [
+        "Developed novel adversarial perturbation purification methods improving model robustness",
+        "Contributed to ongoing research manuscripts for top AI conferences",
+      ],
+      technologies: [
+        "Python",
+        "PyTorch",
+        "Jupyter Notebook",
+        "Git",
+        "Vessel",
+      ],
+      skills: [
+        "Explainable AI research",
+        "Adversarial machine learning",
+        "Deep learning experimentation",
+        "Collaborative research",
+      ],
+      projects: [
+        {
+          name: "Adversarially Robust Diffusion Models",
+          description:
+            "Designed and tested diffusion models with integrated adversarial perturbation to improve robustness and interpretability.",
+          tech: ["PyTorch", "Python"],
+          outcome:
+            "Improved adversarial robustness metrics by 15% compared to baseline models.",
+        },
+      ],
+      collaboration:
+        "Collaborated with PhD students and fellow interns on model development and experiment coordination.",
+      impact:
+        "Advanced understanding of XAI methods applicable to safety-critical AI systems.",
+    },
+    links: {},
+  },
+  {
+    id: "2",
+    title: "FLYAI Bootcamp Participant",
     organization: "SK Telecom",
     period: "Dec 2024 ~ Feb 2025",
     location: "Seoul, South Korea",
     type: "Bootcamp",
     description:
-      "Participated in the SK Telecom-sponsored FLYAI Bootcamp, an intensive, hands-on program designed to build end-to-end capabilities in AI development and deployment.",
+      "Participated in an intensive bootcamp focused on AI development, DevOps, and MLOps practices in cloud environments, including hands-on LLM application deployment.",
     details: {
       overview:
-        "An intensive 3-month AI bootcamp sponsored by SK Telecom, focusing on practical AI development skills from concept to deployment. The program emphasized real-world applications of AI technologies in telecommunications and enterprise solutions, combining theoretical foundations with hands-on project experience.",
+        "Completed a 3-month program emphasizing practical AI and MLOps skills, with a curriculum covering cloud infrastructure, model deployment, and AI product development.",
       responsibilities: [
-        "Developed end-to-end AI solutions for telecommunications challenges",
-        "Collaborated with cross-functional teams on AI product development",
-        "Participated in weekly technical reviews and code evaluations",
-        "Mentored junior participants in machine learning fundamentals",
-        "Presented final projects to SK Telecom executives and technical leads",
+        "Developed end-to-end AI applications for telecommunications scenarios",
+        "Collaborated on LLM-based real-world AI projects",
+        "Managed cloud deployments and CI/CD pipelines",
+        "Engaged in team code reviews and technical presentations",
       ],
       achievements: [
-        "Successfully completed all 12 weekly technical challenges",
-        "Developed an AI-powered network optimization tool achieving 15% performance improvement",
-        "Led a team of 4 developers in the final capstone project",
-        "Received 'Outstanding Participant' recognition for technical excellence",
-        "Built production-ready AI models deployed in SK Telecom's test environment",
+        "Successfully deployed production-ready AI models in cloud environments",
+        "Led a project improving network optimization via reinforcement learning",
+        "Recognized for technical excellence and teamwork",
       ],
       technologies: [
         "Python",
         "TensorFlow",
         "PyTorch",
-        "Kubernetes",
         "Docker",
         "FastAPI",
         "React",
-        "PostgreSQL",
-        "Redis",
         "AWS",
         "MLOps",
       ],
       skills: [
         "Machine Learning Engineering",
-        "AI Model Deployment",
+        "Cloud Deployment",
         "MLOps Pipeline Development",
-        "Team Leadership",
-        "Technical Presentation",
-        "Agile Development",
+        "Team Collaboration",
+        "Technical Communication",
       ],
       projects: [
         {
-          name: "Network Traffic Optimization AI",
+          name: "ArtChemy: AI-based Art Appreciation Assistant for Visually Impaired",
           description:
-            "Developed an AI system to optimize network traffic routing in real-time using reinforcement learning algorithms",
-          tech: ["Python", "TensorFlow", "Kubernetes", "FastAPI"],
+            "Integrated VLM-based image captioning models to generate detailed descriptions of artworks. Applied prompt engineering techniques to tailor explanations according to the flow of art appreciation. Continuously improved UI and conversational interfaces based on feedback from visually impaired users. Optimized image classification, metadata processing, and AWS S3 integration for efficient data management.",
+          tech: ["AI/ML", "Prompt Engineering", "AWS S3", "Cloud Backend", "Frontend"],
           outcome:
-            "Achieved 15% improvement in network efficiency during testing phase",
-        },
-        {
-          name: "Customer Service Chatbot",
-          description:
-            "Built an intelligent chatbot for SK Telecom customer service using large language models and RAG architecture",
-          tech: ["Python", "LangChain", "OpenAI API", "Vector Database"],
-          outcome: "Reduced customer service response time by 40%",
+            "Enhanced accessibility and user experience for visually impaired individuals, enabling richer cultural engagement through AI-assisted art appreciation.",
         },
       ],
       mentorship:
-        "Mentored 3 junior participants in ML fundamentals and provided guidance on career development in AI",
+        "Mentored junior participants on machine learning fundamentals and career development.",
       collaboration:
-        "Worked closely with SK Telecom engineers and product managers to understand real-world AI implementation challenges",
+        "Worked closely with engineers and product managers on AI integration challenges.",
       impact:
-        "Contributed to 2 production-ready AI solutions currently being evaluated for enterprise deployment",
+        "Contributed to multiple AI solutions evaluated for enterprise deployment.",
     },
     links: {
       website: "https://flyai.sktelecom.com",
-      certificate: "https://certificates.sktelecom.com/flyai-6th",
     },
   },
   {
-    id: "2",
-    title: "AI Research Lab Intern",
-    organization: "AISec, Ewha Womans University",
+    id: "3",
+    title: "Undergraduate Intern",
+    organization: "AISec Lab, Ewha Womans University",
     period: "Jul 2022 ~ Feb 2024",
     location: "Seoul, South Korea",
     type: "Research",
     description:
-      "Researched encrypted network traffic classification, particularly in the context of Website Fingerprinting.",
+      "Led research on AI-driven network security focusing on website fingerprinting and encrypted traffic classification.",
     details: {
       overview:
-        "Conducted cutting-edge research in cybersecurity and network privacy at the AISec lab, focusing on Website Fingerprinting attacks and defenses. The research involved developing novel machine learning approaches to classify encrypted network traffic and exploring privacy-preserving techniques to mitigate such attacks.",
+        "Conducted research on Website Fingerprinting attacks and defenses using machine learning approaches to analyze encrypted network traffic. Published findings in peer-reviewed journals and conferences.",
       responsibilities: [
-        "Conducted literature review on Website Fingerprinting and network traffic analysis",
-        "Designed and implemented machine learning models for encrypted traffic classification",
-        "Collected and preprocessed large-scale network traffic datasets",
-        "Developed privacy-preserving techniques to defend against fingerprinting attacks",
-        "Authored research papers and presented findings at academic conferences",
-        "Collaborated with PhD students and faculty on research methodology",
+        "Reviewed literature on encrypted traffic analysis and fingerprinting",
+        "Designed and implemented deep learning models for traffic classification",
+        "Collected and processed large-scale network traffic datasets",
+        "Authored research papers and presented at academic conferences",
+        "Collaborated with faculty and graduate students on research methodologies",
       ],
       achievements: [
-        "Published 2 research papers in top-tier cybersecurity conferences",
-        "Developed a novel defense mechanism achieving 89% protection rate against WF attacks",
-        "Created a comprehensive dataset of 50,000+ encrypted traffic samples",
-        "Presented research findings at 3 international cybersecurity conferences",
-        "Received 'Best Student Paper Award' at CyberSec 2023 conference",
-        "Contributed to 1 patent application for traffic obfuscation techniques",
+        "Published papers in IEEE Access and KIISC journals",
+        "Developed a traffic classification model achieving state-of-the-art accuracy",
+        "Created a large-scale encrypted traffic dataset with over 50,000 samples",
+        "Presented at multiple international cybersecurity conferences",
       ],
       technologies: [
         "Python",
-        "Scikit-learn",
         "TensorFlow",
+        "PyTorch",
         "Wireshark",
-        "Scapy",
         "NumPy",
         "Pandas",
-        "Matplotlib",
         "Linux",
         "Docker",
         "Git",
       ],
       skills: [
-        "Cybersecurity Research",
-        "Network Traffic Analysis",
-        "Machine Learning for Security",
-        "Academic Writing",
-        "Data Collection & Preprocessing",
-        "Statistical Analysis",
-        "Privacy-Preserving Technologies",
+        "Cybersecurity research",
+        "Network traffic analysis",
+        "Deep learning for security",
+        "Academic writing and presentation",
       ],
       projects: [
         {
           name: "Website Fingerprinting Defense System",
           description:
-            "Developed an advanced defense mechanism against Website Fingerprinting attacks using adversarial machine learning and traffic obfuscation",
-          tech: ["Python", "TensorFlow", "Scapy", "Linux"],
+            "Developed adversarial machine learning-based defense mechanisms against website fingerprinting attacks.",
+          tech: ["Python", "TensorFlow", "Scapy"],
           outcome:
-            "Achieved 89% protection rate while maintaining 95% Browse performance",
-        },
-        {
-          name: "Encrypted Traffic Classification Framework",
-          description:
-            "Built a comprehensive framework for classifying encrypted network traffic using deep learning and feature engineering",
-          tech: ["Python", "PyTorch", "Wireshark", "Docker"],
-          outcome:
-            "Reached 94% accuracy in traffic classification across 100 different websites",
+            "Achieved 89% defense effectiveness while maintaining network performance.",
         },
       ],
       mentorship:
-        "Mentored 2 undergraduate students in cybersecurity research methods and machine learning applications",
+        "Mentored undergraduate students in security research methods and machine learning applications.",
       collaboration:
-        "Collaborated with researchers from 3 international universities on joint research projects",
+        "Collaborated with international researchers on joint cybersecurity projects.",
       impact:
-        "Research findings influenced the development of privacy-preserving protocols adopted by major browser vendors",
+        "Contributed to advancements in privacy-preserving network security technologies.",
     },
     links: {
-      website: "https://aisec.ewha.ac.kr",
-      portfolio: "https://research-portfolio.com",
+      website: "https://sites.google.com/view/ewha-aisec/",
     },
   },
 ];
