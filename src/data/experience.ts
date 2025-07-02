@@ -49,7 +49,6 @@ export const experienceData = [
       impact:
         "Advanced understanding of XAI methods applicable to safety-critical AI systems.",
     },
-    links: {},
   },
   {
     id: "2",
