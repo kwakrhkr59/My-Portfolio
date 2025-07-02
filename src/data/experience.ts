@@ -29,7 +29,7 @@ export interface Experience {
   organization: string;
   period: string;
   location?: string;
-  type: "Research" | "Bootcamp" | "Internship" | "Project";
+  type: string;
   description: string;
   details: ExperienceDetails;
   links?: ExperienceLinks;
