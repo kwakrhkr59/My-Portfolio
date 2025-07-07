@@ -146,7 +146,7 @@ export const experienceData = [
         "Contributed to multiple AI solutions evaluated for enterprise deployment.",
     },
     links: {
-      website: "https://flyai.sktelecom.com",
+      portfolio: "https://github.com/orgs/SKT-FLY-AI-project/repositories",
     },
   },
   {
