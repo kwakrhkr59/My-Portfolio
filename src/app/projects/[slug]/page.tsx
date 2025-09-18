@@ -40,7 +40,7 @@ export default async function ProjectDetail(props: any) {
     project.type && project.type.includes("Research") ? FlaskConical : Code;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
       <nav className="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-md bg-white/90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
