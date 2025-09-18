@@ -1,60 +1,67 @@
-# 곽현정 포트폴리오
+# My-Portfolio
 
-AI 및 풀스택 개발자 곽현정의 포트폴리오 웹사이트입니다.
+This is a personal portfolio website built with Next.js and TypeScript. It showcases professional experience, projects, publications, awards, and contact information. The site is styled with Tailwind CSS and features a modern, responsive design.
 
-## 소개
+## Features
 
-- 최신 Next.js 기반의 SSR/SSG 포트폴리오 사이트
-- Tailwind CSS, React, TypeScript 사용
-- 프로젝트, 경력, 논문, 연락처 등 다양한 섹션 제공
-- 다크 모드 지원
+- **Home Page:** Introduction, profile, and overview of skills and achievements
+- **Experience:** Timeline of professional and academic experiences
+- **Projects:** Detailed project pages with descriptions, images, and links
+- **Publications:** List of academic or professional publications
+- **Awards:** Highlights of awards and recognitions
+- **Contact:** Contact form for direct communication
+- **Dark/Light Theme:** Toggle between dark and light modes
 
-## 주요 폴더 구조
+## Tech Stack
+
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS, PostCSS
+- **Data Fetching:** Custom API routes, Notion, Supabase
+- **Deployment:** Vercel (recommended)
+
+## Project Structure
 
 ```
+components.json
+public/           # Static assets (images, PDFs, SVGs)
 src/
-  app/                # Next.js app 디렉토리 (페이지, api 라우트 등)
-  components/         # UI 및 페이지별 컴포넌트
-  data/               # 정적 데이터
-  lib/                # 유틸리티 및 API 연동 함수
-  types/              # TypeScript 타입 정의
-public/               # 정적 파일 (이미지, favicon 등)
+  app/            # Next.js app directory
+    api/          # API routes for data fetching
+    ...           # Pages (projects, experience, contact, etc.)
+  components/     # Reusable UI and page components
+  data/           # Static data files
+  lib/            # Utility and data fetching libraries
+  types/          # TypeScript type definitions
 ```
 
-## 설치 및 실행
+## Getting Started
 
-1. 패키지 설치
-
-   ```sh
+1. **Install dependencies:**
+   ```bash
    npm install
    ```
-
-2. 개발 서버 실행
-
-   ```sh
+2. **Run the development server:**
+   ```bash
    npm run dev
    ```
+3. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
 
-3. 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
+## Environment Variables
 
-## 환경 변수
-
-`.env.local` 파일에 Gmail SMTP 정보 등 필요한 환경변수를 설정해야 합니다.
+Create a `.env.local` file in the root directory and add the following if you want to enable email features:
 
 ```
 GMAIL_USER=your_gmail@gmail.com
 GMAIL_PASS=your_gmail_app_password
 ```
 
-## 기술 스택
+## Customization
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- PostCSS
-- Nodemailer (이메일 전송)
+- Update your profile, experience, projects, and other data in the `src/data` and `src/lib` directories.
+- Replace images and assets in the `public/` folder.
+- Adjust theme and layout in the `src/components/layout` directory.
 
-## 배포
+## License
 
-직접 Vercel로 배포된 웹사이트 [포트폴리오](https://hyeonjeong-kwak-portfolio.vercel.app/)를 확인하실 수 있습니다.
+This project is open source and available under the [MIT License](LICENSE).
