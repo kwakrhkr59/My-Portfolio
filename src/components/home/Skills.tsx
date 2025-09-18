@@ -36,7 +36,7 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="py-16 md:py-24 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+      className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">

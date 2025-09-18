@@ -40,7 +40,7 @@ export default function Experiences() {
   return (
     <section
       id="experience"
-      className="py-16 md:py-24 bg-slate-50 dark:bg-slate-800"
+      className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">

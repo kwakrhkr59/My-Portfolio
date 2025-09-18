@@ -21,7 +21,7 @@ const Profile = () => {
   return (
     <section
       id="about"
-      className="py-16 md:py-24 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+      className="py-16 md:py-24 bg-slate-50 dark:bg-slate-900"
     >
       <div className="container mx-auto px-4 text-center">
         <div className="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-slate-700 max-w-2xl mx-auto transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
