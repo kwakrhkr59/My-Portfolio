@@ -90,8 +90,18 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800 rounded-lg text-sm text-gray-700 dark:text-gray-300">
           <p className="mb-1">
             <span className="font-semibold">Authors:</span>{" "}
-            {paper.authors.join(", ")}
+            {paper.authors.map((author, i) => (
+              <span key={i}>
+                {author === "Hyeonjeong Kwak" ? (
+                  <span className="font-bold">{author}</span>
+                ) : (
+                  author
+                )}
+                {i < paper.authors.length - 1 && ", "}
+              </span>
+            ))}
           </p>
+
           <p className="flex items-center gap-2">
             <BookOpen className="w-4 h-4" />{" "}
             <span className="font-semibold">{paper.journal}</span> •{" "}
