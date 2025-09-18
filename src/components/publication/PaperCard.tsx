@@ -92,7 +92,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             <span className="font-semibold">Authors:</span>{" "}
             {paper.authors.map((author, i) => (
               <span key={i}>
-                {author === "Hyeonjeong Kwak" ? (
+                {author === "HyeonJeong Kwak" ? (
                   <span className="font-bold">{author}</span>
                 ) : (
                   author
