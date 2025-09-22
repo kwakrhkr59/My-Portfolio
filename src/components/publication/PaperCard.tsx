@@ -8,6 +8,8 @@ import {
   Award,
   ShieldCheck,
   BrainCircuit,
+  Microscope,
+  Globe,
   Github,
 } from "lucide-react";
 import { Paper } from "@/types/publications";
