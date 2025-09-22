@@ -6,27 +6,25 @@ import {
   Users,
   ExternalLink,
   Award,
-  Microscope,
-  Brain,
-  Database,
-  Globe,
+  ShieldCheck,
+  BrainCircuit,
   Github,
 } from "lucide-react";
 import { Paper } from "@/types/publications";
 
 export default function PaperCard({ paper }: { paper: Paper }) {
   const getFieldIcon = (field: string) => {
-    switch (field) {
-      case "Medical AI":
-        return Microscope;
-      case "Quantum ML":
-        return Brain;
-      case "Green Computing":
-        return Database;
-      default:
-        return BookOpen;
-    }
-  };
+  switch (field) {
+    case "HCI":
+      return Users;
+    case "Network Security":
+      return ShieldCheck;
+    case "XAI":
+      return BrainCircuit;
+    default:
+      return BookOpen;
+  }
+};
 
   const Icon = getFieldIcon(paper.field);
 
@@ -64,9 +62,9 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         </div>
         <div className="absolute bottom-4 left-4">
           <span
-            className={`className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium ${getStatusColor(
+            className={`px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium ${getStatusColor(
               paper.status
-            )}`}
+            )} ${getStatusFontSize(paper.status)}`}
           >
             {paper.status}
           </span>
