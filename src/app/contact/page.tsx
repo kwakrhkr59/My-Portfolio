@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 
 const contactData = {
-  email: "kwakrhkr59@gmail.com",\
+  email: "kwakrhkr59@gmail.com",
   location: "Seoul, South Korea",
   github: "https://github.com/kwakrhkr59",
   linkedin: "https://linkedin.com/in/hyeonjeong-kwak",
