@@ -1,6 +1,17 @@
 import { notion, NOTION_PROJECT_ID } from "./notion";
-import { Project } from "@/types/project";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  getPlainText,
+  getMultiSelect,
+  getSelectName,
+  getStatusName,
+  getUrl,
+  getFiles,
+} from "@/lib/notionParsers";
+import { Project, ProjectShort } from "@/types/project";
+import {
+  PageObjectResponse,
+  GetPageResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionProjectsAll(): Promise<Project[]> {
   const response = await notion.databases.query({
@@ -15,44 +26,6 @@ export async function fetchNotionProjectsAll(): Promise<Project[]> {
     )
     .map((page) => {
       const props = page.properties;
-
-      const getPlainText = (
-        prop: any,
-        expectedType: string
-      ): string | undefined => {
-        if (prop && prop.type === expectedType) {
-          if (expectedType === "title" || expectedType === "rich_text") {
-            return prop[expectedType][0]?.plain_text || undefined;
-          }
-          return prop[expectedType] || undefined;
-        }
-        return undefined;
-      };
-
-      const getMultiSelect = (prop: any): string[] =>
-        prop?.type === "multi_select"
-          ? prop.multi_select.map((s: { name: string }) => s.name)
-          : [];
-
-      const getSelectName = (prop: any): string | undefined =>
-        prop?.type === "select" ? prop.select?.name : undefined;
-
-      const getStatusName = (prop: any): string | undefined =>
-        prop?.type === "status" ? prop.status?.name : undefined;
-
-      const getUrl = (prop: any): string | undefined =>
-        prop?.type === "url" ? prop.url || undefined : undefined;
-
-      const getFiles = (prop: any): string[] =>
-        prop?.type === "files"
-          ? (prop.files
-              .map(
-                (f: { file?: { url: string }; external?: { url: string } }) =>
-                  f.external?.url || f.file?.url || ""
-              )
-              .filter(Boolean) as string[])
-          : [];
-
       const createdAt = page.created_time as string;
 
       return {
@@ -78,6 +51,7 @@ export async function fetchNotionProjectsAll(): Promise<Project[]> {
       };
     });
 }
+
 export async function fetchNotionProjectBySlug(
   slug: string
 ): Promise<Project | null> {
@@ -101,44 +75,6 @@ export async function fetchNotionProjectBySlug(
     return null;
   }
   const props = page.properties;
-
-  const getPlainText = (
-    prop: any,
-    expectedType: string
-  ): string | undefined => {
-    if (prop && prop.type === expectedType) {
-      if (expectedType === "title" || expectedType === "rich_text") {
-        return prop[expectedType][0]?.plain_text || undefined;
-      }
-      return prop[expectedType] || undefined;
-    }
-    return undefined;
-  };
-
-  const getMultiSelect = (prop: any): string[] =>
-    prop?.type === "multi_select"
-      ? prop.multi_select.map((s: { name: string }) => s.name)
-      : [];
-
-  const getSelectName = (prop: any): string | undefined =>
-    prop?.type === "select" ? prop.select?.name : undefined;
-
-  const getStatusName = (prop: any): string | undefined =>
-    prop?.type === "status" ? prop.status?.name : undefined;
-
-  const getUrl = (prop: any): string | undefined =>
-    prop?.type === "url" ? prop.url || undefined : undefined;
-
-  const getFiles = (prop: any): string[] =>
-    prop?.type === "files"
-      ? (prop.files
-          .map(
-            (f: { file?: { url: string }; external?: { url: string } }) =>
-              f.external?.url || f.file?.url || ""
-          )
-          .filter(Boolean) as string[])
-      : [];
-
   const createdAt = page.created_time as string;
 
   return {
@@ -163,3 +99,18 @@ export async function fetchNotionProjectBySlug(
     created_at: createdAt,
   };
 }
+
+export const parseProject = (
+  projectPage: GetPageResponse
+): ProjectShort | null => {
+  if (!projectPage || !("properties" in projectPage)) return null;
+
+  const props = projectPage.properties as any;
+
+  return {
+    title: getPlainText(props["Title"], "title") || "Untitled Project",
+    summary: getPlainText(props["Summary"], "rich_text") || "",
+    features: getMultiSelect(props["Features"]),
+    outcome: getPlainText(props["Outcome"], "rich_text") || "",
+  };
+};

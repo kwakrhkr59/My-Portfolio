@@ -13,7 +13,8 @@ import {
   Rocket,
   BookOpen,
 } from "lucide-react";
-import { experienceData, Experience } from "@/data/experience"; 
+import { Experience } from "@/types/experience";
+import { fetchNotionExperience } from "@/lib/fetchExperience";
 
 function ExperienceItem({ experience }: { experience: Experience }) {
   const getTypeColor = (type: string) => {
@@ -48,15 +49,11 @@ function ExperienceItem({ experience }: { experience: Experience }) {
     }
   })();
 
-  const displayedResponsibilities = experience.details.responsibilities.slice(
-    0,
-    3
-  );
-  const displayedAchievements = experience.details.achievements.slice(0, 3);
-  const displayedTechnologies = experience.details.technologies.slice(0, 4);
-  const displayedSkills = experience.details.skills.slice(0, 4);
-  // projects는 옵셔널일 수 있으므로 안전하게 접근
-  const displayedProjects = experience.details.projects?.slice(0, 2);
+  const displayedResponsibilities = experience.details.responsibilities;
+  const displayedAchievements = experience.details.achievements;
+  const displayedFeatures = experience.details.features;
+  const displayedSkills = experience.details.skills;
+  const displayedProjects = experience.details.projects;
 
   return (
     <div className="relative mb-16 md:mb-24 last:mb-0">
@@ -90,7 +87,6 @@ function ExperienceItem({ experience }: { experience: Experience }) {
             )}
           </div>
         </div>
-        {/* Description/Overview */}
         <div className="mb-6">
           <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-yellow-500" />
@@ -100,7 +96,6 @@ function ExperienceItem({ experience }: { experience: Experience }) {
             {experience.description}
           </p>
         </div>
-        {/* Key Responsibilities */}
         {displayedResponsibilities.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
@@ -114,19 +109,12 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                   className="flex items-start gap-2 text-gray-600 dark:text-gray-400 text-base"
                 >
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                  <span className="line-clamp-2">{responsibility}</span>
+                  <span>{responsibility}</span>
                 </li>
               ))}
-              {experience.details.responsibilities.length > 3 && (
-                <li className="text-sm text-gray-500 dark:text-gray-400 pl-6">
-                  +{experience.details.responsibilities.length - 3} more
-                  responsibilities
-                </li>
-              )}
             </ul>
           </div>
         )}
-        {/* Key Achievements */}
         {displayedAchievements.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
@@ -140,26 +128,19 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                   className="flex items-start gap-2 text-gray-600 dark:text-gray-400 text-base"
                 >
                   <TrendingUp className="w-4 h-4 text-orange-500 mt-1 flex-shrink-0" />
-                  <span className="line-clamp-2">{achievement}</span>
+                  <span>{achievement}</span>
                 </li>
               ))}
-              {experience.details.achievements.length > 3 && (
-                <li className="text-sm text-gray-500 dark:text-gray-400 pl-6">
-                  +{experience.details.achievements.length - 3} more
-                  achievements
-                </li>
-              )}
             </ul>
           </div>
         )}
-        {/* Technologies Used */}
-        {displayedTechnologies.length > 0 && (
+        {displayedFeatures.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3">
-              Technologies Used
+              Features
             </h4>
             <div className="flex flex-wrap gap-2">
-              {displayedTechnologies.map((tech, idx) => (
+              {displayedFeatures.map((tech, idx) => (
                 <span
                   key={idx}
                   className="px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 rounded-md font-medium border border-gray-200 dark:border-slate-700 text-sm"
@@ -167,15 +148,9 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                   {tech}
                 </span>
               ))}
-              {experience.details.technologies.length > 4 && (
-                <span className="px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 rounded-md font-medium border border-gray-200 dark:border-slate-700 text-sm">
-                  +{experience.details.technologies.length - 4}
-                </span>
-              )}
             </div>
           </div>
         )}
-        {/* Skills Developed */}
         {displayedSkills.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3">
@@ -190,15 +165,9 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                   {skill}
                 </span>
               ))}
-              {experience.details.skills.length > 4 && (
-                <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-500 dark:text-purple-400 rounded-md font-medium text-sm">
-                  +{experience.details.skills.length - 4}
-                </span>
-              )}
             </div>
           </div>
         )}
-        {/* Major Projects (Condensed) */}
         {displayedProjects && displayedProjects.length > 0 && (
           <div className="mb-6">
             <h4 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
@@ -211,25 +180,18 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                   key={idx}
                   className="bg-gray-50 dark:bg-slate-800 rounded-lg p-3 text-gray-700 dark:text-gray-300 text-sm border border-gray-200 dark:border-slate-700"
                 >
-                  <span className="font-semibold">{project.name}: </span>
-                  <span className="line-clamp-1">{project.description}</span>
+                  <span className="font-semibold">{project.title}: </span>
+                  <span>{project.summary}</span>
                 </li>
               ))}
-              {experience.details.projects &&
-                experience.details.projects.length > 2 && (
-                  <li className="text-sm text-gray-500 dark:text-gray-400">
-                    +{experience.details.projects.length - 2} more projects
-                  </li>
-                )}
             </ul>
           </div>
         )}
-        {/* Links */}
         {(experience.links?.website ||
           experience.links?.certificate ||
           experience.links?.portfolio) && (
           <div className="flex flex-wrap gap-4 justify-center mt-6">
-            {experience.links?.website && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
+            {experience.links?.website && (
               <a
                 href={experience.links.website}
                 target="_blank"
@@ -240,7 +202,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                 Website
               </a>
             )}
-            {experience.links?.certificate && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
+            {experience.links?.certificate && (
               <a
                 href={experience.links.certificate}
                 target="_blank"
@@ -251,7 +213,7 @@ function ExperienceItem({ experience }: { experience: Experience }) {
                 Certificate
               </a>
             )}
-            {experience.links?.portfolio && ( // links 객체 자체가 없을 수 있으므로 다시 '?' 추가
+            {experience.links?.portfolio && (
               <a
                 href={experience.links.portfolio}
                 target="_blank"
@@ -269,7 +231,9 @@ function ExperienceItem({ experience }: { experience: Experience }) {
   );
 }
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const experiences = await fetchNotionExperience();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -277,14 +241,14 @@ export default function ExperiencePage() {
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
             Professional Experience
           </h1>
-          <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-2xl text-gray-60G00 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Detailed journey through my professional experiences, research
             contributions, and key achievements.
           </p>
         </div>
 
         <div className="relative max-w-3xl mx-auto">
-          {experienceData.map((experience) => (
+          {experiences.map((experience) => (
             <ExperienceItem key={experience.id} experience={experience} />
           ))}
         </div>

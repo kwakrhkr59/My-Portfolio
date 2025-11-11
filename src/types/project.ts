@@ -19,3 +19,10 @@ export interface Project {
   status: string | null;
   created_at: string;
 }
+
+export interface ProjectShort {
+  title: string;
+  summary: string;
+  features: string[];
+  outcome: string;
+}
