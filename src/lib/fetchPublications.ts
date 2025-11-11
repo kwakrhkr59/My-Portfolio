@@ -1,4 +1,11 @@
 import { notion, NOTION_PUBLICATION_ID } from "./notion";
+import {
+  getPlainText,
+  getMultiSelect,
+  getSelectName,
+  getUrl,
+  getNumber,
+} from "@/lib/notionParsers";
 import { Paper } from "@/types/publications";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -15,33 +22,6 @@ export async function fetchNotionPapers(): Promise<Paper[]> {
     )
     .map((page) => {
       const props = page.properties;
-
-      const getPlainText = (
-        prop: any,
-        expectedType: string
-      ): string | undefined => {
-        if (prop && prop.type === expectedType) {
-          if (expectedType === "title" || expectedType === "rich_text") {
-            return prop[expectedType][0]?.plain_text || undefined;
-          }
-          return prop[expectedType] || undefined;
-        }
-        return undefined;
-      };
-
-      const getMultiSelect = (prop: any): string[] =>
-        prop?.type === "multi_select"
-          ? prop.multi_select.map((s: { name: string }) => s.name)
-          : [];
-
-      const getSelectName = (prop: any): string | undefined =>
-        prop?.type === "select" ? prop.select?.name : undefined;
-
-      const getUrl = (prop: any): string | undefined =>
-        prop?.type === "url" ? prop.url || undefined : undefined;
-
-      const getNumber = (prop: any): number | undefined =>
-        prop?.type === "number" ? prop.number : undefined;
 
       return {
         id: page.id,
