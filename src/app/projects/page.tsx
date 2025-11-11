@@ -1,7 +1,7 @@
 import { fetchNotionProjectsAll } from "@/lib/fetchProject";
 import { Project } from "@/types/project";
 import { Github, FolderOpen, Search, Filter } from "lucide-react";
-import ProjectsPageCard from "@/components/projects/ProjectCard";
+import ProjectList from "@/components/projects/ProjectList";
 
 function ProjectStats({ projects }: { projects: Project[] }) {
   const totalProjects = projects.length;
@@ -92,11 +92,7 @@ export default async function ProjectsPage() {
 
         <ProjectStats projects={projects} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mb-12 items-start">
-          {projects.map((project) => (
-            <ProjectsPageCard key={project.id} project={project} />
-          ))}
-        </div>
+        <ProjectList projects={projects} />
 
         <div className="text-center">
           <div className="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-slate-700 max-w-md mx-auto">

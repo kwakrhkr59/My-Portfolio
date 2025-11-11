@@ -17,12 +17,11 @@ interface ProjectCardProps {
   project: Project;
 }
 
-const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
+export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
   const Icon = project.title.toLowerCase().includes("research")
     ? FaFlask
     : FaCode;
 
-  // 랜덤 그라디언트 색상 (프로젝트 ID 기반으로 일관성 유지)
   const gradients = [
     "from-purple-500 to-pink-500",
     "from-blue-500 to-cyan-500",
@@ -38,7 +37,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <Link href={`/projects/${project.slug}`} className="block group">
       <div className="relative bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 cursor-pointer">
-        {/* 그라디언트 헤더 */}
         <div className={`h-32 bg-gradient-to-r ${selectedGradient} relative`}>
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute top-4 left-4">
@@ -47,7 +45,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           </div>
 
-          {/* 타입 배지 */}
           <div className="absolute bottom-4 left-4">
             <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
               {project.type || "Project"}
@@ -55,7 +52,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
           </div>
         </div>
 
-        {/* 컨텐츠 영역 */}
         <div className="p-6">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300 line-clamp-2">
             {project.title}
@@ -65,7 +61,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             {project.summary}
           </p>
 
-          {/* 프로젝트 목표 */}
           {project.goal && (
             <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-500">
               <div className="flex items-start">
@@ -77,7 +72,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          {/* 주요 기능들 */}
           {project.features && project.features.length > 0 && (
             <div className="mb-4">
               <h4 className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
@@ -103,7 +97,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          {/* 프로젝트 성과 */}
           {project.results && (
             <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
               <div className="flex items-start">
@@ -115,7 +108,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          {/* 메타 정보 */}
           <div className="flex items-center justify-between mb-4 text-xs text-gray-500 dark:text-gray-400">
             <div className="flex items-center space-x-4">
               {project.period && (
@@ -145,7 +137,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           </div>
 
-          {/* 기술 스택 */}
           {project.stack && project.stack.length > 0 && (
             <div className="mb-6">
               <h4 className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -169,7 +160,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          {/* 도전 과제 (간략하게) */}
           {project.challenges && (
             <div className="mb-4 p-2 bg-orange-50 dark:bg-orange-900/20 rounded-md">
               <p className="text-orange-800 dark:text-orange-300 text-xs line-clamp-1">
@@ -179,7 +169,6 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          {/* CTA 버튼 */}
           <div className="relative z-10">
             <button className="w-full py-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 text-white dark:text-gray-900 rounded-xl font-medium text-sm hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 group-hover:from-purple-600 group-hover:to-pink-600 dark:group-hover:from-purple-600 dark:group-hover:to-pink-600 dark:group-hover:text-white">
               Explore Project
@@ -187,11 +176,8 @@ const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
           </div>
         </div>
 
-        {/* 호버 오버레이 효과 */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 to-pink-500/0 group-hover:from-purple-500/5 group-hover:to-pink-500/5 transition-all duration-300 pointer-events-none rounded-2xl"></div>
       </div>
     </Link>
   );
 };
-
-export default ProjectsPageCard;
