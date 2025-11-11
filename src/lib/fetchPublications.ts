@@ -7,7 +7,11 @@ import {
   getNumber,
 } from "@/lib/notionParsers";
 import { Paper } from "@/types/publications";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+
+import {
+  PageObjectResponse,
+  QueryDatabaseResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionPapers(): Promise<Paper[]> {
   const response = await notion.databases.query({
@@ -16,11 +20,14 @@ export async function fetchNotionPapers(): Promise<Paper[]> {
   });
 
   return response.results
-    .map(
-      (page: PageObjectResponse) =>
+    .filter(
+      (
+        page: QueryDatabaseResponse["results"][number]
+      ): page is PageObjectResponse =>
         "properties" in page && page.object === "page"
     )
-    .map((page: any) => {
+
+    .map((page: PageObjectResponse) => {
       const props = page.properties;
 
       return {

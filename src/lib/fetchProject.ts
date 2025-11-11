@@ -11,6 +11,7 @@ import { Project, ProjectShort } from "@/types/project";
 import {
   PageObjectResponse,
   GetPageResponse,
+  QueryDatabaseResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionProjectsAll(): Promise<Project[]> {
@@ -20,11 +21,15 @@ export async function fetchNotionProjectsAll(): Promise<Project[]> {
   });
 
   return response.results
-    .map(
-      (page: PageObjectResponse) =>
+
+    .filter(
+      (
+        page: QueryDatabaseResponse["results"][number]
+      ): page is PageObjectResponse =>
         "properties" in page && page.object === "page"
     )
-    .map((page: any) => {
+
+    .map((page: PageObjectResponse) => {
       const props = page.properties;
       const createdAt = page.created_time as string;
 
@@ -71,6 +76,7 @@ export async function fetchNotionProjectBySlug(
   }
 
   const page = response.results[0];
+
   if (!("properties" in page) || page.object !== "page") {
     return null;
   }
@@ -103,9 +109,15 @@ export async function fetchNotionProjectBySlug(
 export const parseProject = (
   projectPage: GetPageResponse
 ): ProjectShort | null => {
-  if (!projectPage || !("properties" in projectPage)) return null;
+  if (
+    !projectPage ||
+    !("properties" in projectPage) ||
+    projectPage.object !== "page"
+  ) {
+    return null;
+  }
 
-  const props = projectPage.properties as any;
+  const props = projectPage.properties;
 
   return {
     title: getPlainText(props["Title"], "title") || "Untitled Project",

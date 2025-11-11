@@ -13,7 +13,10 @@ import {
 } from "@/types/experience";
 import { ProjectShort } from "@/types/project";
 import { parseProject } from "./fetchProject";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  PageObjectResponse,
+  QueryDatabaseResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionExperience(): Promise<Experience[]> {
   const response = await notion.databases.query({
@@ -22,8 +25,10 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
 
   const experiences = await Promise.all(
     response.results
-      .map(
-        (page: PageObjectResponse) =>
+      .filter(
+        (
+          page: QueryDatabaseResponse["results"][number]
+        ): page is PageObjectResponse =>
           page.object === "page" && "properties" in page
       )
       .map(async (page: PageObjectResponse) => {
