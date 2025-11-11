@@ -16,11 +16,11 @@ export async function fetchNotionPapers(): Promise<Paper[]> {
   });
 
   return response.results
-    .filter(
-      (page): page is PageObjectResponse =>
+    .map(
+      (page: PageObjectResponse) =>
         "properties" in page && page.object === "page"
     )
-    .map((page) => {
+    .map((page: any) => {
       const props = page.properties;
 
       return {

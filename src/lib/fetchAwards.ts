@@ -11,7 +11,7 @@ export async function fetchNotionAwards(): Promise<Award[]> {
 
   return response.results
     .filter((page): page is PageObjectResponse => "properties" in page)
-    .map((page) => {
+    .map((page: PageObjectResponse) => {
       const props = page.properties;
 
       const yearProp = props.Year;
