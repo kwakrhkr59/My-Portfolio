@@ -89,3 +89,14 @@ html {
   background: #a8a8a8;
   @apply dark:bg-gray-500;
 }
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -24px;
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 24px;
+  background-clip: padding-box;
+}

@@ -1,45 +1,23 @@
-"use client";
+import PaperList from "@/components/publication/PaperList";
+import { fetchNotionPapers } from "@/lib/fetchPublications";
 
-import React, { useState, useEffect } from "react";
-import HeroSection from "@/components/home/Hero";
-import FloatingNav from "@/components/layout/FloatingNav";
-import Profile from "@/components/home/Profile";
-import ProjectPreview from "@/components/home/ProjectPreview";
-import Publications from "@/components/home/Publications";
-import Awards from "@/components/home/Awards";
-import Education from "@/components/home/Education";
-import Experiences from "@/components/home/Experiences";
-import Skills from "@/components/home/Skills";
-
-const Portfolio = () => {
-  const [showNav, setShowNav] = useState(false);
-
-  const handleScroll = () => {
-    setShowNav(window.scrollY > window.innerHeight * 0.3);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToContent = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-  };
+export default async function PublicationsPage() {
+  const papers = await fetchNotionPapers();
 
   return (
-    <div className="min-h-screen">
-      <HeroSection onScroll={scrollToContent} />
-      <FloatingNav show={showNav} />
-      <Profile />
-      <ProjectPreview />
-      <Publications />
-      <Awards />
-      <Experiences />
-      <Education />
-      <Skills />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="text-center mb-16 md:mb-20">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+            Academic Publications
+          </h1>
+          <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            Explore my research contributions in AI and Cyber Security.
+          </p>
+        </div>
+
+        <PaperList papers={papers} />
+      </div>
     </div>
   );
-};
-
-export default Portfolio;
+}

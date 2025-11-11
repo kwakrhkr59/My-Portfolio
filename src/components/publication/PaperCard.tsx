@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import {
   BookOpen,
   Calendar,
@@ -15,18 +16,20 @@ import {
 import { Paper } from "@/types/publications";
 
 export default function PaperCard({ paper }: { paper: Paper }) {
+  const [open, setOpen] = useState(false);
+
   const getFieldIcon = (field: string) => {
-  switch (field) {
-    case "HCI":
-      return Users;
-    case "Network Security":
-      return ShieldCheck;
-    case "XAI":
-      return BrainCircuit;
-    default:
-      return BookOpen;
-  }
-};
+    switch (field) {
+      case "HCI":
+        return Users;
+      case "Network Security":
+        return ShieldCheck;
+      case "XAI":
+        return BrainCircuit;
+      default:
+        return BookOpen;
+    }
+  };
 
   const Icon = getFieldIcon(paper.field);
 
@@ -53,6 +56,12 @@ export default function PaperCard({ paper }: { paper: Paper }) {
     }
   };
 
+  const isLong = paper.abstract?.length > 180;
+  const abstractText =
+    open || !paper.abstract
+      ? paper.abstract
+      : paper.abstract.slice(0, 180) + (isLong ? "..." : "");
+
   return (
     <div className="relative bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 cursor-pointer">
       <div className={`h-32 bg-gradient-to-r ${selectedGradient} relative`}>
@@ -71,15 +80,6 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             {paper.status}
           </span>
         </div>
-        {/* {paper.citations && (
-          <div className="absolute top-3 right-4">
-            <div className="bg-white/20 backdrop-blur-sm rounded-lg px-2 py-1">
-              <span className="text-white text-xs font-medium">
-                {paper.citations} citations
-              </span>
-            </div>
-          </div>
-        )} */}
       </div>
 
       <div className="p-6 group">
@@ -109,13 +109,24 @@ export default function PaperCard({ paper }: { paper: Paper }) {
           </p>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
             Abstract
           </h4>
-          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-            {paper.abstract}
-          </p>
+          <div className="relative bg-gray-50 dark:bg-slate-800 rounded-lg p-3">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed relative">
+              {abstractText}
+
+              {isLong && (
+                <button
+                  onClick={() => setOpen(!open)}
+                  className="absolute bottom-0 right-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xs px-1 pb-0.5 bg-gray-50 dark:bg-slate-800"
+                >
+                  {open ? "접기" : "더보기"}
+                </button>
+              )}
+            </p>
+          </div>
         </div>
 
         {paper.impact && (
