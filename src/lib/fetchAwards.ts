@@ -1,6 +1,9 @@
 import { notion, NOTION_AWARDS_ID } from "./notion";
 import { Award } from "@/types/award";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  PageObjectResponse,
+  QueryDatabaseResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 export async function fetchNotionAwards(): Promise<Award[]> {
   const queryDatabase = notion.databases.query.bind(notion.databases);
@@ -10,7 +13,11 @@ export async function fetchNotionAwards(): Promise<Award[]> {
   });
 
   return response.results
-    .filter((page): page is PageObjectResponse => "properties" in page)
+    .filter(
+      (
+        page: QueryDatabaseResponse["results"][number]
+      ): page is PageObjectResponse => "properties" in page
+    )
     .map((page: PageObjectResponse) => {
       const props = page.properties;
 
@@ -20,16 +27,16 @@ export async function fetchNotionAwards(): Promise<Award[]> {
       return {
         id: page.id,
         title:
-          props.Title.type === "title"
-            ? props.Title.title[0]?.plain_text || "Untitled"
+          props.Title?.type === "title" && props.Title.title[0]?.plain_text
+            ? props.Title.title[0].plain_text
             : "Untitled",
         year: yearDate ? new Date(yearDate).getFullYear() : 0,
         organization:
-          props.Organization.type === "rich_text"
+          props.Organization?.type === "rich_text"
             ? props.Organization.rich_text[0]?.plain_text || ""
             : "",
         description:
-          props.Description.type === "rich_text"
+          props.Description?.type === "rich_text"
             ? props.Description.rich_text[0]?.plain_text || ""
             : "",
       };

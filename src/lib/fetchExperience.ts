@@ -22,15 +22,18 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
 
   const experiences = await Promise.all(
     response.results
-      .filter(
-        (page): page is PageObjectResponse =>
-          "properties" in page && page.object === "page"
+      .map(
+        (page: PageObjectResponse) =>
+          page.object === "page" && "properties" in page
       )
-      .map(async (page) => {
-        const props = page.properties;
+      .map(async (page: PageObjectResponse) => {
+        const props = page.properties as any;
 
-        const projectIds =
-          props["Projects"]?.relation.map((r: { id: string }) => r.id) || [];
+        const projectIds: string[] =
+          props["Projects"]?.type === "relation"
+            ? props["Projects"].relation.map((r: { id: string }) => r.id)
+            : [];
+
         const projectPages = await Promise.all(
           projectIds.map((id) => notion.pages.retrieve({ page_id: id }))
         );
