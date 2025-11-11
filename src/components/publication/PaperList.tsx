@@ -7,8 +7,8 @@ export default function PaperList({ papers }: { papers: any[] }) {
   const breakpointColumnsObj = {
     default: 3,
     1024: 3,
-    640: 2,
-    639: 1,
+    720: 2,
+    719: 1,
   };
 
   return (

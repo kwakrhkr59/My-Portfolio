@@ -102,11 +102,17 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             ))}
           </p>
 
-          <p className="flex items-center gap-2">
-            <BookOpen className="w-4 h-4" />{" "}
-            <span className="font-semibold">{paper.journal}</span> •{" "}
-            {paper.year}
-          </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0">
+              <BookOpen className="w-4 h-4 flex-shrink-0" />
+              <span className="font-semibold truncate min-w-0">
+                {paper.journal}
+              </span>
+            </div>
+            <div className="ml-3 flex-shrink-0 text-sm text-gray-600 dark:text-gray-300 whitespace-nowrap">
+              {paper.year}
+            </div>
+          </div>
         </div>
 
         <div className="mb-4 relative">
