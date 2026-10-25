@@ -1,6 +1,11 @@
 import { notion, NOTION_AWARDS_ID } from "./notion";
 import { Award } from "@/types/award";
-import { getRichText, compact } from "@/lib/notionParsers";
+import {
+  getRichText,
+  getCheckbox,
+  getNumber,
+  compact,
+} from "@/lib/notionParsers";
 import {
   PageObjectResponse,
   QueryDatabaseResponse,
@@ -40,6 +45,8 @@ export async function fetchNotionAwards(): Promise<Award[]> {
           props.Description?.type === "rich_text"
             ? props.Description.rich_text[0]?.plain_text || ""
             : "",
+        featured: getCheckbox(props["Featured"]),
+        order: getNumber(props["Order"]) ?? 999,
         en: compact({
           title: getRichText(props["Title_en"]),
           organization: getRichText(props["Organization_en"]),

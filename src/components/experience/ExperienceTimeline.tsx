@@ -20,6 +20,7 @@ import {
 import { Experience } from "@/types/experience";
 import { useLang } from "@/lib/i18n/LanguageProvider";
 import { localize } from "@/lib/i18n/localize";
+import { formatPeriod } from "@/lib/i18n/format";
 import {
   Sheet,
   SheetContent,
@@ -58,16 +59,17 @@ const typeIcon = (type: string) => {
   }
 };
 
-// period 문자열에서 가장 앞의 4자리 연도를 시작 연도로 사용한다.
-const startYear = (period: string) => {
-  const match = period.match(/\d{4}/);
+// 시작일이 있으면 그 연도를, 없으면 period 문자열에서 처음 나오는 4자리 연도를 쓴다.
+const startYear = (exp: Experience) => {
+  if (exp.start) return Number(exp.start.slice(0, 4));
+  const match = exp.period.match(/\d{4}/);
   return match ? Number(match[0]) : null;
 };
 
 function groupByYear(experiences: Experience[]) {
   const groups = new Map<string, Experience[]>();
   for (const exp of experiences) {
-    const year = startYear(exp.period);
+    const year = startYear(exp);
     const key = year ? String(year) : "Etc";
     groups.set(key, [...(groups.get(key) ?? []), exp]);
   }
@@ -250,8 +252,14 @@ function TimelineItem({
   experience: Experience;
   onOpen: () => void;
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const Icon = typeIcon(experience.type);
+  const period = formatPeriod(
+    experience.start,
+    experience.end,
+    lang,
+    experience.period,
+  );
 
   return (
     <li className="relative pl-12 md:pl-16 pb-10 last:pb-0">
@@ -277,7 +285,7 @@ function TimelineItem({
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4 text-green-500" />
-            <span>{experience.period}</span>
+            <span>{period}</span>
           </div>
           {experience.location && (
             <div className="flex items-center gap-1">
@@ -355,7 +363,13 @@ export default function ExperienceTimeline({
                   {selected.title}
                 </SheetTitle>
                 <SheetDescription className="text-gray-600 dark:text-gray-400">
-                  {selected.organization} · {selected.period}
+                  {selected.organization} ·{" "}
+                  {formatPeriod(
+                    selected.start,
+                    selected.end,
+                    lang,
+                    selected.period,
+                  )}
                 </SheetDescription>
               </SheetHeader>
               <ExperienceDetail experience={selected} />

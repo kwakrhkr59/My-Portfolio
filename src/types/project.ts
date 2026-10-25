@@ -13,11 +13,16 @@ export interface Project {
   link: string | null;
   stack: string[];
   period: string | null;
+  start: string | null;
+  end: string | null;
   team: string[];
   type: string | null;
   priority: string | null;
   status: string | null;
   created_at: string;
+  homeSummary: string;
+  featured: boolean;
+  order: number;
   en?: Partial<
     Pick<
       Project,
@@ -28,6 +33,7 @@ export interface Project {
       | "features"
       | "challenges"
       | "results"
+      | "homeSummary"
     >
   >;
 }

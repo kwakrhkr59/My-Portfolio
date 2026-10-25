@@ -15,5 +15,18 @@ export interface Paper {
   impact?: string;
   methodology?: string;
   field: string;
-  en?: Partial<Pick<Paper, "title" | "abstract" | "impact" | "methodology">>;
+  homeSummary: string;
+  featured: boolean;
+  order: number;
+  en?: Partial<
+    Pick<
+      Paper,
+      | "title"
+      | "abstract"
+      | "impact"
+      | "methodology"
+      | "journal"
+      | "homeSummary"
+    >
+  >;
 }

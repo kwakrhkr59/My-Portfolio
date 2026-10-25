@@ -30,6 +30,7 @@ const DATABASES = {
       ["Features", "Features_en", "lines"],
       ["Challenges", "Challenges_en", "text"],
       ["Results", "Results_en", "text"],
+      ["Home_summary", "Home_summary_en", "text"],
     ],
   },
   experience: {
@@ -44,6 +45,7 @@ const DATABASES = {
       ["Responsibilities", "Responsibilities_en", "lines"],
       ["Achievements", "Achievements_en", "lines"],
       ["Features", "Features_en", "lines"],
+      ["Home_summary", "Home_summary_en", "text"],
     ],
   },
   publication: {
@@ -54,6 +56,8 @@ const DATABASES = {
       ["Abstract", "Abstract_en", "text"],
       ["Impact", "Impact_en", "text"],
       ["Methodology", "Methodology_en", "text"],
+      ["Journal", "Journal_en", "text"],
+      ["Home_summary", "Home_summary_en", "text"],
     ],
   },
   awards: {
@@ -101,6 +105,7 @@ async function translate(sourceByKey, context, style) {
         "the output must not contain any Hangul; " +
         "do not add or remove information; keep the first-person voice if the source uses it; " +
         "never use first-person pronouns (I, my, we, our); " + style + " " +
+        "for the key Home_summary write a short descriptive blurb of one or two sentences such as 'A Flutter mobile app that ...' and do not start it with 'This project'; " +
         "preserve line breaks (each line is a separate list item); if a value is already English, return it unchanged. " +
         'Reply with ONLY a JSON object that has exactly the same keys as the input and string values. No markdown fences.',
       messages: [

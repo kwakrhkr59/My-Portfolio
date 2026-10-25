@@ -24,13 +24,21 @@ export interface Experience {
   title: string;
   organization: string;
   period: string;
+  start: string | null;
+  end: string | null;
   location?: string;
   type: string;
   description: string;
   details: ExperienceDetails;
   links?: ExperienceLinks;
+  homeSummary: string;
+  featured: boolean;
+  order: number;
   en?: Partial<
-    Pick<Experience, "title" | "organization" | "location" | "description">
+    Pick<
+      Experience,
+      "title" | "organization" | "location" | "description" | "homeSummary"
+    >
   > & {
     details?: Partial<
       Pick<

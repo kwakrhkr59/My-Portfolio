@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { T, useLang } from "@/lib/i18n/LanguageProvider";
 import { localize } from "@/lib/i18n/localize";
+import { formatPeriod } from "@/lib/i18n/format";
 import { Project } from "@/types/project";
 
 const gradients = [
@@ -126,7 +127,14 @@ export default function ProjectDetailView({
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/90">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                <span>{project.period || <T k="detail.unknownPeriod" />}</span>
+                <span>
+                  {formatPeriod(
+                    project.start,
+                    project.end,
+                    lang,
+                    project.period ?? "",
+                  ) || <T k="detail.unknownPeriod" />}
+                </span>
               </div>
               {project.team && project.team.length > 0 && (
                 <div className="flex items-center gap-2">

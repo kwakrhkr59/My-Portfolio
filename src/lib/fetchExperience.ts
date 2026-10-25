@@ -7,6 +7,9 @@ import {
   getTextArray,
   getRichText,
   getLines,
+  getDate,
+  getCheckbox,
+  getNumber,
   compact,
 } from "@/lib/notionParsers";
 import {
@@ -24,6 +27,7 @@ import {
 export async function fetchNotionExperience(): Promise<Experience[]> {
   const response = await notion.databases.query({
     database_id: NOTION_EXPERIENCE_ID,
+    sorts: [{ property: "Start", direction: "descending" }],
   });
 
   const experiences = await Promise.all(
@@ -73,16 +77,22 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
           title: getPlainText(props["Title"], "title") || "Untitled",
           organization: getPlainText(props["Organization"], "rich_text") || "",
           period: getPlainText(props["Period"], "rich_text") || "",
+          start: getDate(props["Start"]),
+          end: getDate(props["End"]),
           location: getPlainText(props["Location"], "rich_text"),
           type: getSelectName(props["Type"]) || "Work",
           description: getPlainText(props["Description"], "rich_text") || "",
           details: details,
           links: links,
+          homeSummary: getRichText(props["Home_summary"]) || "",
+          featured: getCheckbox(props["Featured"]),
+          order: getNumber(props["Order"]) ?? 999,
           en: compact({
             title: getRichText(props["Title_en"]),
             organization: getRichText(props["Organization_en"]),
             location: getRichText(props["Location_en"]),
             description: getRichText(props["Description_en"]),
+            homeSummary: getRichText(props["Home_summary_en"]),
             details: compact({
               details: getLines(props["Detailed Overview_en"]),
               responsibilities: getLines(props["Responsibilities_en"]),

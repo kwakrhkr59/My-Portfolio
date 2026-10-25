@@ -62,6 +62,7 @@ const en = {
       title: "Skills",
       desc: "Key technologies used across projects and research.",
     },
+    loading: "Loading...",
     loadingProjects: "Loading projects...",
   },
   skillCategories: {
@@ -78,106 +79,6 @@ const en = {
     coursework: "Key Courses",
     courses:
       "Data Structures, Algorithms, Artificial Intelligence, Database Systems, Linear Algebra, Calculus, Probability & Statistics, Discrete Mathematics",
-  },
-  home: {
-    projects: [
-      {
-        match: "Poever",
-        desc: "A React Native mobile app that uses OpenPose to extract joint coordinates from side-view full-body images and analyze the user's posture.",
-      },
-      {
-        match: "Silent Camera",
-        desc: "A Flutter mobile app built to zoom in on and quietly photograph distant whiteboard content during lectures.",
-      },
-      {
-        match: "ArtChemy",
-        desc: "A conversational AI docent service built with a Vision-Language Model (VLM) to support visually impaired people in appreciating artworks.",
-      },
-      {
-        match: "BOJ Auto Commit",
-        desc: "A Chrome extension that automatically records Baekjoon Online Judge submission results to GitHub so you can manage your algorithm study history.",
-      },
-      {
-        match: "What To Do?",
-        desc: "A Flutter mobile app that recommends activities worth doing today based on context such as mood, location, and weather.",
-      },
-    ],
-    publications: [
-      {
-        title:
-          "An Inclusive AI Docent System for Accessible and Interactive Art Appreciation using Vision and Language Models",
-        year: "2025",
-        venue: "Journal of the Korea Society of Computer and Information",
-        desc: "A study on a conversational AI docent system based on a Vision-Language Model to improve visually impaired people's access to artworks.",
-      },
-      {
-        title:
-          "StarPrint: Starlink Vulnerability Analysis and Transformer-Based Website Fingerprinting Attack",
-        year: "2025",
-        venue: "KIISC Summer Conference (CISC-S)",
-        desc: "A study of security vulnerabilities in Starlink environments and a Transformer-based website fingerprinting attack.",
-      },
-      {
-        title:
-          "Exploring Vulnerabilities of Website Fingerprinting Defense Models through Deep Learning-Based Detection of Correlations in Split Data",
-        year: "2024",
-        venue: "KIISC Yeongnam Chapter Conference",
-        desc: "A study of vulnerabilities in website fingerprinting defenses through correlation analysis of split network traffic.",
-      },
-      {
-        title:
-          "DeepCoAST: Unveiling Split Trace Correlation to Counter Traffic Splitting Defenses",
-        year: "2024",
-        venue: "IEEE Access",
-        desc: "An analysis of vulnerabilities in website fingerprinting defenses by exploiting correlations between split traffic.",
-      },
-    ],
-    awards: [
-      {
-        title: "KIISC Summer Conference President's Award",
-        year: "2025",
-        org: "Korea Institute of Information Security & Cryptology (KIISC)",
-        desc: "President's Award at the CISC-S'25 conference.",
-      },
-      {
-        title: "Grand Prize, College of AI Programming Contest",
-        year: "2024",
-        org: "College of Artificial Intelligence, Ewha Womans University",
-        desc: "1st place at the 2024 College of Artificial Intelligence Programming Contest.",
-      },
-      {
-        title: "1st Place, E-PPER Programming Contest",
-        year: "2024",
-        org: "School of Software, Ewha Womans University",
-        desc: "1st place at the 2024 E-PPER Programming Contest.",
-      },
-      {
-        title: "KIISC Yeongnam Chapter Conference President's Award",
-        year: "2023",
-        org: "Korea Institute of Information Security & Cryptology (KIISC)",
-        desc: "President's Award at the KIISC Yeongnam Chapter Conference.",
-      },
-    ],
-    experiences: [
-      {
-        role: "Undergraduate Research Intern",
-        org: "KAIST SAILab",
-        period: "Jun 2025 – Dec 2025",
-        desc: "Took part in explainable AI (XAI) and generative AI research, exploring the interpretability and robustness of time-series deep learning models.",
-      },
-      {
-        role: "Undergraduate Research Intern",
-        org: "AISec Lab, Ewha Womans University",
-        period: "Jul 2022 – Feb 2024",
-        desc: "Analyzed encrypted traffic from anonymity networks such as Tor and researched website fingerprinting attacks and defenses.",
-      },
-      {
-        role: "Trainee",
-        org: "SK Telecom FLY AI",
-        period: "Dec 2024 – Feb 2025",
-        desc: "Completed a practical AI and DevOps training program and developed an AI-based chatbot that describes artworks for visually impaired people.",
-      },
-    ],
   },
   projectPreview: {
     error: "Failed to load project data.",
@@ -363,6 +264,7 @@ const ko: Dictionary = {
       title: "Skills",
       desc: "프로젝트와 연구 과정에서 활용한 주요 기술입니다.",
     },
+    loading: "불러오는 중...",
     loadingProjects: "프로젝트를 불러오는 중...",
   },
   skillCategories: {
@@ -379,106 +281,6 @@ const ko: Dictionary = {
     coursework: "주요 이수 과목",
     courses:
       "자료구조, 알고리즘, 인공지능, 데이터베이스, 선형대수학, 미적분학, 확률과 통계, 이산수학",
-  },
-  home: {
-    projects: [
-      {
-        match: "Poever",
-        desc: "OpenPose를 활용하여 측면 전신 이미지에서 관절 좌표를 추출하고, 사용자의 자세를 분석하는 React Native 기반 모바일 애플리케이션입니다.",
-      },
-      {
-        match: "Silent Camera",
-        desc: "강의 중 멀리 있는 판서 내용을 확대하고 조용히 촬영할 수 있도록 개발한 Flutter 기반 모바일 애플리케이션입니다.",
-      },
-      {
-        match: "ArtChemy",
-        desc: "시각장애인의 미술 작품 감상을 지원하기 위해 Vision-Language Model(VLM)을 활용하여 개발한 대화형 AI 도슨트 서비스입니다.",
-      },
-      {
-        match: "BOJ Auto Commit",
-        desc: "백준 온라인 저지의 문제 제출 결과를 GitHub에 자동으로 기록하여 알고리즘 학습 이력을 관리할 수 있도록 개발한 Chrome 확장 프로그램입니다.",
-      },
-      {
-        match: "What To Do?",
-        desc: "사용자의 기분, 위치, 날씨 등의 상황 정보를 바탕으로 오늘 할 만한 활동을 추천하는 Flutter 기반 모바일 애플리케이션입니다.",
-      },
-    ],
-    publications: [
-      {
-        title:
-          "An Inclusive AI Docent System for Accessible and Interactive Art Appreciation using Vision and Language Models",
-        year: "2025",
-        venue: "한국컴퓨터정보학회 논문지",
-        desc: "시각장애인의 미술 작품 접근성 향상을 위한 Vision-Language Model 기반 대화형 AI 도슨트 시스템 연구",
-      },
-      {
-        title:
-          "StarPrint: Starlink Vulnerability Analysis and Transformer-Based Website Fingerprinting Attack",
-        year: "2025",
-        venue: "한국정보보호학회 하계학술대회",
-        desc: "Starlink 환경의 보안 취약점 분석 및 Transformer 기반 웹사이트 핑거프린팅 공격 연구",
-      },
-      {
-        title:
-          "Exploring Vulnerabilities of Website Fingerprinting Defense Models through Deep Learning-Based Detection of Correlations in Split Data",
-        year: "2024",
-        venue: "한국정보보호학회 영남지부학술대회",
-        desc: "분할된 네트워크 트래픽의 상관관계 분석을 통한 웹사이트 핑거프린팅 방어 기법의 취약점 연구",
-      },
-      {
-        title:
-          "DeepCoAST: Unveiling Split Trace Correlation to Counter Traffic Splitting Defenses",
-        year: "2024",
-        venue: "IEEE Access",
-        desc: "분할 트래픽 간 상관관계를 활용한 웹사이트 핑거프린팅 방어 기법의 취약점 분석 연구",
-      },
-    ],
-    awards: [
-      {
-        title: "한국정보보호학회 하계학술대회 학회장상",
-        year: "2025",
-        org: "한국정보보호학회",
-        desc: "CISC-S'25 학술대회 학회장상 수상",
-      },
-      {
-        title: "인공지능대학 프로그래밍 경진대회 대상",
-        year: "2024",
-        org: "이화여자대학교 인공지능대학",
-        desc: "2024 인공지능대학 프로그래밍 경진대회 1위",
-      },
-      {
-        title: "E-PPER 프로그래밍 경진대회 1위",
-        year: "2024",
-        org: "이화여자대학교 소프트웨어학부",
-        desc: "2024 E-PPER 프로그래밍 경진대회 1위",
-      },
-      {
-        title: "한국정보보호학회 영남지부학술대회 학회장상",
-        year: "2023",
-        org: "한국정보보호학회",
-        desc: "한국정보보호학회 영남지부학술대회 학회장상 수상",
-      },
-    ],
-    experiences: [
-      {
-        role: "학부 연구 인턴",
-        org: "KAIST SAILab",
-        period: "2025.06 ~ 2025.12",
-        desc: "설명가능한 인공지능(XAI) 및 생성형 AI 연구에 참여하며, 시계열 딥러닝 모델의 해석 가능성과 강건성을 탐구했습니다.",
-      },
-      {
-        role: "학부 연구 인턴",
-        org: "이화여자대학교 AISec Lab",
-        period: "2022.07 ~ 2024.02",
-        desc: "Tor 브라우저 등 익명 네트워크 환경에서 발생하는 암호화 트래픽을 분석하고, 웹사이트 핑거프린팅 공격 및 방어 기법을 연구했습니다.",
-      },
-      {
-        role: "교육생",
-        org: "SK텔레콤 FLY AI",
-        period: "2024.12 ~ 2025.02",
-        desc: "AI 및 DevOps 실무 교육과정을 이수하고, 시각장애인을 위한 AI 기반 미술 작품 해설 챗봇을 개발했습니다.",
-      },
-    ],
   },
   projectPreview: {
     error: "프로젝트 데이터를 불러오는데 실패했습니다.",

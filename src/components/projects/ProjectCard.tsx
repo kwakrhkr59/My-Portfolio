@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { Project } from "@/types/project";
 import { localize } from "@/lib/i18n/localize";
+import { formatPeriod } from "@/lib/i18n/format";
 
 interface ProjectCardProps {
   project: Project;
@@ -24,6 +25,12 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({
 }) => {
   const { t, lang } = useLang();
   const project = localize(rawProject, lang);
+  const period = formatPeriod(
+    project.start,
+    project.end,
+    lang,
+    project.period ?? "",
+  );
   const Icon = project.title.toLowerCase().includes("research")
     ? FaFlask
     : FaCode;
@@ -119,10 +126,10 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({
 
           <div className="flex items-center justify-between mb-4 text-xs text-gray-500 dark:text-gray-400">
             <div className="flex items-center space-x-4">
-              {project.period && (
+              {period && (
                 <div className="flex items-center">
                   <FaClock className="mr-1" />
-                  <span>{project.period}</span>
+                  <span>{period}</span>
                 </div>
               )}
 

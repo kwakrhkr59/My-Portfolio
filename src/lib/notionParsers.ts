@@ -67,3 +67,10 @@ export const compact = <T extends Record<string, unknown>>(
       Array.isArray(v) ? v.length > 0 : v !== undefined && v !== "",
     ),
   ) as Partial<T>;
+
+export const getCheckbox = (prop: any): boolean =>
+  prop?.type === "checkbox" ? prop.checkbox : false;
+
+// Notion date 속성의 시작/끝을 "YYYY-MM-DD" 문자열로 돌려준다.
+export const getDate = (prop: any): string | null =>
+  prop?.type === "date" ? (prop.date?.start ?? null) : null;

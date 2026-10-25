@@ -8,12 +8,10 @@ import { useLang } from "@/lib/i18n/LanguageProvider";
 
 interface ProjectPreviewCardProps {
   project: Project;
-  description?: string;
 }
 
 const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({
   project: rawProject,
-  description,
 }) => {
   const { t, lang } = useLang();
   const project = localize(rawProject, lang);
@@ -30,7 +28,7 @@ const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({
             </h3>
           </div>
           <p className="text-gray-700 dark:text-gray-300 mb-3 text-base">
-            {description ?? project.summary}
+            {project.homeSummary || project.summary}
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
             {(project.stack || []).slice(0, 3).map((tech, idx) => (

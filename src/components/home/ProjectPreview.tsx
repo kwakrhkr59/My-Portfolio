@@ -6,6 +6,7 @@ import ProjectCard from "@/components/home/ProjectPreviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useLang } from "@/lib/i18n/LanguageProvider";
+import { featuredList } from "@/lib/featured";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -36,11 +37,7 @@ export default function ProjectPreview() {
     fetchProjects();
   }, []);
 
-  // 홈에는 고정된 순서와 소개 문구로 보여 준다. Notion 에서는 링크(slug)와 스택만 가져온다.
-  const featured = t.home.projects.flatMap(({ match, desc }) => {
-    const project = projects.find((p) => p.title.startsWith(match));
-    return project ? [{ project, desc }] : [];
-  });
+  const featured = featuredList(projects);
 
   if (loading) {
     return (
@@ -164,9 +161,9 @@ export default function ProjectPreview() {
             }}
             className="pb-12"
           >
-            {featured.map(({ project, desc }) => (
+            {featured.map((project) => (
               <SwiperSlide key={project.id}>
-                <ProjectCard project={project} description={desc} />
+                <ProjectCard project={project} />
               </SwiperSlide>
             ))}
           </Swiper>
