@@ -22,9 +22,25 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Lang>("ko");
 
+  // 언어 결정 순서: 1) 토글로 직접 고른 값 2) 브라우저 언어(한국어가 아니면 영어) 3) 기본값 한국어
+  // 자동 감지한 값은 저장하지 않는다. 그래야 이후 브라우저 언어를 바꿨을 때 따라간다.
   useEffect(() => {
-    const stored = localStorage.getItem("lang");
-    if (stored === "ko" || stored === "en") setLangState(stored);
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem("lang");
+    } catch {
+      // 저장소를 쓸 수 없는 환경(시크릿 모드 등)이면 감지 결과만 사용한다.
+    }
+    if (stored === "ko" || stored === "en") {
+      setLangState(stored);
+      return;
+    }
+    const browserLang = (
+      navigator.languages?.[0] ||
+      navigator.language ||
+      ""
+    ).toLowerCase();
+    if (browserLang && !browserLang.startsWith("ko")) setLangState("en");
   }, []);
 
   useEffect(() => {
@@ -33,7 +49,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const setLang = (next: Lang) => {
     setLangState(next);
-    localStorage.setItem("lang", next);
+    try {
+      localStorage.setItem("lang", next);
+    } catch {
+      // 저장하지 못해도 현재 화면의 언어는 바뀐다.
+    }
   };
 
   return (
