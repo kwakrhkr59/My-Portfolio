@@ -97,88 +97,129 @@ export default function ProjectDetailView({
     if (img && img.complete && img.naturalWidth === 0) setCoverFailed(true);
   }, []);
   const coverBase = `/images/projects/${project.slug}`;
+  // 이미지 안에 프로젝트 이름이 들어 있어서 잘라 쓰지 않고 가로 전체로 그대로 보여 준다.
+  // width/height 는 로딩 전 자리를 잡기 위한 대략적인 비율이고, 실제 비율은 이미지에 따라 달라도 된다.
   const coverCommon = {
     alt: `${project.title} cover`,
-    fill: true,
     sizes: "100vw",
     quality: 85,
     loading: "eager" as const,
-    className: "object-cover object-center",
+    className: "block w-full h-auto",
   };
   const desktopCover = getImageProps({
     ...coverCommon,
     src: `${coverBase}-desktop.png`,
+    width: 3840,
+    height: 520,
   });
   const mobileCover = getImageProps({
     ...coverCommon,
     src: `${coverBase}-mobile.png`,
+    width: 1940,
+    height: 600,
   });
+
+  const period =
+    formatPeriod(project.start, project.end, lang, project.period ?? "") ||
+    null;
+
+  // 제목, 유형, 기간. 이미지 위(어두운 배경)에 얹을 때와 이미지 아래(밝은 배경)에 둘 때 색만 다르다.
+  const heading = (onDark: boolean) => (
+    <div className={onDark ? "text-white" : "text-gray-900 dark:text-white"}>
+      <span
+        className={`inline-block px-4 py-1 mb-4 text-sm font-semibold rounded-full ${
+          onDark
+            ? "bg-white/20 backdrop-blur-sm"
+            : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+        }`}
+      >
+        {project.type || <T k="detail.project" />}
+      </span>
+      <h1
+        className={`text-4xl md:text-6xl font-bold mb-4 leading-tight ${
+          onDark ? "drop-shadow-md" : ""
+        }`}
+      >
+        {project.title}
+      </h1>
+      <div
+        className={`flex flex-wrap items-center gap-x-6 gap-y-2 ${
+          onDark ? "text-white/90" : "text-gray-600 dark:text-gray-400"
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <Calendar className="w-4 h-4" />
+          <span>{period || <T k="detail.unknownPeriod" />}</span>
+        </div>
+        {project.team && project.team.length > 0 && (
+          <div className="flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            <span>{project.team.join(", ")}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  const backLink = (onDark: boolean) => (
+    <Link
+      href="/projects"
+      className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
+        onDark
+          ? "px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full text-white"
+          : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+      }`}
+    >
+      <ArrowLeft className="w-4 h-4" />
+      <T k="detail.back" />
+    </Link>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <section
-        className={`relative w-full overflow-hidden bg-gradient-to-r ${gradient}`}
-      >
-        {!coverFailed ? (
-          <picture>
-            <source
-              media="(min-width: 768px)"
-              srcSet={desktopCover.props.srcSet}
-            />
-            <img
-              {...mobileCover.props}
-              alt={coverCommon.alt}
-              ref={coverRef}
-              fetchPriority="high"
-              onError={() => setCoverFailed(true)}
-            />
-          </picture>
-        ) : (
+      {!coverFailed ? (
+        <>
+          <section className={`w-full bg-gradient-to-r ${gradient}`}>
+            <picture>
+              <source
+                media="(min-width: 768px)"
+                srcSet={desktopCover.props.srcSet}
+                width={3840}
+                height={520}
+              />
+              <img
+                {...mobileCover.props}
+                alt={coverCommon.alt}
+                ref={coverRef}
+                fetchPriority="high"
+                onError={() => setCoverFailed(true)}
+              />
+            </picture>
+          </section>
+          <div className="container mx-auto px-4 pt-8 md:pt-10">
+            <div className="max-w-6xl mx-auto">
+              <div className="mb-6">{backLink(false)}</div>
+              {heading(false)}
+            </div>
+          </div>
+        </>
+      ) : (
+        <section
+          className={`relative w-full overflow-hidden bg-gradient-to-r ${gradient}`}
+        >
           <Icon
             aria-hidden
             className="absolute right-8 md:right-24 top-1/2 -translate-y-1/2 w-40 h-40 md:w-64 md:h-64 text-white/20"
           />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-
-        <div className="relative container mx-auto px-4 min-h-[18rem] md:min-h-[26rem] py-6 md:py-8 flex flex-col justify-between">
-          <Link
-            href="/projects"
-            className="self-start inline-flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full text-white text-sm font-medium transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <T k="detail.back" />
-          </Link>
-
-          <div className="max-w-6xl mx-auto w-full text-white pt-12">
-            <span className="inline-block px-4 py-1 mb-4 bg-white/20 backdrop-blur-sm text-sm font-semibold rounded-full">
-              {project.type || <T k="detail.project" />}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight drop-shadow-md">
-              {project.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/90">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>
-                  {formatPeriod(
-                    project.start,
-                    project.end,
-                    lang,
-                    project.period ?? "",
-                  ) || <T k="detail.unknownPeriod" />}
-                </span>
-              </div>
-              {project.team && project.team.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  <span>{project.team.join(", ")}</span>
-                </div>
-              )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
+          <div className="relative container mx-auto px-4 min-h-[18rem] md:min-h-[26rem] py-6 md:py-8 flex flex-col justify-between">
+            <div className="self-start">{backLink(true)}</div>
+            <div className="max-w-6xl mx-auto w-full pt-12">
+              {heading(true)}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
