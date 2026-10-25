@@ -30,7 +30,8 @@ const en = {
   profile: {
     name: "Hyeonjeong Kwak",
     role: "AI & Full-Stack Developer",
-    university: "Computer Science & Mathematics @ Ewha Womans University",
+    university:
+      "Computer Science & Mathematics Graduate @ Ewha Womans University",
     tagline: "Solving everyday problems with technology",
     description:
       "Grounded in AI research and full-stack development, I turn complex problems into practical services.\n\nBeyond exploring new technologies, I value the process of defining and solving problems from the real user's perspective.",
@@ -72,7 +73,7 @@ const en = {
   education: {
     school: "Ewha Womans University",
     degree: "Computer Science & Engineering, Mathematics",
-    period: "2021 – Present",
+    period: "2021 – 2026",
     gpa: "GPA",
     coursework: "Key Courses",
     courses:
@@ -161,7 +162,7 @@ const en = {
       {
         role: "Undergraduate Research Intern",
         org: "KAIST SAILab",
-        period: "Jun 19, 2025 – Present",
+        period: "Jun 19, 2025 – Dec 18, 2025",
         desc: "Took part in explainable AI (XAI) and generative AI research, exploring the interpretability and robustness of time-series deep learning models.",
       },
       {
@@ -331,7 +332,7 @@ const ko: Dictionary = {
   profile: {
     name: "곽현정",
     role: "AI & Full-Stack Developer",
-    university: "이화여자대학교 컴퓨터공학·수학 전공",
+    university: "이화여자대학교 컴퓨터공학, 수학 전공 졸업",
     tagline: "일상의 문제를 기술로 해결하다",
     description:
       "인공지능 연구와 풀스택 개발을 기반으로, 복잡한 문제를 실용적인 서비스로 구현하는 개발자입니다.\n\n새로운 기술을 탐구하는 데 그치지 않고, 실제 사용자의 관점에서 문제를 정의하고 해결하는 과정에 가치를 둡니다.",
@@ -372,8 +373,8 @@ const ko: Dictionary = {
   },
   education: {
     school: "이화여자대학교",
-    degree: "컴퓨터공학·수학 전공",
-    period: "2021 ~ 현재",
+    degree: "컴퓨터공학, 수학 전공",
+    period: "2021 ~ 2026",
     gpa: "학점",
     coursework: "주요 이수 과목",
     courses:
@@ -462,7 +463,7 @@ const ko: Dictionary = {
       {
         role: "학부 연구 인턴",
         org: "KAIST SAILab",
-        period: "2025.06.19 ~ 현재",
+        period: "2025.06.19 ~ 2025.12.18",
         desc: "설명가능한 인공지능(XAI) 및 생성형 AI 연구에 참여하며, 시계열 딥러닝 모델의 해석 가능성과 강건성을 탐구했습니다.",
       },
       {
