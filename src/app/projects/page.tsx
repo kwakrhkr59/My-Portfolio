@@ -1,7 +1,7 @@
 import { fetchNotionProjectsAll } from "@/lib/fetchProject";
 import { Github } from "lucide-react";
 import { PageShell, PageHeader } from "@/components/layout/PageShell";
-import { T } from "@/lib/i18n/LanguageProvider";
+import { T } from "@/components/layout/T";
 import ProjectList from "@/components/projects/ProjectList";
 
 // Notion 수정 사항이 재배포 없이 반영되도록 5분마다 갱신한다.

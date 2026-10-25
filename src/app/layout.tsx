@@ -1,6 +1,6 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
+import { LanguageProvider } from "@/components/layout/LanguageProvider";
 import { ClientLayoutWrapper } from "@/components/layout/ClientLayoutWrapper";
 import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";

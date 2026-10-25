@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 
 const HeroSection = ({ onScroll }: { onScroll: () => void }) => {
   const { t } = useLang();

@@ -2,7 +2,7 @@
 
 import { BookOpen } from "lucide-react";
 import { Paper } from "@/types/publications";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import { localize } from "@/lib/i18n/localize";
 import { featuredList } from "@/lib/featured";
 import { useNotionList } from "@/lib/useNotionList";

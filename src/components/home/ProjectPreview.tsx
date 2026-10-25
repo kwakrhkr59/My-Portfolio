@@ -5,7 +5,7 @@ import { Project } from "@/types/project";
 import ProjectCard from "@/components/home/ProjectPreviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import { featuredList } from "@/lib/featured";
 
 import "swiper/css";

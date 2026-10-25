@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import { Paper } from "@/types/publications";
 import { localize } from "@/lib/i18n/localize";
-import { useLang, fill } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
+import { fill } from "@/lib/i18n/fill";
 
 export default function PaperCard({ paper: rawPaper }: { paper: Paper }) {
   const { t, lang } = useLang();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import {
   User,
   Briefcase,

@@ -1,7 +1,7 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import { Dictionary } from "@/lib/i18n/dictionary";
 
 export interface HomeListItem {

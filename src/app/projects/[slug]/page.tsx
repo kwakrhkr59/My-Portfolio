@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { T } from "@/lib/i18n/LanguageProvider";
+import { T } from "@/components/layout/T";
 import { PageShell } from "@/components/layout/PageShell";
 import ProjectDetailView from "@/components/projects/ProjectDetailView";
 import { fetchNotionProjectBySlug } from "@/lib/fetchProject";

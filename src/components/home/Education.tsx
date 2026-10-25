@@ -1,7 +1,7 @@
 "use client";
 
 import { GraduationCap } from "lucide-react";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 
 const educationData = [
   {

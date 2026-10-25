@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Project } from "@/types/project";
 import { Code } from "lucide-react";
 import { localize } from "@/lib/i18n/localize";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 
 interface ProjectPreviewCardProps {
   project: Project;

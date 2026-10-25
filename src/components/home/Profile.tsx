@@ -2,7 +2,7 @@
 
 import { Mail, Github, Linkedin, FileText, User } from "lucide-react";
 import Image from "next/image";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 
 const profileData = {
   imageUrl: "/profile.jpg",

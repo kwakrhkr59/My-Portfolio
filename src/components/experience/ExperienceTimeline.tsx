@@ -18,7 +18,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Experience } from "@/types/experience";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import { localize } from "@/lib/i18n/localize";
 import { formatPeriod } from "@/lib/i18n/format";
 import {

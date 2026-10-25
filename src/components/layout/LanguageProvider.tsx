@@ -7,7 +7,7 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { dictionaries, Dictionary, Lang } from "./dictionary";
+import { dictionaries, Dictionary, Lang } from "@/lib/i18n/dictionary";
 
 interface LanguageContextType {
   lang: Lang;
@@ -50,18 +50,3 @@ export const useLang = (): LanguageContextType => {
   }
   return context;
 };
-
-// 서버 컴포넌트에서 사전 문구를 쓰기 위한 헬퍼. 예: <T k="detail.overview" />
-export function T({ k }: { k: string }) {
-  const { t } = useLang();
-  const value = k
-    .split(".")
-    .reduce<unknown>(
-      (acc, key) => (acc as Record<string, unknown> | undefined)?.[key],
-      t,
-    );
-  return <>{typeof value === "string" ? value : k}</>;
-}
-
-export const fill = (template: string, n: number) =>
-  template.replace("{n}", String(n));

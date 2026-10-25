@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FlagKR, FlagUS } from "./FlagIcon";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 
 const navLinks: {
   key: "home" | "projects" | "publication" | "experience" | "blog" | "contact";

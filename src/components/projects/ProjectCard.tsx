@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useLang, fill } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
+import { fill } from "@/lib/i18n/fill";
 import {
   FaCode,
   FaFlask,

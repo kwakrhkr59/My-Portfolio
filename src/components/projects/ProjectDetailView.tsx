@@ -16,7 +16,8 @@ import {
   Wrench,
   FileText,
 } from "lucide-react";
-import { T, useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
+import { T } from "@/components/layout/T";
 import { localize } from "@/lib/i18n/localize";
 import { formatPeriod } from "@/lib/i18n/format";
 import { Project } from "@/types/project";

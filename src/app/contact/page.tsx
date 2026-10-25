@@ -13,7 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { useState } from "react";
-import { useLang } from "@/lib/i18n/LanguageProvider";
+import { useLang } from "@/components/layout/LanguageProvider";
 import { PageShell, PageHeader } from "@/components/layout/PageShell";
 
 const contactData = {
