@@ -17,7 +17,7 @@ export function PageHeader({
 }) {
   return (
     <div className="text-center mb-16 md:mb-20">
-      <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+      <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-0 md:mb-2 pb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
         {title}
       </h1>
       <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
