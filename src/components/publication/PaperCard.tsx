@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   BookOpen,
+  Quote,
   Users,
   ExternalLink,
   Award,
@@ -77,6 +78,14 @@ export default function PaperCard({ paper: rawPaper }: { paper: Paper }) {
             <BookOpen className="text-white text-xl" />
           </div>
         </div>
+        {paper.citations ? (
+          <div className="absolute top-4 right-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
+              <Quote className="w-3.5 h-3.5" />
+              {fill(t.paper.citations, paper.citations)}
+            </span>
+          </div>
+        ) : null}
         <div className="absolute bottom-4 left-4">
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
