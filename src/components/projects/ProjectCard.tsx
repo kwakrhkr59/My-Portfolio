@@ -1,6 +1,7 @@
-"use clients";
+"use client";
 
 import Link from "next/link";
+import { useLang, fill } from "@/lib/i18n/LanguageProvider";
 import {
   FaCode,
   FaFlask,
@@ -12,12 +13,17 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 import { Project } from "@/types/project";
+import { localize } from "@/lib/i18n/localize";
 
 interface ProjectCardProps {
   project: Project;
 }
 
-export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
+export const ProjectsPageCard: React.FC<ProjectCardProps> = ({
+  project: rawProject,
+}) => {
+  const { t, lang } = useLang();
+  const project = localize(rawProject, lang);
   const Icon = project.title.toLowerCase().includes("research")
     ? FaFlask
     : FaCode;
@@ -47,7 +53,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
 
           <div className="absolute bottom-4 left-4">
             <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
-              {project.type || "Project"}
+              {project.type || t.projectCard.project}
             </span>
           </div>
         </div>
@@ -76,7 +82,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             <div className="mb-4">
               <h4 className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
                 <FaCheckCircle className="mr-1 text-green-500" />
-                Key Features
+                {t.projectCard.keyFeatures}
               </h4>
               <div className="space-y-1">
                 {project.features.slice(0, 3).map((feature, idx) => (
@@ -90,7 +96,10 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
                 ))}
                 {project.features.length > 3 && (
                   <div className="text-xs text-gray-500 dark:text-gray-400 pl-3">
-                    +{project.features.length - 3} more features
+                    {fill(
+                      t.projectCard.moreFeatures,
+                      project.features.length - 3,
+                    )}
                   </div>
                 )}
               </div>
@@ -122,8 +131,8 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
                   <FaUsers className="mr-1" />
                   <span>
                     {project.team.length === 1
-                      ? "Solo"
-                      : `${project.team.length} members`}
+                      ? t.projectCard.solo
+                      : fill(t.projectCard.members, project.team.length)}
                   </span>
                 </div>
               )}
@@ -132,7 +141,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
             <div className="flex items-center">
               <FaStar className="text-yellow-400 mr-1" />
               <span className="text-yellow-600 dark:text-yellow-400 font-medium">
-                Featured
+                {t.projectCard.featured}
               </span>
             </div>
           </div>
@@ -140,7 +149,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.stack && project.stack.length > 0 && (
             <div className="mb-6">
               <h4 className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                Tech Stack
+                {t.projectCard.techStack}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {project.stack.slice(0, 4).map((tech, idx) => (
@@ -163,7 +172,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.challenges && (
             <div className="mb-4 p-2 bg-orange-50 dark:bg-orange-900/20 rounded-md">
               <p className="text-orange-800 dark:text-orange-300 text-xs line-clamp-1">
-                <span className="font-semibold">Challenge:</span>{" "}
+                <span className="font-semibold">{t.projectCard.challenge}</span>{" "}
                 {project.challenges}
               </p>
             </div>
@@ -171,7 +180,7 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({ project }) => {
 
           <div className="relative z-10">
             <button className="w-full py-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 text-white dark:text-gray-900 rounded-xl font-medium text-sm hover:shadow-lg transform hover:scale-[1.02] transition-all duration-200 group-hover:from-purple-600 group-hover:to-pink-600 dark:group-hover:from-purple-600 dark:group-hover:to-pink-600 dark:group-hover:text-white">
-              Explore Project
+              {t.projectCard.explore}
             </button>
           </div>
         </div>

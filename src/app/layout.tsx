@@ -1,8 +1,9 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import { ClientLayoutWrapper } from "@/components/layout/ClientLayoutWrapper";
 import { ReactNode } from "react";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "개발자 포트폴리오 | 곽현정",
@@ -25,7 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="min-h-screen bg-light dark:bg-dark transition-colors duration-300">
         <ThemeProvider>
-          <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+          <LanguageProvider>
+            <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+          </LanguageProvider>
         </ThemeProvider>
         <Analytics />
       </body>

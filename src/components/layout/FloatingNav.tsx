@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 import {
   User,
   Briefcase,
@@ -14,16 +15,17 @@ interface FloatingNavProps {
 }
 
 const navItems = [
-  { href: "#about", icon: User, label: "About Me" },
-  { href: "#projects", icon: Briefcase, label: "Projects" },
-  { href: "#publication", icon: BookOpen, label: "Publication" },
-  { href: "#awards", icon: Award, label: "Awards" },
-  { href: "#experience", icon: Search, label: "Experience" },
-  { href: "#education", icon: GraduationCap, label: "Education" },
-  { href: "#skills", icon: Wrench, label: "Skills" },
-];
+  { href: "#about", icon: User, key: "about" },
+  { href: "#projects", icon: Briefcase, key: "projects" },
+  { href: "#publication", icon: BookOpen, key: "publication" },
+  { href: "#awards", icon: Award, key: "awards" },
+  { href: "#experience", icon: Search, key: "experience" },
+  { href: "#education", icon: GraduationCap, key: "education" },
+  { href: "#skills", icon: Wrench, key: "skills" },
+] as const;
 
 const FloatingNav: React.FC<FloatingNavProps> = ({ show }) => {
+  const { t } = useLang();
   const [isHovered, setIsHovered] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
 
@@ -91,7 +93,7 @@ const FloatingNav: React.FC<FloatingNavProps> = ({ show }) => {
                         : "opacity-0 -translate-x-4 w-0 overflow-hidden"
                     }`}
                   >
-                    {item.label}
+                    {t.floating[item.key]}
                   </span>
                 </a>
 

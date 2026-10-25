@@ -1,15 +1,16 @@
 "use client";
 
-import { Code, Webhook, Brain, Wrench } from "lucide-react"; // Using Lucide icons for categories
+import { Code, Webhook, Brain, Wrench } from "lucide-react";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 
 const skillsData = [
   {
-    category: "Programming Languages",
+    category: "languages",
     skills: ["Python", "C++", "JavaScript", "TypeScript", "Java"],
     icon: Code,
   },
   {
-    category: "Web Development",
+    category: "web",
     skills: [
       "FastAPI",
       "React",
@@ -21,18 +22,19 @@ const skillsData = [
     icon: Webhook,
   },
   {
-    category: "AI & Data Science",
+    category: "ai",
     skills: ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy"],
     icon: Brain,
   },
   {
-    category: "Tools & Others",
+    category: "tools",
     skills: ["Git", "Docker", "AWS", "Azure", "SQL"],
     icon: Wrench,
   },
-];
+] as const;
 
 const Skills = () => {
+  const { t } = useLang();
   return (
     <section
       id="skills"
@@ -41,10 +43,10 @@ const Skills = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Skills
+            {t.sections.skills.title}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            A comprehensive overview of my technical expertise and capabilities.
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-4xl mx-auto break-keep">
+            {t.sections.skills.desc}
           </p>
         </div>
 
@@ -59,7 +61,7 @@ const Skills = () => {
                   <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white text-center">
-                  {category}
+                  {t.skillCategories[category]}
                 </h3>
               </div>
               <div className="flex flex-wrap gap-2 justify-center">

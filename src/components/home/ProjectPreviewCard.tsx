@@ -3,12 +3,20 @@
 import Link from "next/link";
 import { Project } from "@/types/project";
 import { Code } from "lucide-react";
+import { localize } from "@/lib/i18n/localize";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 
 interface ProjectPreviewCardProps {
   project: Project;
+  description?: string;
 }
 
-const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
+const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({
+  project: rawProject,
+  description,
+}) => {
+  const { t, lang } = useLang();
+  const project = localize(rawProject, lang);
   return (
     <Link href={`/projects/${project.slug}`}>
       <div className="flex flex-col md:flex-row items-start p-6 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -22,7 +30,7 @@ const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
             </h3>
           </div>
           <p className="text-gray-700 dark:text-gray-300 mb-3 text-base">
-            {project.summary}
+            {description ?? project.summary}
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
             {(project.stack || []).slice(0, 3).map((tech, idx) => (
@@ -35,7 +43,7 @@ const ProjectPreviewCard: React.FC<ProjectPreviewCardProps> = ({ project }) => {
             ))}
           </div>
           <span className="text-indigo-600 dark:text-white hover:text-indigo-800 font-medium">
-            View Details →
+            {t.projectPreview.viewDetails}
           </span>
         </div>
       </div>

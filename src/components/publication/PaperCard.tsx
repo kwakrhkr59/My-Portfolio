@@ -16,8 +16,12 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { Paper } from "@/types/publications";
+import { localize } from "@/lib/i18n/localize";
+import { useLang, fill } from "@/lib/i18n/LanguageProvider";
 
-export default function PaperCard({ paper }: { paper: Paper }) {
+export default function PaperCard({ paper: rawPaper }: { paper: Paper }) {
+  const { t, lang } = useLang();
+  const paper = localize(rawPaper, lang);
   const [open, setOpen] = useState(false);
   const [titleOpen, setTitleOpen] = useState(false);
   const [titleTruncated, setTitleTruncated] = useState(false);
@@ -113,7 +117,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             onClick={() => setTitleOpen(!titleOpen)}
             className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
           >
-            {titleOpen ? "제목 접기" : "제목 전체 보기"}
+            {titleOpen ? t.paper.titleCollapse : t.paper.titleExpand}
             {titleOpen ? (
               <ChevronUp className="w-3 h-3" />
             ) : (
@@ -125,7 +129,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
 
         <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800 rounded-lg text-sm text-gray-700 dark:text-gray-300">
           <p className="mb-1">
-            <span className="font-semibold">Authors:</span>{" "}
+            <span className="font-semibold">{t.paper.authors}</span>{" "}
             {paper.authors.map((author, i) => (
               <span key={i}>
                 {author === "HyeonJeong Kwak" ? (
@@ -153,7 +157,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
 
         <div className="mb-4 relative">
           <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-            Abstract
+            {t.paper.abstract}
           </h4>
           <div className="relative bg-gray-50 dark:bg-slate-800 rounded-lg p-3">
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed relative">
@@ -164,7 +168,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
                   onClick={() => setOpen(!open)}
                   className="absolute bottom-0 right-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xs px-1 pb-0.5 bg-gray-50 dark:bg-slate-800"
                 >
-                  {open ? "접기" : "더보기"}
+                  {open ? t.paper.less : t.paper.more}
                 </button>
               )}
             </p>
@@ -177,7 +181,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               <Award className="text-blue-500 mt-0.5 mr-2 text-sm flex-shrink-0" />
               <div>
                 <h5 className="text-xs font-semibold text-blue-800 dark:text-blue-300 mb-1">
-                  Impact
+                  {t.paper.impact}
                 </h5>
                 <p className="text-blue-700 dark:text-blue-300 text-xs">
                   {paper.impact}
@@ -193,7 +197,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               <Microscope className="text-green-500 mt-0.5 mr-2 text-sm flex-shrink-0" />
               <div>
                 <h5 className="text-xs font-semibold text-green-800 dark:text-green-300 mb-1">
-                  Methodology
+                  {t.paper.methodology}
                 </h5>
                 <p className="text-green-700 dark:text-green-300 text-xs">
                   {paper.methodology}
@@ -211,7 +215,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
             </div>
             <div className="flex items-center">
               <Users className="w-3 h-3 mr-1" />
-              {paper.authors.length} authors
+              {fill(t.paper.authorsCount, paper.authors.length)}
             </div>
           </div>
           <span className="text-blue-600 dark:text-blue-400 font-medium bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">
@@ -221,7 +225,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
 
         <div className="mb-6">
           <h4 className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
-            Keywords
+            {t.paper.keywords}
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {paper.keywords.map((k, i) => (
@@ -244,7 +248,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               className="flex-1 py-2.5 px-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"
             >
               <ExternalLink className="w-4 h-4" />
-              Paper
+              {t.paper.paper}
             </a>
           )}
           {paper.github && (
@@ -255,7 +259,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               className="flex-1 py-2.5 px-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"
             >
               <Github className="w-4 h-4" />
-              Code
+              {t.paper.code}
             </a>
           )}
           {paper.website && (
@@ -266,7 +270,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
               className="flex-1 py-2.5 px-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] transition-all"
             >
               <Globe className="w-4 h-4" />
-              Demo
+              {t.paper.demo}
             </a>
           )}
         </div>

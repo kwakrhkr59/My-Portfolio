@@ -7,10 +7,7 @@ export default async function ExperiencePage() {
 
   return (
     <PageShell>
-      <PageHeader
-        title="Professional Experience"
-        description="Detailed journey through my professional experiences, research contributions, and key achievements."
-      />
+      <PageHeader page="experience" />
 
       <ExperienceTimeline experiences={experiences} />
     </PageShell>

@@ -5,11 +5,13 @@ import { Project } from "@/types/project";
 import ProjectCard from "@/components/home/ProjectPreviewCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 export default function ProjectPreview() {
+  const { t } = useLang();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +27,7 @@ export default function ProjectPreview() {
         setProjects(data);
       } catch (err: unknown) {
         console.error("Error fetching projects:", err);
-        setError("프로젝트 데이터를 불러오는데 실패했습니다.");
+        setError("load-failed");
       } finally {
         setLoading(false);
       }
@@ -34,13 +36,19 @@ export default function ProjectPreview() {
     fetchProjects();
   }, []);
 
+  // 홈에는 고정된 순서와 소개 문구로 보여 준다. Notion 에서는 링크(slug)와 스택만 가져온다.
+  const featured = t.home.projects.flatMap(({ match, desc }) => {
+    const project = projects.find((p) => p.title.startsWith(match));
+    return project ? [{ project, desc }] : [];
+  });
+
   if (loading) {
     return (
       <section id="projects" className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading projects...</p>
+            <p className="mt-4 text-gray-600">{t.sections.loadingProjects}</p>
           </div>
         </div>
       </section>
@@ -67,12 +75,12 @@ export default function ProjectPreview() {
                 />
               </svg>
             </div>
-            <p className="text-gray-800">{error}</p>
+            <p className="text-gray-800">{t.projectPreview.error}</p>
             <button
               onClick={() => window.location.reload()}
               className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
             >
-              Retry
+              {t.projectPreview.retry}
             </button>
           </div>
         </div>
@@ -84,7 +92,9 @@ export default function ProjectPreview() {
     return (
       <section id="projects" className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Projects</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            {t.sections.projects.title}
+          </h2>
           <div className="text-center">
             <div className="text-gray-400 mb-4">
               <svg
@@ -101,10 +111,8 @@ export default function ProjectPreview() {
                 />
               </svg>
             </div>
-            <p className="text-gray-600 text-lg">No projects found.</p>
-            <p className="text-gray-500 mt-2">
-              Check back later for new projects!
-            </p>
+            <p className="text-gray-600 text-lg">{t.projectPreview.empty}</p>
+            <p className="text-gray-500 mt-2">{t.projectPreview.emptyHint}</p>
           </div>
         </div>
       </section>
@@ -119,10 +127,10 @@ export default function ProjectPreview() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
-            Projects
+            {t.sections.projects.title}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            My professional journey and academic contributions.
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-4xl mx-auto break-keep">
+            {t.sections.projects.desc}
           </p>
         </div>
         <div className="relative px-16">
@@ -139,7 +147,7 @@ export default function ProjectPreview() {
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
-            loop={projects.length > 1}
+            loop={featured.length > 1}
             breakpoints={{
               640: {
                 slidesPerView: 1,
@@ -156,9 +164,9 @@ export default function ProjectPreview() {
             }}
             className="pb-12"
           >
-            {projects.map((project) => (
+            {featured.map(({ project, desc }) => (
               <SwiperSlide key={project.id}>
-                <ProjectCard project={project} />
+                <ProjectCard project={project} description={desc} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -181,7 +189,7 @@ export default function ProjectPreview() {
                 clipRule="evenodd"
               />
             </svg>
-            View All Projects on GitHub
+            {t.projectsPage.moreButton}
           </a>
         </div>
       </div>

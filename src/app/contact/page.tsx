@@ -13,16 +13,17 @@ import {
   FileText,
 } from "lucide-react";
 import { useState } from "react";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 import { PageShell, PageHeader } from "@/components/layout/PageShell";
 
 const contactData = {
   email: "kwakrhkr59@gmail.com",
-  location: "Seoul, South Korea",
   github: "https://github.com/kwakrhkr59",
   linkedin: "https://linkedin.com/in/hyeonjeong-kwak",
 };
 
 const ContactPage = () => {
+  const { t } = useLang();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,17 +69,7 @@ const ContactPage = () => {
 
   return (
     <PageShell>
-      <PageHeader
-        title="Get in Touch"
-        description={
-          <>
-            I&apos;d love to hear from you!
-            <br />
-            Feel free to reach out for collaborations, inquiries, or just a
-            friendly chat.
-          </>
-        }
-      />
+      <PageHeader page="contact" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         <div className="lg:col-span-1">
@@ -88,10 +79,10 @@ const ContactPage = () => {
                 <MessageSquare className="w-10 h-10 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Let&apos;s Connect
+                {t.contact.connect}
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
-                Ready to start a conversation?
+                {t.contact.ready}
               </p>
             </div>
 
@@ -103,7 +94,7 @@ const ContactPage = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                      Email
+                      {t.contact.email}
                     </p>
                     <a
                       href={`mailto:${contactData.email}`}
@@ -121,10 +112,10 @@ const ContactPage = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                      Location
+                      {t.contact.location}
                     </p>
                     <p className="text-gray-900 dark:text-white font-medium text-base sm:text-lg break-words">
-                      {contactData.location}
+                      {t.contact.locationValue}
                     </p>
                   </div>
                 </div>
@@ -133,7 +124,7 @@ const ContactPage = () => {
 
             <div className="mt-8 pt-6 border-t border-gray-200 dark:border-slate-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">
-                Follow Me
+                {t.contact.follow}
               </h3>
               <div className="flex justify-center space-x-4">
                 <a
@@ -161,11 +152,10 @@ const ContactPage = () => {
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-200/50 dark:border-slate-700/50">
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Send a Message
+                {t.contact.sendTitle}
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
-                Fill out the form below and I&apos;ll get back to you as soon as
-                possible.
+                {t.contact.sendDesc}
               </p>
             </div>
 
@@ -176,7 +166,7 @@ const ContactPage = () => {
                     htmlFor="name"
                     className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Your Name
+                    {t.contact.name}
                   </label>
                   <div className="relative">
                     <User
@@ -196,7 +186,7 @@ const ContactPage = () => {
                       onBlur={() => setFocusedField(null)}
                       required
                       className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 dark:text-white transition-all duration-200"
-                      placeholder="Enter your name"
+                      placeholder={t.contact.namePlaceholder}
                     />
                   </div>
                 </div>
@@ -206,7 +196,7 @@ const ContactPage = () => {
                     htmlFor="email"
                     className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Your Email
+                    {t.contact.yourEmail}
                   </label>
                   <div className="relative">
                     <AtSign
@@ -226,7 +216,7 @@ const ContactPage = () => {
                       onBlur={() => setFocusedField(null)}
                       required
                       className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 dark:text-white transition-all duration-200"
-                      placeholder="Enter your email"
+                      placeholder={t.contact.emailPlaceholder}
                     />
                   </div>
                 </div>
@@ -237,7 +227,7 @@ const ContactPage = () => {
                   htmlFor="subject"
                   className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
                 >
-                  Subject
+                  {t.contact.subject}
                 </label>
                 <div className="relative">
                   <FileText
@@ -257,7 +247,7 @@ const ContactPage = () => {
                     onBlur={() => setFocusedField(null)}
                     required
                     className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 dark:text-white transition-all duration-200"
-                    placeholder="What's this about?"
+                    placeholder={t.contact.subjectPlaceholder}
                   />
                 </div>
               </div>
@@ -267,7 +257,7 @@ const ContactPage = () => {
                   htmlFor="message"
                   className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
                 >
-                  Your Message
+                  {t.contact.message}
                 </label>
                 <div className="relative">
                   <MessageSquare
@@ -287,7 +277,7 @@ const ContactPage = () => {
                     onBlur={() => setFocusedField(null)}
                     required
                     className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-gray-900 dark:text-white resize-none transition-all duration-200"
-                    placeholder="Tell me about your project or just say hello!"
+                    placeholder={t.contact.messagePlaceholder}
                   />
                 </div>
               </div>
@@ -300,12 +290,12 @@ const ContactPage = () => {
                 {status === "sending" ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Sending Message...
+                    {t.contact.sending}
                   </>
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
-                    Send Message
+                    {t.contact.send}
                   </>
                 )}
               </button>
@@ -313,8 +303,7 @@ const ContactPage = () => {
               {status === "success" && (
                 <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
                   <p className="text-green-800 dark:text-green-400 text-center font-medium">
-                    ✨ Message sent successfully! I&apos;ll get back to you
-                    soon.
+                    {t.contact.success}
                   </p>
                 </div>
               )}
@@ -322,8 +311,7 @@ const ContactPage = () => {
               {status === "error" && (
                 <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
                   <p className="text-red-800 dark:text-red-400 text-center font-medium">
-                    ❌ Failed to send message. Please try again or contact me
-                    directly.
+                    {t.contact.error}
                   </p>
                 </div>
               )}

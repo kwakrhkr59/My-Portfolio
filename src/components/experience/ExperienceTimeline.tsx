@@ -18,6 +18,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Experience } from "@/types/experience";
+import { useLang } from "@/lib/i18n/LanguageProvider";
+import { localize } from "@/lib/i18n/localize";
 import {
   Sheet,
   SheetContent,
@@ -97,6 +99,7 @@ function DetailSection({
 }
 
 function ExperienceDetail({ experience }: { experience: Experience }) {
+  const { t } = useLang();
   const { responsibilities, achievements, features, skills, projects } =
     experience.details;
   const links = experience.links;
@@ -104,7 +107,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
   return (
     <div className="mt-6">
       <DetailSection
-        title="Summary"
+        title={t.timeline.summary}
         icon={<Lightbulb className="w-5 h-5 text-yellow-500" />}
       >
         <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -114,7 +117,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
 
       {responsibilities.length > 0 && (
         <DetailSection
-          title="Key Responsibilities"
+          title={t.timeline.responsibilities}
           icon={<Target className="w-5 h-5 text-blue-500" />}
         >
           <ul className="space-y-2">
@@ -133,7 +136,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
 
       {achievements.length > 0 && (
         <DetailSection
-          title="Key Achievements"
+          title={t.timeline.achievements}
           icon={<Award className="w-5 h-5 text-purple-500" />}
         >
           <ul className="space-y-2">
@@ -151,7 +154,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
       )}
 
       {features.length > 0 && (
-        <DetailSection title="Features">
+        <DetailSection title={t.timeline.features}>
           <div className="flex flex-wrap gap-2">
             {features.map((item, idx) => (
               <span
@@ -166,7 +169,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
       )}
 
       {skills.length > 0 && (
-        <DetailSection title="Skills Developed">
+        <DetailSection title={t.timeline.skills}>
           <div className="flex flex-wrap gap-2">
             {skills.map((item, idx) => (
               <span
@@ -182,7 +185,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
 
       {projects && projects.length > 0 && (
         <DetailSection
-          title="Major Projects"
+          title={t.timeline.projects}
           icon={<Code className="w-5 h-5 text-green-500" />}
         >
           <ul className="space-y-2">
@@ -209,7 +212,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
               className="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-sm transition-colors shadow-md"
             >
               <ExternalLink className="w-4 h-4" />
-              Website
+              {t.timeline.website}
             </a>
           )}
           {links.certificate && (
@@ -220,7 +223,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
               className="inline-flex items-center gap-2 px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold text-sm transition-colors shadow-md"
             >
               <Award className="w-4 h-4" />
-              Certificate
+              {t.timeline.certificate}
             </a>
           )}
           {links.portfolio && (
@@ -231,7 +234,7 @@ function ExperienceDetail({ experience }: { experience: Experience }) {
               className="inline-flex items-center gap-2 px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold text-sm transition-colors shadow-md"
             >
               <FolderOpen className="w-4 h-4" />
-              Portfolio
+              {t.timeline.portfolio}
             </a>
           )}
         </div>
@@ -247,6 +250,7 @@ function TimelineItem({
   experience: Experience;
   onOpen: () => void;
 }) {
+  const { t } = useLang();
   const Icon = typeIcon(experience.type);
 
   return (
@@ -290,7 +294,7 @@ function TimelineItem({
           onClick={onOpen}
           className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
         >
-          더보기
+          {t.timeline.more}
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
@@ -299,10 +303,12 @@ function TimelineItem({
 }
 
 export default function ExperienceTimeline({
-  experiences,
+  experiences: rawExperiences,
 }: {
   experiences: Experience[];
 }) {
+  const { lang } = useLang();
+  const experiences = rawExperiences.map((e) => localize(e, lang));
   const [selected, setSelected] = useState<Experience | null>(null);
   const groups = groupByYear(experiences);
 

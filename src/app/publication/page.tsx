@@ -7,10 +7,7 @@ export default async function PublicationsPage() {
 
   return (
     <PageShell>
-      <PageHeader
-        title="Academic Publications"
-        description="Explore my research contributions in AI and Cyber Security."
-      />
+      <PageHeader page="publication" />
       <PaperList papers={papers} />
     </PageShell>
   );

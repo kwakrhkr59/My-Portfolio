@@ -1,4 +1,8 @@
+"use client";
+
 import { ReactNode } from "react";
+import { useLang } from "@/lib/i18n/LanguageProvider";
+import { Dictionary } from "@/lib/i18n/dictionary";
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -8,19 +12,16 @@ export function PageShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageHeader({
-  title,
-  description,
-}: {
-  title: string;
-  description: ReactNode;
-}) {
+export function PageHeader({ page }: { page: keyof Dictionary["pages"] }) {
+  const { t } = useLang();
+  const { title, description } = t.pages[page];
+
   return (
     <div className="text-center mb-16 md:mb-20">
       <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-0 md:mb-2 pb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
         {title}
       </h1>
-      <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-lg md:text-2xl text-gray-600 dark:text-gray-400 max-w-5xl mx-auto leading-relaxed break-keep whitespace-pre-line">
         {description}
       </p>
     </div>

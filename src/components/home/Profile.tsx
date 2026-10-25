@@ -2,14 +2,9 @@
 
 import { Mail, Github, Linkedin, FileText, User } from "lucide-react";
 import Image from "next/image";
+import { useLang } from "@/lib/i18n/LanguageProvider";
 
 const profileData = {
-  name: "Hyeonjeong Kwak",
-  role: "AI & Full-Stack Developer",
-  university: "Computer Science & Mathematics Student @Ewha Womans University",
-  tagline: "From everyday problems to innovative solutions",
-  description:
-    "Passionate about leveraging cutting-edge technologies to build impactful and user-centric applications. With a background in AI research and full-stack development, I thrive on transforming complex challenges into elegant solutions.",
   imageUrl: "/profile.jpg",
   email: "kwakrhkr59@gmail.com",
   github: "https://github.com/kwakrhkr59",
@@ -18,6 +13,7 @@ const profileData = {
 };
 
 const Profile = () => {
+  const { t } = useLang();
   return (
     <section
       id="about"
@@ -29,7 +25,7 @@ const Profile = () => {
             {profileData.imageUrl ? (
               <Image
                 src={profileData.imageUrl}
-                alt={profileData.name}
+                alt={t.profile.name}
                 className="w-full h-full object-cover"
                 width={500}
                 height={500}
@@ -43,19 +39,19 @@ const Profile = () => {
           </div>
 
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
-            {profileData.name}
+            {t.profile.name}
           </h1>
           <p className="text-xl text-gray-700 dark:text-gray-300 mb-2">
-            {profileData.role}
+            {t.profile.role}
           </p>
           <p className="text-md text-gray-600 dark:text-gray-400 mb-4">
-            {profileData.university}
+            {t.profile.university}
           </p>
           <p className="text-lg italic text-gray-800 dark:text-gray-200 mb-6 max-w-lg mx-auto">
-            &quot;{profileData.tagline}&quot;
+            &quot;{t.profile.tagline}&quot;
           </p>
-          <p className="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed max-w-lg mx-auto">
-            {profileData.description}
+          <p className="text-base text-gray-600 dark:text-gray-400 mb-8 leading-relaxed max-w-lg mx-auto whitespace-pre-line">
+            {t.profile.description}
           </p>
 
           {profileData.cv && (
@@ -66,7 +62,7 @@ const Profile = () => {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-md"
               >
                 <FileText className="w-5 h-5" />
-                Download CV
+                {t.profile.cv}
               </a>
             </div>
           )}
