@@ -15,4 +15,5 @@ export interface Paper {
   impact?: string;
   methodology?: string;
   field: string;
+  en?: Partial<Pick<Paper, "title" | "abstract" | "impact" | "methodology">>;
 }

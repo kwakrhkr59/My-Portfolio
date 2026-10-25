@@ -5,6 +5,8 @@ import {
   getSelectName,
   getUrl,
   getNumber,
+  getRichText,
+  compact,
 } from "@/lib/notionParsers";
 import { Paper } from "@/types/publications";
 
@@ -22,9 +24,9 @@ export async function fetchNotionPapers(): Promise<Paper[]> {
   return response.results
     .filter(
       (
-        page: QueryDatabaseResponse["results"][number]
+        page: QueryDatabaseResponse["results"][number],
       ): page is PageObjectResponse =>
-        "properties" in page && page.object === "page"
+        "properties" in page && page.object === "page",
     )
 
     .map((page: PageObjectResponse) => {
@@ -47,6 +49,12 @@ export async function fetchNotionPapers(): Promise<Paper[]> {
         impact: getPlainText(props["Impact"], "rich_text"),
         methodology: getPlainText(props["Methodology"], "rich_text"),
         field: getSelectName(props["Field"]) || "Other",
+        en: compact({
+          title: getRichText(props["Title_en"]),
+          abstract: getRichText(props["Abstract_en"]),
+          impact: getRichText(props["Impact_en"]),
+          methodology: getRichText(props["Methodology_en"]),
+        }),
       };
     });
 }

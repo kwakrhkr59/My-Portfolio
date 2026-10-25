@@ -6,6 +6,9 @@ import {
   getStatusName,
   getUrl,
   getFiles,
+  getRichText,
+  getLines,
+  compact,
 } from "@/lib/notionParsers";
 import { Project, ProjectShort } from "@/types/project";
 import {
@@ -24,9 +27,9 @@ export async function fetchNotionProjectsAll(): Promise<Project[]> {
 
     .filter(
       (
-        page: QueryDatabaseResponse["results"][number]
+        page: QueryDatabaseResponse["results"][number],
       ): page is PageObjectResponse =>
-        "properties" in page && page.object === "page"
+        "properties" in page && page.object === "page",
     )
 
     .map((page: PageObjectResponse) => {
@@ -53,12 +56,21 @@ export async function fetchNotionProjectsAll(): Promise<Project[]> {
         priority: getSelectName(props["Priority"]) || "",
         status: getStatusName(props["Status"]) || "",
         created_at: createdAt,
+        en: compact({
+          title: getRichText(props["Title_en"]),
+          summary: getRichText(props["Summary_en"]),
+          details: getRichText(props["Details_en"]),
+          goal: getRichText(props["Goal_en"]),
+          features: getLines(props["Features_en"]),
+          challenges: getRichText(props["Challenges_en"]),
+          results: getRichText(props["Results_en"]),
+        }),
       };
     });
 }
 
 export async function fetchNotionProjectBySlug(
-  slug: string
+  slug: string,
 ): Promise<Project | null> {
   const response = await notion.databases.query({
     database_id: process.env.NOTION_PROJECT_ID!,
@@ -103,11 +115,20 @@ export async function fetchNotionProjectBySlug(
     priority: getSelectName(props["Priority"]) || "",
     status: getStatusName(props["Status"]) || "",
     created_at: createdAt,
+    en: compact({
+      title: getRichText(props["Title_en"]),
+      summary: getRichText(props["Summary_en"]),
+      details: getRichText(props["Details_en"]),
+      goal: getRichText(props["Goal_en"]),
+      features: getLines(props["Features_en"]),
+      challenges: getRichText(props["Challenges_en"]),
+      results: getRichText(props["Results_en"]),
+    }),
   };
 }
 
 export const parseProject = (
-  projectPage: GetPageResponse
+  projectPage: GetPageResponse,
 ): ProjectShort | null => {
   if (
     !projectPage ||

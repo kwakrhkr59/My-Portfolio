@@ -5,6 +5,9 @@ import {
   getSelectName,
   getUrl,
   getTextArray,
+  getRichText,
+  getLines,
+  compact,
 } from "@/lib/notionParsers";
 import {
   Experience,
@@ -27,9 +30,9 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
     response.results
       .filter(
         (
-          page: QueryDatabaseResponse["results"][number]
+          page: QueryDatabaseResponse["results"][number],
         ): page is PageObjectResponse =>
-          page.object === "page" && "properties" in page
+          page.object === "page" && "properties" in page,
       )
       .map(async (page: PageObjectResponse) => {
         const props = page.properties as any;
@@ -40,7 +43,7 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
             : [];
 
         const projectPages = await Promise.all(
-          projectIds.map((id) => notion.pages.retrieve({ page_id: id }))
+          projectIds.map((id) => notion.pages.retrieve({ page_id: id })),
         );
         const parsedProjects = projectPages
           .map(parseProject)
@@ -75,8 +78,20 @@ export async function fetchNotionExperience(): Promise<Experience[]> {
           description: getPlainText(props["Description"], "rich_text") || "",
           details: details,
           links: links,
+          en: compact({
+            title: getRichText(props["Title_en"]),
+            organization: getRichText(props["Organization_en"]),
+            location: getRichText(props["Location_en"]),
+            description: getRichText(props["Description_en"]),
+            details: compact({
+              details: getLines(props["Detailed Overview_en"]),
+              responsibilities: getLines(props["Responsibilities_en"]),
+              achievements: getLines(props["Achievements_en"]),
+              features: getLines(props["Features_en"]),
+            }),
+          }),
         };
-      })
+      }),
   );
 
   return experiences.filter(Boolean);

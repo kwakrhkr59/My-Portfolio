@@ -18,6 +18,18 @@ export interface Project {
   priority: string | null;
   status: string | null;
   created_at: string;
+  en?: Partial<
+    Pick<
+      Project,
+      | "title"
+      | "summary"
+      | "details"
+      | "goal"
+      | "features"
+      | "challenges"
+      | "results"
+    >
+  >;
 }
 
 export interface ProjectShort {

@@ -1,5 +1,6 @@
 import { notion, NOTION_AWARDS_ID } from "./notion";
 import { Award } from "@/types/award";
+import { getRichText, compact } from "@/lib/notionParsers";
 import {
   PageObjectResponse,
   QueryDatabaseResponse,
@@ -15,8 +16,8 @@ export async function fetchNotionAwards(): Promise<Award[]> {
   return response.results
     .filter(
       (
-        page: QueryDatabaseResponse["results"][number]
-      ): page is PageObjectResponse => "properties" in page
+        page: QueryDatabaseResponse["results"][number],
+      ): page is PageObjectResponse => "properties" in page,
     )
     .map((page: PageObjectResponse) => {
       const props = page.properties;
@@ -39,6 +40,11 @@ export async function fetchNotionAwards(): Promise<Award[]> {
           props.Description?.type === "rich_text"
             ? props.Description.rich_text[0]?.plain_text || ""
             : "",
+        en: compact({
+          title: getRichText(props["Title_en"]),
+          organization: getRichText(props["Organization_en"]),
+          description: getRichText(props["Description_en"]),
+        }),
       };
     });
 }

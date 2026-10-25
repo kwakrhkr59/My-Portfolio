@@ -29,4 +29,14 @@ export interface Experience {
   description: string;
   details: ExperienceDetails;
   links?: ExperienceLinks;
+  en?: Partial<
+    Pick<Experience, "title" | "organization" | "location" | "description">
+  > & {
+    details?: Partial<
+      Pick<
+        ExperienceDetails,
+        "details" | "responsibilities" | "achievements" | "features"
+      >
+    >;
+  };
 }

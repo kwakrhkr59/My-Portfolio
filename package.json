@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "translate": "node --env-file=.env.local scripts/translate-notion.mjs"
   },
   "dependencies": {
     "@notionhq/client": "^3.1.2",

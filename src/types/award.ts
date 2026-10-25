@@ -4,4 +4,5 @@ export interface Award {
   year: number;
   organization: string;
   description: string;
+  en?: Partial<Pick<Award, "title" | "organization" | "description">>;
 }
