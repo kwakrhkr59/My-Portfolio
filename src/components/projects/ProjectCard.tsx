@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { getImageProps } from "next/image";
 import { useLang } from "@/components/layout/LanguageProvider";
 import { fill } from "@/lib/i18n/fill";
 import {
@@ -48,19 +50,58 @@ export const ProjectsPageCard: React.FC<ProjectCardProps> = ({
   const gradientIndex = project.id.charCodeAt(0) % gradients.length;
   const selectedGradient = gradients[gradientIndex];
 
+  // 미리보기 이미지는 상세 페이지용 모바일 이미지(/images/projects/{slug}-mobile.png)를 그대로 쓴다.
+  // 파일이 없으면 아래 그라디언트 헤더가 대신 보인다.
+  const [coverFailed, setCoverFailed] = useState(false);
+  const coverRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    // 하이드레이션 전에 이미 로드에 실패한 경우 onError 를 놓칠 수 있어 한 번 더 확인한다.
+    const img = coverRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setCoverFailed(true);
+  }, []);
+  const cover = getImageProps({
+    src: `/images/projects/${project.slug}-mobile.png`,
+    alt: `${project.title} preview`,
+    width: 1940,
+    height: 600,
+    sizes: "(min-width: 1024px) 33vw, (min-width: 720px) 50vw, 100vw",
+    quality: 80,
+    className: "block w-full h-auto",
+  });
+
   return (
     <Link href={`/projects/${project.slug}`} className="block group">
       <div className="relative bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-800 cursor-pointer">
-        <div className={`h-32 bg-gradient-to-r ${selectedGradient} relative`}>
-          <div className="absolute inset-0 bg-black/10"></div>
-          <div className="absolute top-4 left-4">
-            <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-              <Icon className="text-white text-xl" />
-            </div>
-          </div>
+        <div
+          className={`relative bg-gradient-to-r ${selectedGradient} ${
+            coverFailed ? "h-32" : ""
+          }`}
+        >
+          {!coverFailed ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              {...cover.props}
+              alt={cover.props.alt}
+              ref={coverRef}
+              onError={() => setCoverFailed(true)}
+            />
+          ) : (
+            <>
+              <div className="absolute inset-0 bg-black/10"></div>
+              <div className="absolute top-4 left-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                  <Icon className="text-white text-xl" />
+                </div>
+              </div>
+            </>
+          )}
 
-          <div className="absolute bottom-4 left-4">
-            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs font-medium">
+          <div className="absolute bottom-3 left-3">
+            <span
+              className={`px-3 py-1 backdrop-blur-sm rounded-full text-white text-xs font-medium ${
+                coverFailed ? "bg-white/20" : "bg-black/40"
+              }`}
+            >
               {project.type || t.projectCard.project}
             </span>
           </div>
