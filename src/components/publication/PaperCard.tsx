@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BookOpen,
   Calendar,
@@ -12,11 +12,27 @@ import {
   Microscope,
   Globe,
   Github,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Paper } from "@/types/publications";
 
 export default function PaperCard({ paper }: { paper: Paper }) {
   const [open, setOpen] = useState(false);
+  const [titleOpen, setTitleOpen] = useState(false);
+  const [titleTruncated, setTitleTruncated] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  // 제목이 접힌 상태에서 말줄임이 생겼는지 측정한다 (창 크기 변경에도 대응).
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el || titleOpen) return;
+    const measure = () => setTitleTruncated(el.scrollHeight > el.clientHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [paper.title, titleOpen]);
 
   const getFieldIcon = (field: string) => {
     switch (field) {
@@ -74,7 +90,7 @@ export default function PaperCard({ paper }: { paper: Paper }) {
         <div className="absolute bottom-4 left-4">
           <span
             className={`px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium ${getStatusColor(
-              paper.status
+              paper.status,
             )}`}
           >
             {paper.status}
@@ -83,9 +99,29 @@ export default function PaperCard({ paper }: { paper: Paper }) {
       </div>
 
       <div className="p-6 group">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300 line-clamp-2">
+        <h3
+          ref={titleRef}
+          className={`text-xl font-bold text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text transition-all duration-300 ${
+            titleOpen ? "" : "line-clamp-2"
+          }`}
+        >
           {paper.title}
         </h3>
+        {(titleTruncated || titleOpen) && (
+          <button
+            type="button"
+            onClick={() => setTitleOpen(!titleOpen)}
+            className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            {titleOpen ? "제목 접기" : "제목 전체 보기"}
+            {titleOpen ? (
+              <ChevronUp className="w-3 h-3" />
+            ) : (
+              <ChevronDown className="w-3 h-3" />
+            )}
+          </button>
+        )}
+        <div className="mb-2" />
 
         <div className="mb-4 p-3 bg-gray-50 dark:bg-slate-800 rounded-lg text-sm text-gray-700 dark:text-gray-300">
           <p className="mb-1">
