@@ -97,21 +97,23 @@ export default function ProjectDetailView({
     if (img && img.complete && img.naturalWidth === 0) setCoverFailed(true);
   }, []);
   const coverBase = `/images/projects/${project.slug}`;
-  // 데스크톱(md 이상)은 영역 비율을 3840:520 으로 고정하고 이미지를 가득 채운다. 비율이 다른 이미지는 가장자리가 잘린다.
-  // 모바일은 이미지 높이를 그대로 따른다. width/height 는 로딩 전 자리를 잡기 위한 대략적인 값이다.
+  // 이미지 위에 제목, 유형, 기간을 얹는다. 이미지는 영역을 가득 채우고 왼쪽 기준으로 잘린다.
+  // 이미지 왼쪽에 아이콘이 있어서, 데스크톱에서는 글자를 폭의 14% 지점(아이콘 오른쪽)부터 시작한다.
+  // 데스크톱(md 이상)은 영역 비율을 3840:580 으로 고정하되, 내용이 더 길면 그만큼 늘어난다.
+  // width/height 는 로딩 전 자리를 잡기 위한 대략적인 값이다.
   const coverCommon = {
     alt: `${project.title} cover`,
     sizes: "100vw",
     quality: 85,
     loading: "eager" as const,
     className:
-      "block w-full h-auto md:absolute md:inset-0 md:h-full md:object-cover md:object-center",
+      "absolute inset-0 h-full w-full object-cover object-left md:object-[15%_50%]",
   };
   const desktopCover = getImageProps({
     ...coverCommon,
     src: `${coverBase}-desktop.png`,
     width: 3840,
-    height: 520,
+    height: 580,
   });
   const mobileCover = getImageProps({
     ...coverCommon,
@@ -124,105 +126,68 @@ export default function ProjectDetailView({
     formatPeriod(project.start, project.end, lang, project.period ?? "") ||
     null;
 
-  // 제목, 유형, 기간. 이미지 위(어두운 배경)에 얹을 때와 이미지 아래(밝은 배경)에 둘 때 색만 다르다.
-  const heading = (onDark: boolean) => (
-    <div className={onDark ? "text-white" : "text-gray-900 dark:text-white"}>
-      <span
-        className={`inline-block px-4 py-1 mb-4 text-sm font-semibold rounded-full ${
-          onDark
-            ? "bg-white/20 backdrop-blur-sm"
-            : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
-        }`}
-      >
-        {project.type || <T k="detail.project" />}
-      </span>
-      <h1
-        className={`text-4xl md:text-6xl font-bold mb-4 leading-tight ${
-          onDark ? "drop-shadow-md" : ""
-        }`}
-      >
-        {project.title}
-      </h1>
-      <div
-        className={`flex flex-wrap items-center gap-x-6 gap-y-2 ${
-          onDark ? "text-white/90" : "text-gray-600 dark:text-gray-400"
-        }`}
-      >
-        <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4" />
-          <span>{period || <T k="detail.unknownPeriod" />}</span>
-        </div>
-        {project.team && project.team.length > 0 && (
-          <div className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            <span>{project.team.join(", ")}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  const backLink = (onDark: boolean) => (
-    <Link
-      href="/projects"
-      className={`inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-        onDark
-          ? "px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full text-white"
-          : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
-      }`}
-    >
-      <ArrowLeft className="w-4 h-4" />
-      <T k="detail.back" />
-    </Link>
-  );
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      {!coverFailed ? (
-        <>
-          <section
-            className={`relative w-full overflow-hidden md:aspect-[3840/520] bg-gradient-to-r ${gradient}`}
-          >
-            <picture>
-              <source
-                media="(min-width: 768px)"
-                srcSet={desktopCover.props.srcSet}
-                width={3840}
-                height={520}
-              />
-              <img
-                {...mobileCover.props}
-                alt={coverCommon.alt}
-                ref={coverRef}
-                fetchPriority="high"
-                onError={() => setCoverFailed(true)}
-              />
-            </picture>
-          </section>
-          <div className="container mx-auto px-4 pt-8 md:pt-10">
-            <div className="max-w-6xl mx-auto">
-              <div className="mb-6">{backLink(false)}</div>
-              {heading(false)}
-            </div>
-          </div>
-        </>
-      ) : (
-        <section
-          className={`relative w-full overflow-hidden bg-gradient-to-r ${gradient}`}
-        >
+      <section
+        className={`relative flex w-full overflow-hidden min-h-[18rem] md:min-h-[16rem] md:aspect-[3840/580] bg-gradient-to-r ${gradient}`}
+      >
+        {!coverFailed ? (
+          <picture>
+            <source
+              media="(min-width: 768px)"
+              srcSet={desktopCover.props.srcSet}
+              width={3840}
+              height={580}
+            />
+            <img
+              {...mobileCover.props}
+              alt={coverCommon.alt}
+              ref={coverRef}
+              fetchPriority="high"
+              onError={() => setCoverFailed(true)}
+            />
+          </picture>
+        ) : (
           <Icon
             aria-hidden
             className="absolute right-8 md:right-24 top-1/2 -translate-y-1/2 w-40 h-40 md:w-64 md:h-64 text-white/20"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
-          <div className="relative container mx-auto px-4 min-h-[18rem] md:min-h-[26rem] py-6 md:py-8 flex flex-col justify-between">
-            <div className="self-start">{backLink(true)}</div>
-            <div className="max-w-6xl mx-auto w-full pt-12">
-              {heading(true)}
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
+
+        <div className="relative container mx-auto px-4 py-4 md:py-8 flex flex-col justify-between">
+          <div className="md:pl-[14%]">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full text-white text-sm font-medium transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <T k="detail.back" />
+            </Link>
+          </div>
+
+          <div className="w-full text-white pt-8 md:pl-[14%]">
+            <span className="inline-block px-4 py-1 mb-3 bg-white/20 backdrop-blur-sm text-sm font-semibold rounded-full">
+              {project.type || <T k="detail.project" />}
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight drop-shadow-md">
+              {project.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/90">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>{period || <T k="detail.unknownPeriod" />}</span>
+              </div>
+              {project.team && project.team.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  <span>{project.team.join(", ")}</span>
+                </div>
+              )}
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-6xl mx-auto">
