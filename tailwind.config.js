@@ -23,7 +23,17 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-pretendard)", "Pretendard", "sans-serif"],
+        sans: [
+          "Pretendard Variable",
+          "Pretendard",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "system-ui",
+          "Roboto",
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          "sans-serif",
+        ],
       },
       animation: {
         "fade-in": "fade-in 1s ease-out forwards",
