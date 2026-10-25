@@ -69,7 +69,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 relative">
             <Link href="/" className="flex-shrink-0 flex items-center gap-2.5">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt={t.profile.name}
                 width={32}
                 height={32}
