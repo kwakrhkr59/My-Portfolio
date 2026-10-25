@@ -97,14 +97,15 @@ export default function ProjectDetailView({
     if (img && img.complete && img.naturalWidth === 0) setCoverFailed(true);
   }, []);
   const coverBase = `/images/projects/${project.slug}`;
-  // 이미지 안에 프로젝트 이름이 들어 있어서 잘라 쓰지 않고 가로 전체로 그대로 보여 준다.
-  // width/height 는 로딩 전 자리를 잡기 위한 대략적인 비율이고, 실제 비율은 이미지에 따라 달라도 된다.
+  // 데스크톱(md 이상)은 영역 비율을 3840:520 으로 고정하고 이미지를 가득 채운다. 비율이 다른 이미지는 가장자리가 잘린다.
+  // 모바일은 이미지 높이를 그대로 따른다. width/height 는 로딩 전 자리를 잡기 위한 대략적인 값이다.
   const coverCommon = {
     alt: `${project.title} cover`,
     sizes: "100vw",
     quality: 85,
     loading: "eager" as const,
-    className: "block w-full h-auto",
+    className:
+      "block w-full h-auto md:absolute md:inset-0 md:h-full md:object-cover md:object-center",
   };
   const desktopCover = getImageProps({
     ...coverCommon,
@@ -179,7 +180,9 @@ export default function ProjectDetailView({
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
       {!coverFailed ? (
         <>
-          <section className={`w-full bg-gradient-to-r ${gradient}`}>
+          <section
+            className={`relative w-full overflow-hidden md:aspect-[3840/520] bg-gradient-to-r ${gradient}`}
+          >
             <picture>
               <source
                 media="(min-width: 768px)"
