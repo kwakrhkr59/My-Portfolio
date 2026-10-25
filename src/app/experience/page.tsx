@@ -13,6 +13,7 @@ import {
   Rocket,
   BookOpen,
 } from "lucide-react";
+import { PageShell, PageHeader } from "@/components/layout/PageShell";
 import { Experience } from "@/types/experience";
 import { fetchNotionExperience } from "@/lib/fetchExperience";
 
@@ -235,24 +236,17 @@ export default async function ExperiencePage() {
   const experiences = await fetchNotionExperience();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        <div className="text-center mb-16 md:mb-20">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
-            Professional Experience
-          </h1>
-          <p className="text-lg md:text-2xl text-gray-60G00 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Detailed journey through my professional experiences, research
-            contributions, and key achievements.
-          </p>
-        </div>
+    <PageShell>
+      <PageHeader
+        title="Professional Experience"
+        description="Detailed journey through my professional experiences, research contributions, and key achievements."
+      />
 
-        <div className="relative max-w-3xl mx-auto">
-          {experiences.map((experience) => (
-            <ExperienceItem key={experience.id} experience={experience} />
-          ))}
-        </div>
+      <div className="relative max-w-3xl mx-auto">
+        {experiences.map((experience) => (
+          <ExperienceItem key={experience.id} experience={experience} />
+        ))}
       </div>
-    </div>
+    </PageShell>
   );
 }

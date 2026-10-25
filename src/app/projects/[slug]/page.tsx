@@ -41,7 +41,7 @@ export default async function ProjectDetail(props: any) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <nav className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700">
+      <nav className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
@@ -126,8 +126,8 @@ export default async function ProjectDetail(props: any) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
-              <h2 className="text-2xl font-bold mb-6 pb-4 border-b border-gray-100 dark:border-gray-600 text-gray-900 dark:text-gray-100">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-8 border border-gray-200 dark:border-slate-700">
+              <h2 className="text-2xl font-bold mb-6 pb-4 border-b border-gray-200 dark:border-slate-600 text-gray-900 dark:text-gray-100">
                 Overview
               </h2>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -138,8 +138,8 @@ export default async function ProjectDetail(props: any) {
             </div>
 
             {project.goal && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100 dark:border-gray-600 text-gray-900 dark:text-gray-100">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-8 border border-gray-200 dark:border-slate-700">
+                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-200 dark:border-slate-600 text-gray-900 dark:text-gray-100">
                   <Lightbulb className="mr-3 text-yellow-500 dark:text-yellow-400" />
                   Project Goal
                 </h2>
@@ -148,8 +148,8 @@ export default async function ProjectDetail(props: any) {
             )}
 
             {project.features && project.features.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100 dark:border-gray-600 text-gray-900 dark:text-gray-100">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-8 border border-gray-200 dark:border-slate-700">
+                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-200 dark:border-slate-600 text-gray-900 dark:text-gray-100">
                   <ListTodo className="mr-3 text-indigo-500 dark:text-indigo-400" />
                   Key Features
                 </h2>
@@ -167,8 +167,8 @@ export default async function ProjectDetail(props: any) {
             )}
 
             {project.challenges && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100 dark:border-gray-600 text-gray-900 dark:text-gray-100">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-8 border border-gray-200 dark:border-slate-700">
+                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-200 dark:border-slate-600 text-gray-900 dark:text-gray-100">
                   <Wrench className="mr-3 text-gray-600 dark:text-gray-400" />
                   Challenges & Solutions
                 </h2>
@@ -179,8 +179,8 @@ export default async function ProjectDetail(props: any) {
             )}
 
             {project.results && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
-                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-100 dark:border-gray-600 text-gray-900 dark:text-gray-100">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-8 border border-gray-200 dark:border-slate-700">
+                <h2 className="text-2xl font-bold mb-6 flex items-center pb-4 border-b border-gray-200 dark:border-slate-600 text-gray-900 dark:text-gray-100">
                   <Trophy className="mr-3 text-amber-500 dark:text-amber-400" />
                   Results & Achievements
                 </h2>
@@ -193,7 +193,7 @@ export default async function ProjectDetail(props: any) {
 
           <div className="space-y-8">
             {project.stack && project.stack.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 border border-gray-200 dark:border-slate-700">
                 <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800 dark:text-gray-200">
                   <Wrench className="mr-2 text-indigo-500 dark:text-indigo-400" />
                   Technologies
@@ -212,7 +212,7 @@ export default async function ProjectDetail(props: any) {
             )}
 
             {project.team && project.team.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 border border-gray-200 dark:border-slate-700">
                 <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800 dark:text-gray-200">
                   <Users className="mr-2 text-indigo-500 dark:text-indigo-400" />
                   Team
@@ -230,7 +230,7 @@ export default async function ProjectDetail(props: any) {
               </div>
             )}
 
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-6 border border-gray-200 dark:border-slate-700">
               <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">Links</h3>
               <div className="space-y-4">
                 {project.link && (
@@ -249,7 +249,7 @@ export default async function ProjectDetail(props: any) {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center py-2 px-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 border border-gray-200 dark:border-gray-600"
+                    className="flex items-center py-2 px-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 border border-gray-200 dark:border-slate-600"
                   >
                     <Github className="mr-3" />
                     <span>GitHub Repository</span>
