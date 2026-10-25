@@ -14,7 +14,6 @@ export interface Paper {
   status: "Published" | "In Review" | "Preprint";
   impact?: string;
   methodology?: string;
-  field: string;
   homeSummary: string;
   featured: boolean;
   order: number;

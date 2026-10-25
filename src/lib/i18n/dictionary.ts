@@ -163,6 +163,15 @@ const en = {
     demo: "Demo",
     titleExpand: "Show full title",
     titleCollapse: "Collapse title",
+    statuses: {
+      Published: "Published",
+      "In Review": "In Review",
+      Preprint: "Preprint",
+    },
+    roles: {
+      "Primary Author": "Primary Author",
+      "Co-Author": "Co-Author",
+    },
   },
   timeline: {
     more: "Read more",
@@ -364,6 +373,15 @@ const ko: Dictionary = {
     demo: "데모",
     titleExpand: "제목 전체 보기",
     titleCollapse: "제목 접기",
+    statuses: {
+      Published: "게재 완료",
+      "In Review": "심사 중",
+      Preprint: "프리프린트",
+    },
+    roles: {
+      "Primary Author": "제1저자",
+      "Co-Author": "공저자",
+    },
   },
   timeline: {
     more: "더보기",
