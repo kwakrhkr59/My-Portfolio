@@ -162,7 +162,7 @@ const en = {
       {
         role: "Undergraduate Research Intern",
         org: "KAIST SAILab",
-        period: "Jun 19, 2025 – Dec 18, 2025",
+        period: "Jun 2025 – Dec 2025",
         desc: "Took part in explainable AI (XAI) and generative AI research, exploring the interpretability and robustness of time-series deep learning models.",
       },
       {
@@ -463,7 +463,7 @@ const ko: Dictionary = {
       {
         role: "학부 연구 인턴",
         org: "KAIST SAILab",
-        period: "2025.06.19 ~ 2025.12.18",
+        period: "2025.06 ~ 2025.12",
         desc: "설명가능한 인공지능(XAI) 및 생성형 AI 연구에 참여하며, 시계열 딥러닝 모델의 해석 가능성과 강건성을 탐구했습니다.",
       },
       {
