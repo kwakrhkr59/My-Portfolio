@@ -7,6 +7,7 @@ import {
   useState,
   ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
 import { dictionaries, Dictionary, Lang } from "@/lib/i18n/dictionary";
 
 interface LanguageContextType {
@@ -46,6 +47,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  // 탭 제목은 서버가 한국어로 내려 주므로, 언어나 페이지가 바뀔 때 현재 언어에 맞게 다시 맞춘다.
+  // 프로젝트 상세(/projects/slug)는 상세 페이지가 직접 정한다.
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname.startsWith("/projects/")) return;
+    const key = pathname === "/" ? "home" : pathname.split("/")[1];
+    const title = (dictionaries[lang].meta as Record<string, string>)[key];
+    if (title) document.title = title;
+  }, [pathname, lang]);
 
   const setLang = (next: Lang) => {
     setLangState(next);

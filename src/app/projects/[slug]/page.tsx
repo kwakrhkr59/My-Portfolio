@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { T } from "@/components/layout/T";
@@ -7,6 +8,16 @@ import { fetchNotionProjectBySlug } from "@/lib/fetchProject";
 
 // Notion 수정 사항이 재배포 없이 반영되도록 5분마다 갱신한다.
 export const revalidate = 300;
+
+export async function generateMetadata(props: any): Promise<Metadata> {
+  const { slug } = await props.params;
+  const project = await fetchNotionProjectBySlug(slug);
+  if (!project) return { title: "프로젝트" };
+  return {
+    title: project.title,
+    description: project.summary || undefined,
+  };
+}
 
 export default async function ProjectDetail(props: any) {
   const params = await props.params;

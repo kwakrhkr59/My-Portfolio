@@ -80,7 +80,7 @@ export default function ProjectDetailView({
 }: {
   project: Project;
 }) {
-  const { lang } = useLang();
+  const { lang, t } = useLang();
   const project = localize(rawProject, lang);
 
   const Icon =
@@ -121,6 +121,10 @@ export default function ProjectDetailView({
     width: 1940,
     height: 600,
   });
+
+  useEffect(() => {
+    document.title = `${project.title} | ${t.meta.name}`;
+  }, [project.title, t.meta.name]);
 
   const period =
     formatPeriod(project.start, project.end, lang, project.period ?? "") ||

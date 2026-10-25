@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FlagKR, FlagUS } from "./FlagIcon";
 import { useLang } from "@/components/layout/LanguageProvider";
@@ -66,27 +67,37 @@ export default function Navbar() {
       <header className="sticky top-0 z-40 w-full backdrop-blur bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 relative">
-            <Link
-              href="/"
-              className="flex-shrink-0 text-sm sm:text-base xl:text-lg font-bold whitespace-nowrap text-gray-900 dark:text-white w-52 sm:w-60 xl:w-64 h-7 overflow-hidden relative"
-              style={{ height: "1.75rem" }}
-            >
+            <Link href="/" className="flex-shrink-0 flex items-center gap-2.5">
+              <Image
+                src="/logo.png"
+                alt={t.profile.name}
+                width={32}
+                height={32}
+                priority
+                className="w-8 h-8"
+              />
+              {/* 글자는 공간이 있을 때만 보인다: 모바일과 lg 구간(가운데 메뉴와 겹침)에서는 로고만 남긴다. */}
               <div
-                ref={containerRef}
-                className="transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateY(-${currentTextIndex * 1.75}rem)`,
-                }}
+                className="hidden sm:block lg:hidden xl:block text-base xl:text-lg font-bold whitespace-nowrap text-gray-900 dark:text-white w-60 xl:w-64 h-7 overflow-hidden relative"
+                style={{ height: "1.75rem" }}
               >
-                {rotatingTexts.map((text, idx) => (
-                  <div
-                    key={idx}
-                    className="h-7 leading-7 flex items-center"
-                    style={{ height: "1.75rem" }}
-                  >
-                    {text}
-                  </div>
-                ))}
+                <div
+                  ref={containerRef}
+                  className="transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateY(-${currentTextIndex * 1.75}rem)`,
+                  }}
+                >
+                  {rotatingTexts.map((text, idx) => (
+                    <div
+                      key={idx}
+                      className="h-7 leading-7 flex items-center"
+                      style={{ height: "1.75rem" }}
+                    >
+                      {text}
+                    </div>
+                  ))}
+                </div>
               </div>
             </Link>
 

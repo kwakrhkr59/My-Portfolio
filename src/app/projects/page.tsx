@@ -4,6 +4,8 @@ import { PageShell, PageHeader } from "@/components/layout/PageShell";
 import { T } from "@/components/layout/T";
 import ProjectList from "@/components/projects/ProjectList";
 
+export const metadata = { title: "프로젝트" };
+
 // Notion 수정 사항이 재배포 없이 반영되도록 5분마다 갱신한다.
 export const revalidate = 300;
 

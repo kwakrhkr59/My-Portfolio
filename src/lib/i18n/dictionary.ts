@@ -12,6 +12,14 @@ const en = {
     rotating: ["AI & Full-stack Developer", "Hyeonjeong's Portfolio"],
     switchLabel: "Switch language",
   },
+  meta: {
+    name: "Hyeonjeong Kwak",
+    home: "Hyeonjeong Kwak | AI & Full-stack Developer",
+    projects: "Projects | Hyeonjeong Kwak",
+    experience: "Experience | Hyeonjeong Kwak",
+    publication: "Research | Hyeonjeong Kwak",
+    contact: "Contact | Hyeonjeong Kwak",
+  },
   floating: {
     about: "About Me",
     projects: "Projects",
@@ -224,6 +232,14 @@ const ko: Dictionary = {
     menuOpen: "모바일 메뉴 열기",
     rotating: ["AI & Fullstack 개발자", "곽현정 포트폴리오"],
     switchLabel: "언어 전환",
+  },
+  meta: {
+    name: "곽현정",
+    home: "곽현정 | AI & 풀스택 개발자",
+    projects: "프로젝트 | 곽현정",
+    experience: "경력 | 곽현정",
+    publication: "연구 | 곽현정",
+    contact: "연락하기 | 곽현정",
   },
   floating: {
     about: "About Me",
