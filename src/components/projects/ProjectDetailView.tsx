@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import {
   Github,
   ExternalLink,
@@ -85,22 +86,53 @@ export default function ProjectDetailView({
   const Icon =
     project.type && project.type.includes("Research") ? FlaskConical : Code;
   const gradient = gradients[project.id.charCodeAt(0) % gradients.length];
-  const coverImage = project.images?.[0];
+
+  // 대표 이미지는 파일 이름 규칙으로 찾는다: /images/projects/{slug}-desktop.png, {slug}-mobile.png
+  // 파일이 없으면 아래 그라디언트 배경과 아이콘이 대신 보인다.
+  const [coverFailed, setCoverFailed] = useState(false);
+  const coverRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    // 하이드레이션 전에 이미 로드에 실패한 경우 onError 를 놓칠 수 있어 한 번 더 확인한다.
+    const img = coverRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setCoverFailed(true);
+  }, []);
+  const coverBase = `/images/projects/${project.slug}`;
+  const coverCommon = {
+    alt: `${project.title} cover`,
+    fill: true,
+    sizes: "100vw",
+    quality: 85,
+    loading: "eager" as const,
+    className: "object-cover object-center",
+  };
+  const desktopCover = getImageProps({
+    ...coverCommon,
+    src: `${coverBase}-desktop.png`,
+  });
+  const mobileCover = getImageProps({
+    ...coverCommon,
+    src: `${coverBase}-mobile.png`,
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
       <section
         className={`relative w-full overflow-hidden bg-gradient-to-r ${gradient}`}
       >
-        {coverImage ? (
-          <Image
-            src={coverImage}
-            alt={`${project.title} cover`}
-            fill
-            unoptimized
-            priority
-            className="object-cover object-center"
-          />
+        {!coverFailed ? (
+          <picture>
+            <source
+              media="(min-width: 768px)"
+              srcSet={desktopCover.props.srcSet}
+            />
+            <img
+              {...mobileCover.props}
+              alt={coverCommon.alt}
+              ref={coverRef}
+              fetchPriority="high"
+              onError={() => setCoverFailed(true)}
+            />
+          </picture>
         ) : (
           <Icon
             aria-hidden
